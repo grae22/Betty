@@ -135,19 +135,7 @@ namespace Betty
       uiWallSectionLength.Focus();
       uiAddWallSection.Enabled = false;
 
-      if( m_wallTotalLength > 0 )
-      {
-        int remainingLength = ( (int)m_wallTotalLength - (int)m_wall.Length );
-        uiWallRemainingLength.Text = ( (int)m_wallTotalLength - (int)m_wall.Length ).ToString();
-        if( remainingLength < 0 )
-        {
-          uiWallRemainingLength.BackColor = ( remainingLength < 0 ? Color.Red : Color.White );
-        }
-      }
-      else
-      {
-        uiWallRemainingLength.Text = "";
-      }
+      UpdateUsedRemainingStat();
     }
 
     //-------------------------------------------------------------------------
@@ -278,6 +266,67 @@ namespace Betty
       for( int i = 0; i < uiWallSections.Items.Count; i++ )
       {
         uiWallSections.Items[ i ] = uiWallSections.Items[ i ];
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiRemoveWallSection_Click( object sender, EventArgs e )
+    {
+      if( uiWallSections.SelectedItem == null )
+      {
+        return;
+      }
+
+      m_wall.Sections.Remove( uiWallSections.SelectedItem as WallSection );
+      uiWallSections.Items.Remove( uiWallSections.SelectedItem );
+
+      UpdateUsedRemainingStat();
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void UpdateUsedRemainingStat()
+    {
+      if( m_wallTotalLength > 0 )
+      {
+        int remainingLength = ( (int)m_wallTotalLength - (int)m_wall.Length );
+        uiWallRemainingLength.Text = m_wall.Length.ToString() + " / " + ( (int)m_wallTotalLength - (int)m_wall.Length ).ToString();
+        uiWallRemainingLength.BackColor = ( remainingLength < 0 ? Color.Red : Color.White );
+      }
+      else
+      {
+        uiWallRemainingLength.Text = "";
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiSectionMoveUp_Click( object sender, EventArgs e )
+    {
+      if( uiWallSections.SelectedItem != null &&
+          uiWallSections.SelectedIndex > 0 )
+      {
+        int index = uiWallSections.SelectedIndex;
+        WallSection section = uiWallSections.SelectedItem as WallSection;
+        uiWallSections.Items.RemoveAt( index );
+        uiWallSections.Items.Insert( index - 1, section );
+        uiWallSections.SelectedItem = section;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiSectionMoveDown_Click( object sender, EventArgs e )
+    {
+      if( uiWallSections.SelectedItem != null &&
+          uiWallSections.SelectedIndex < uiWallSections.Items.Count - 1 )
+      {
+        int index = uiWallSections.SelectedIndex;
+        WallSection section = uiWallSections.SelectedItem as WallSection;
+        uiWallSections.Items.RemoveAt( index );
+        uiWallSections.Items.Insert( index + 1, section );
+        uiWallSections.SelectedItem = section;
       }
     }
 
