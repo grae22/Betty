@@ -20,13 +20,23 @@ namespace Betty
 
       uiSectionType.Text = uiSectionType.Items[ 0 ] as string;
       uiAddWallSection.Enabled = false;
+
+      PopulatePredefinedWallSectionsTree();
     }
 
     //-------------------------------------------------------------------------
 
     private void PopulatePredefinedWallSectionsTree()
     {
+      foreach( string groupName in m_floorPlan.WallSectionGroupNames )
+      {
+        TreeNode groupNode = uiPredefinedWallSections.Nodes.Add( groupName );
 
+        foreach( WallSection section in m_floorPlan.GetSectionsForGroup( groupName ) )
+        {
+          //uiPredefinedWallSections.Nodes.Add()
+        }
+      }
     }
 
     //-------------------------------------------------------------------------
