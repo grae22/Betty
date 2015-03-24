@@ -3,12 +3,22 @@ using System.Collections.Generic;
 
 namespace Betty
 {
-  class WallSection
+  public class WallSection
   {
-    private string m_group;
+    private string m_group = "Unknown";
     private ushort m_length;        // mm
     private ushort m_height;        // mm
-    private string m_description;
+
+    //-------------------------------------------------------------------------
+
+    public WallSection( string group,
+                        ushort length,
+                        ushort height )
+    {
+      m_group = group;
+      m_length = length;
+      m_height = height;
+    }
 
     //-------------------------------------------------------------------------
 
@@ -64,7 +74,7 @@ namespace Betty
     {
       get
       {
-        return Program.UnitConvert( m_length ).ToString();
+        return Program.UnitConvertForDisplay( m_length ).ToString();
       }
     }
 
@@ -77,22 +87,7 @@ namespace Betty
     {
       get
       {
-        return Program.UnitConvert( m_height ).ToString();
-      }
-    }
-
-    //-------------------------------------------------------------------------
-
-    public string Description
-    {
-      get
-      {
-        return m_description;
-      }
-
-      set
-      {
-        m_description = value;
+        return Program.UnitConvertForDisplay( m_height ).ToString();
       }
     }
 
@@ -101,20 +96,14 @@ namespace Betty
     public override string ToString()
     {
       // Length & height (if any).
-      string s = m_group + " (" + LengthForDisplay;
+      string s = m_group + " [ " + LengthForDisplay;
 
       if( m_height > 0 )
       {
-        s += " x " + m_height.ToString();
+        s += " x " + HeightForDisplay;
       }
 
-      s += ")";
-
-      // Description.
-      if( m_description.Length > 0 )
-      {
-        s += ' ' + m_description;
-      }
+      s += " ]";
 
       return s;
     }

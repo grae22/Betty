@@ -45,13 +45,14 @@
       this.label2 = new System.Windows.Forms.Label();
       this.uiSectionType = new System.Windows.Forms.ComboBox();
       this.label1 = new System.Windows.Forms.Label();
-      this.uiPredefinedWallSections = new System.Windows.Forms.TreeView();
+      this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this.uiSetupWallSectionGroups = new System.Windows.Forms.Button();
       this.groupBox2.SuspendLayout();
+      this.groupBox1.SuspendLayout();
       this.SuspendLayout();
       // 
       // groupBox2
       // 
-      this.groupBox2.Controls.Add(this.uiPredefinedWallSections);
       this.groupBox2.Controls.Add(this.uiSectionMoveDown);
       this.groupBox2.Controls.Add(this.uiSectionMoveUp);
       this.groupBox2.Controls.Add(this.uiRemoveWallSection);
@@ -68,9 +69,9 @@
       this.groupBox2.Controls.Add(this.label2);
       this.groupBox2.Controls.Add(this.uiSectionType);
       this.groupBox2.Controls.Add(this.label1);
-      this.groupBox2.Location = new System.Drawing.Point(14, 8);
+      this.groupBox2.Location = new System.Drawing.Point(14, 119);
       this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(715, 488);
+      this.groupBox2.Size = new System.Drawing.Size(715, 377);
       this.groupBox2.TabIndex = 1;
       this.groupBox2.TabStop = false;
       this.groupBox2.Text = "Build up your wall\'s sections:";
@@ -230,19 +231,32 @@
       this.label1.TabIndex = 0;
       this.label1.Text = "Section is";
       // 
-      // uiPredefinedWallSections
+      // groupBox1
       // 
-      this.uiPredefinedWallSections.Location = new System.Drawing.Point(434, 19);
-      this.uiPredefinedWallSections.Name = "uiPredefinedWallSections";
-      this.uiPredefinedWallSections.ShowPlusMinus = false;
-      this.uiPredefinedWallSections.Size = new System.Drawing.Size(266, 452);
-      this.uiPredefinedWallSections.TabIndex = 16;
+      this.groupBox1.Controls.Add(this.uiSetupWallSectionGroups);
+      this.groupBox1.Location = new System.Drawing.Point(14, 9);
+      this.groupBox1.Name = "groupBox1";
+      this.groupBox1.Size = new System.Drawing.Size(222, 100);
+      this.groupBox1.TabIndex = 2;
+      this.groupBox1.TabStop = false;
+      this.groupBox1.Text = "Floor Plan:";
+      // 
+      // uiSetupWallSectionGroups
+      // 
+      this.uiSetupWallSectionGroups.Location = new System.Drawing.Point(18, 28);
+      this.uiSetupWallSectionGroups.Name = "uiSetupWallSectionGroups";
+      this.uiSetupWallSectionGroups.Size = new System.Drawing.Size(93, 23);
+      this.uiSetupWallSectionGroups.TabIndex = 0;
+      this.uiSetupWallSectionGroups.Text = "Setup Groups";
+      this.uiSetupWallSectionGroups.UseVisualStyleBackColor = true;
+      this.uiSetupWallSectionGroups.Click += new System.EventHandler(this.uiSetupWallSectionGroups_Click);
       // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(737, 504);
+      this.Controls.Add(this.groupBox1);
       this.Controls.Add(this.groupBox2);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.MaximizeBox = false;
@@ -251,6 +265,7 @@
       this.Text = "Betty";
       this.groupBox2.ResumeLayout(false);
       this.groupBox2.PerformLayout();
+      this.groupBox1.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -274,7 +289,8 @@
     private System.Windows.Forms.Button uiRemoveWallSection;
     private System.Windows.Forms.Button uiSectionMoveDown;
     private System.Windows.Forms.Button uiSectionMoveUp;
-    private System.Windows.Forms.TreeView uiPredefinedWallSections;
+    private System.Windows.Forms.GroupBox groupBox1;
+    private System.Windows.Forms.Button uiSetupWallSectionGroups;
   }
 }
 

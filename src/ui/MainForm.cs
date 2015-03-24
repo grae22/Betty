@@ -10,7 +10,7 @@ namespace Betty
     private FloorPlan m_floorPlan = new FloorPlan();
     private ushort m_wallTotalLength;
     private Wall m_wall = new Wall();
-    private WallSection m_section = new WallSection();
+    private WallSection m_section = new WallSection( "Unknown", 1000, 0 );
 
     //-------------------------------------------------------------------------
 
@@ -20,23 +20,6 @@ namespace Betty
 
       uiSectionType.Text = uiSectionType.Items[ 0 ] as string;
       uiAddWallSection.Enabled = false;
-
-      PopulatePredefinedWallSectionsTree();
-    }
-
-    //-------------------------------------------------------------------------
-
-    private void PopulatePredefinedWallSectionsTree()
-    {
-      foreach( string groupName in m_floorPlan.WallSectionGroupNames )
-      {
-        TreeNode groupNode = uiPredefinedWallSections.Nodes.Add( groupName );
-
-        foreach( WallSection section in m_floorPlan.GetSectionsForGroup( groupName ) )
-        {
-          //uiPredefinedWallSections.Nodes.Add()
-        }
-      }
     }
 
     //-------------------------------------------------------------------------
@@ -46,7 +29,7 @@ namespace Betty
       m_wall.Sections.Add( m_section );
       uiWallSections.Items.Add( m_section );
 
-      m_section = new WallSection();
+      m_section = new WallSection( "Unknown", 1000, 0 );
 
       uiWallSectionLength.Text = "";
       uiWallSectionLength.Focus();
@@ -202,6 +185,14 @@ namespace Betty
         uiWallSections.Items.Insert( index + 1, section );
         uiWallSections.SelectedItem = section;
       }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiSetupWallSectionGroups_Click( object sender, EventArgs e )
+    {
+      WallSectionGroupSetup dlg = new WallSectionGroupSetup( m_floorPlan );
+      dlg.ShowDialog( this );
     }
 
     //-------------------------------------------------------------------------
