@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace Betty
 {
@@ -106,6 +107,47 @@ namespace Betty
       s += " ]";
 
       return s;
+    }
+
+    //-------------------------------------------------------------------------
+
+    public XmlElement ToXml( XmlDocument doc )
+    {
+      XmlElement wallSection = doc.CreateElement( "WallSection" );
+      
+      XmlElement group = doc.CreateElement( "Group" );
+      wallSection.AppendChild( group );
+      group.InnerText = m_group;
+      
+      XmlElement length = doc.CreateElement( "Length" );
+      wallSection.AppendChild( length );
+      length.InnerText = m_length.ToString();
+
+      XmlElement height = doc.CreateElement( "Height" );
+      wallSection.AppendChild( height );
+      height.InnerText = m_height.ToString();
+
+      return wallSection;
+    }
+
+    //-------------------------------------------------------------------------
+
+    public static WallSection CreateFromXml( XmlElement wallSectionXml )
+    {
+      try
+      {
+        XmlElement groupXml = wallSectionXml.SelectSingleNode( "Group" ) as XmlElement;
+        XmlElement lengthXml = wallSectionXml.SelectSingleNode( "Length" ) as XmlElement;
+        XmlElement heightXml = wallSectionXml.SelectSingleNode( "Height" ) as XmlElement;
+
+        return new WallSection( groupXml.InnerText,
+                                Convert.ToUInt16( lengthXml.InnerText ),
+                                Convert.ToUInt16( heightXml.InnerText ) );
+      }
+      catch
+      {
+        return null;
+      }
     }
 
     //-------------------------------------------------------------------------

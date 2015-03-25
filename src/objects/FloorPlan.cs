@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace Betty
 {
@@ -12,24 +13,24 @@ namespace Betty
 
     public FloorPlan()
     {
-      List< WallSection > list = new List< WallSection >();
-      WallSection section = new WallSection( "Shutter", 1000, 1000 );
-      list.Add( section );
-      section = new WallSection( "Shutter", 2000, 1000 );
-      list.Add( section );
-      m_wallSectionTypeGroups.Add( "Shutter", list );
+      //List< WallSection > list = new List< WallSection >();
+      //WallSection section = new WallSection( "Shutter", 1000, 1000 );
+      //list.Add( section );
+      //section = new WallSection( "Shutter", 2000, 1000 );
+      //list.Add( section );
+      //m_wallSectionTypeGroups.Add( "Shutter", list );
 
-      list = new List<WallSection>();
-      section = new WallSection( "Door", 800, 1000 );
-      list.Add( section );
-      section = new WallSection( "Door", 1200, 1000 );
-      list.Add( section );
-      m_wallSectionTypeGroups.Add( "Door", list );
+      //list = new List<WallSection>();
+      //section = new WallSection( "Door", 800, 1000 );
+      //list.Add( section );
+      //section = new WallSection( "Door", 1200, 1000 );
+      //list.Add( section );
+      //m_wallSectionTypeGroups.Add( "Door", list );
 
-      list = new List<WallSection>();
-      section = new WallSection( "Window", 2000, 500 );
-      list.Add( section );
-      m_wallSectionTypeGroups.Add( "Window", list );
+      //list = new List<WallSection>();
+      //section = new WallSection( "Window", 2000, 500 );
+      //list.Add( section );
+      //m_wallSectionTypeGroups.Add( "Window", list );
     }
 
     //-------------------------------------------------------------------------
@@ -176,6 +177,62 @@ namespace Betty
           }
         }
       }
+    }
+
+    //-------------------------------------------------------------------------
+
+    public XmlElement ToXml( XmlDocument doc )
+    {
+      //-- Floor plan element.
+      XmlElement floorPlan = doc.CreateElement( "FloorPlan" );
+
+      //-- Wall section types.
+      XmlElement wallSectionTypeCollection = doc.CreateElement( "WallSectionTypeCollection" );
+      floorPlan.AppendChild( wallSectionTypeCollection );
+      
+      foreach( List< WallSection > groupSections in m_wallSectionTypeGroups.Values )
+      {
+        foreach( WallSection section in groupSections )
+        {
+          wallSectionTypeCollection.AppendChild( section.ToXml( doc ) );
+        }
+      }
+
+      return floorPlan;
+    }
+
+    //-------------------------------------------------------------------------
+
+    public static FloorPlan CreateFromXml( XmlElement floorPlanXml )
+    {
+      FloorPlan newFloorPlan = new FloorPlan();
+
+      //-- Wall section types.
+      XmlElement wallSectionTypeCollection =
+        floorPlanXml.SelectSingleNode( "./WallSectionTypeCollection" ) as XmlElement;
+
+      XmlNodeList wallSections = wallSectionTypeCollection.SelectNodes( "./WallSection" );
+
+      foreach( XmlElement sectionXml in wallSectionTypeCollection )
+      {
+        WallSection newSection = WallSection.CreateFromXml( sectionXml );
+
+        if( newSection != null )
+        {
+          newFloorPlan.AddWallSectionType( newSection );
+        }
+      }
+
+      return newFloorPlan;
+    }
+
+    //-------------------------------------------------------------------------
+
+    public void WriteToFile()
+    {
+      XmlDocument doc = new XmlDocument();
+      doc.AppendChild( ToXml( doc ) );
+      doc.Save( "Test.floorplan" );
     }
 
     //-------------------------------------------------------------------------

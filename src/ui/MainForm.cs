@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace Betty
 {
@@ -14,12 +15,32 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    public MainForm()
+    public MainForm( string floorPlanFilename )
     {
       InitializeComponent();
 
       uiSectionType.Text = uiSectionType.Items[ 0 ] as string;
       uiAddWallSection.Enabled = false;
+
+      //-- Load floor plan from xml doc.
+      try
+      {
+        if( floorPlanFilename.Length > 0 )
+        {
+          XmlDocument doc = new XmlDocument();
+          doc.Load( floorPlanFilename );
+          XmlElement floorPlanXml = doc.FirstChild as XmlElement;
+          m_floorPlan = FloorPlan.CreateFromXml( floorPlanXml );
+        }
+      }
+      catch( Exception ex )
+      {
+        MessageBox.Show( "Error loading FloorPlan from file '" + floorPlanFilename + "'." +
+                          Environment.NewLine + Environment.NewLine + ex.Message,
+                         "Error",
+                         MessageBoxButtons.OK,
+                         MessageBoxIcon.Error );
+      }
     }
 
     //-------------------------------------------------------------------------
@@ -193,6 +214,13 @@ namespace Betty
     {
       WallSectionGroupSetup dlg = new WallSectionGroupSetup( m_floorPlan );
       dlg.ShowDialog( this );
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiSave_Click( object sender, EventArgs e )
+    {
+      m_floorPlan.WriteToFile();
     }
 
     //-------------------------------------------------------------------------

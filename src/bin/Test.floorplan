@@ -1,0 +1,29 @@
+<FloorPlan>
+  <WallSectionTypeCollection>
+    <WallSection>
+      <Group>Shutter</Group>
+      <Length>2000</Length>
+      <Height>1000</Height>
+    </WallSection>
+    <WallSection>
+      <Group>Shutter</Group>
+      <Length>1000</Length>
+      <Height>1000</Height>
+    </WallSection>
+    <WallSection>
+      <Group>Door</Group>
+      <Length>1200</Length>
+      <Height>1000</Height>
+    </WallSection>
+    <WallSection>
+      <Group>Door</Group>
+      <Length>800</Length>
+      <Height>1000</Height>
+    </WallSection>
+    <WallSection>
+      <Group>Window</Group>
+      <Length>2000</Length>
+      <Height>500</Height>
+    </WallSection>
+  </WallSectionTypeCollection>
+</FloorPlan>

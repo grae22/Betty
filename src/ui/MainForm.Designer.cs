@@ -47,6 +47,7 @@
       this.label1 = new System.Windows.Forms.Label();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
       this.uiSetupWallSectionGroups = new System.Windows.Forms.Button();
+      this.uiSave = new System.Windows.Forms.Button();
       this.groupBox2.SuspendLayout();
       this.groupBox1.SuspendLayout();
       this.SuspendLayout();
@@ -233,6 +234,7 @@
       // 
       // groupBox1
       // 
+      this.groupBox1.Controls.Add(this.uiSave);
       this.groupBox1.Controls.Add(this.uiSetupWallSectionGroups);
       this.groupBox1.Location = new System.Drawing.Point(14, 9);
       this.groupBox1.Name = "groupBox1";
@@ -243,13 +245,23 @@
       // 
       // uiSetupWallSectionGroups
       // 
-      this.uiSetupWallSectionGroups.Location = new System.Drawing.Point(18, 28);
+      this.uiSetupWallSectionGroups.Location = new System.Drawing.Point(18, 60);
       this.uiSetupWallSectionGroups.Name = "uiSetupWallSectionGroups";
       this.uiSetupWallSectionGroups.Size = new System.Drawing.Size(93, 23);
       this.uiSetupWallSectionGroups.TabIndex = 0;
       this.uiSetupWallSectionGroups.Text = "Setup Groups";
       this.uiSetupWallSectionGroups.UseVisualStyleBackColor = true;
       this.uiSetupWallSectionGroups.Click += new System.EventHandler(this.uiSetupWallSectionGroups_Click);
+      // 
+      // uiSave
+      // 
+      this.uiSave.Location = new System.Drawing.Point(18, 31);
+      this.uiSave.Name = "uiSave";
+      this.uiSave.Size = new System.Drawing.Size(93, 23);
+      this.uiSave.TabIndex = 1;
+      this.uiSave.Text = "Save";
+      this.uiSave.UseVisualStyleBackColor = true;
+      this.uiSave.Click += new System.EventHandler(this.uiSave_Click);
       // 
       // MainForm
       // 
@@ -291,6 +303,7 @@
     private System.Windows.Forms.Button uiSectionMoveUp;
     private System.Windows.Forms.GroupBox groupBox1;
     private System.Windows.Forms.Button uiSetupWallSectionGroups;
+    private System.Windows.Forms.Button uiSave;
   }
 }
 
