@@ -107,5 +107,77 @@ namespace Betty
     }
 
     //-------------------------------------------------------------------------
+
+    public bool RemoveWallSectionType( WallSection sectionTypeToRemove )
+    {
+      // Iterate through each group.
+      foreach( List< WallSection > groupSections in m_wallSectionTypeGroups.Values )
+      {
+        // Iterate throught the group's sections.
+        foreach( WallSection section in groupSections )
+        {
+          if( section == sectionTypeToRemove )
+          {
+            groupSections.Remove( sectionTypeToRemove );
+
+            // Group is now empty? Remove it from the map.
+            if( groupSections.Count == 0 )
+            {
+              m_wallSectionTypeGroups.Remove( sectionTypeToRemove.Group );
+            }
+
+            return true;
+          }
+        }
+      }
+
+      return false;
+    }
+
+    //-------------------------------------------------------------------------
+
+    public void PrioritiseWallSectionType( WallSection sectionToPrioritise )
+    {
+      // Iterate through each group.
+      foreach( List< WallSection > groupSections in m_wallSectionTypeGroups.Values )
+      {
+        // Iterate throught the group's sections.
+        // Start at 2nd item since if the section is already the 1st then
+        // we can't prioritise it further.
+        for( int i = 1; i < groupSections.Count; i++ )
+        {
+          if( groupSections[ i ] == sectionToPrioritise )
+          {
+            WallSection tmp = groupSections[ i - 1 ];
+            groupSections[ i - 1 ] = groupSections[ i ];
+            groupSections[ i ] = tmp;
+          }
+        }
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    public void DeprioritiseWallSectionType( WallSection sectionToPrioritise )
+    {
+      // Iterate through each group.
+      foreach( List< WallSection > groupSections in m_wallSectionTypeGroups.Values )
+      {
+        // Iterate throught the group's sections.
+        // Stop at 1 before the end since if the section is already the last
+        // then we can't deprioritise it further.
+        for( int i = 0; i < groupSections.Count - 1; i++ )
+        {
+          if( groupSections[ i ] == sectionToPrioritise )
+          {
+            WallSection tmp = groupSections[ i + 1 ];
+            groupSections[ i + 1 ] = groupSections[ i ];
+            groupSections[ i ] = tmp;
+          }
+        }
+      }
+    }
+
+    //-------------------------------------------------------------------------
   }
 }

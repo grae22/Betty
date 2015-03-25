@@ -18,28 +18,53 @@ namespace Betty
 
       InitializeComponent();
       PopulateGroupSectionsTree();
+
+      uiUnit.Text = Program.Unit;
     }
 
     //-------------------------------------------------------------------------
 
     private void PopulateGroupSectionsTree()
     {
-      uiPredefinedWallSections.Nodes.Clear();
+      // Remember what was selected.
+      WallSection selectedItem = null;
+      
+      if( uiGroupsAndSections.SelectedNode != null )
+      {
+        selectedItem = uiGroupsAndSections.SelectedNode.Tag as WallSection;
+      }
+
+      // Clear the tree.
+      uiGroupsAndSections.Nodes.Clear();
+      uiGroupName.Items.Clear();
 
       // Iterate through the section groups and add each one.
       foreach( string groupName in m_floorPlan.WallSectionGroupNames )
       {
-        TreeNode groupNode = uiPredefinedWallSections.Nodes.Add( groupName );
+        // Create a node for this group.
+        TreeNode groupNode = uiGroupsAndSections.Nodes.Add( groupName );
+
+        // Add the name to the groups combobox.
+        uiGroupName.Items.Add( groupName );
 
         // Iterate through this group's sections and add as children to
         // the group.
         foreach( WallSection section in m_floorPlan.GetSectionsForGroup( groupName ) )
         {
-          groupNode.Nodes.Add( section.ToString() );
+          TreeNode node = new TreeNode( section.ToString() );
+          node.Tag = section;
+
+          groupNode.Nodes.Add( node );
+
+          // Was previously selected? Re-select.
+          if( section == selectedItem )
+          {
+            uiGroupsAndSections.SelectedNode = node;
+          }
         }
       }
 
-      uiPredefinedWallSections.ExpandAll();
+      uiGroupsAndSections.ExpandAll();
     }
 
     //-------------------------------------------------------------------------
@@ -61,14 +86,6 @@ namespace Betty
       {
         ShowMissingInfoMessage( "Group Name" );
         uiGroupName.Focus();
-        return;
-      }
-
-      // Name.
-      if( uiName.Text.Length == 0 )
-      {
-        ShowMissingInfoMessage( "Name" );
-        uiName.Focus();
         return;
       }
 
@@ -127,6 +144,52 @@ namespace Betty
 
       if( m_floorPlan.AddWallSectionType( section ) )
       {
+        PopulateGroupSectionsTree();
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiRemove_Click( object sender, EventArgs e )
+    {
+      // The nodes for sections have a 'tag' that is the section object,
+      // if the selected node has this - remove the section.
+      if( uiGroupsAndSections.SelectedNode != null &&
+          uiGroupsAndSections.SelectedNode.Tag != null )
+      {
+        m_floorPlan.RemoveWallSectionType(
+          uiGroupsAndSections.SelectedNode.Tag as WallSection );
+
+        PopulateGroupSectionsTree();
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiPrioritise_Click( object sender, EventArgs e )
+    {
+      // The nodes for sections have a 'tag' that is the section object.
+      if( uiGroupsAndSections.SelectedNode != null &&
+          uiGroupsAndSections.SelectedNode.Tag != null )
+      {
+        m_floorPlan.PrioritiseWallSectionType(
+          uiGroupsAndSections.SelectedNode.Tag as WallSection );
+
+        PopulateGroupSectionsTree();
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiDeprioritise_Click( object sender, EventArgs e )
+    {
+      // The nodes for sections have a 'tag' that is the section object.
+      if( uiGroupsAndSections.SelectedNode != null &&
+          uiGroupsAndSections.SelectedNode.Tag != null )
+      {
+        m_floorPlan.DeprioritiseWallSectionType(
+          uiGroupsAndSections.SelectedNode.Tag as WallSection );
+
         PopulateGroupSectionsTree();
       }
     }

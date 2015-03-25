@@ -28,10 +28,8 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.uiPredefinedWallSections = new System.Windows.Forms.TreeView();
+      this.uiGroupsAndSections = new System.Windows.Forms.TreeView();
       this.label1 = new System.Windows.Forms.Label();
-      this.textBox1 = new System.Windows.Forms.TextBox();
-      this.uiName = new System.Windows.Forms.Label();
       this.uiLength = new System.Windows.Forms.TextBox();
       this.label2 = new System.Windows.Forms.Label();
       this.uiUnit = new System.Windows.Forms.Label();
@@ -45,13 +43,15 @@
       this.uiGroupName = new System.Windows.Forms.ComboBox();
       this.SuspendLayout();
       // 
-      // uiPredefinedWallSections
+      // uiGroupsAndSections
       // 
-      this.uiPredefinedWallSections.Location = new System.Drawing.Point(12, 12);
-      this.uiPredefinedWallSections.Name = "uiPredefinedWallSections";
-      this.uiPredefinedWallSections.ShowPlusMinus = false;
-      this.uiPredefinedWallSections.Size = new System.Drawing.Size(266, 452);
-      this.uiPredefinedWallSections.TabIndex = 17;
+      this.uiGroupsAndSections.HideSelection = false;
+      this.uiGroupsAndSections.Location = new System.Drawing.Point(12, 12);
+      this.uiGroupsAndSections.Name = "uiGroupsAndSections";
+      this.uiGroupsAndSections.ShowPlusMinus = false;
+      this.uiGroupsAndSections.ShowRootLines = false;
+      this.uiGroupsAndSections.Size = new System.Drawing.Size(266, 452);
+      this.uiGroupsAndSections.TabIndex = 0;
       // 
       // label1
       // 
@@ -62,33 +62,17 @@
       this.label1.TabIndex = 18;
       this.label1.Text = "Group Name:";
       // 
-      // textBox1
-      // 
-      this.textBox1.Location = new System.Drawing.Point(287, 76);
-      this.textBox1.Name = "textBox1";
-      this.textBox1.Size = new System.Drawing.Size(161, 20);
-      this.textBox1.TabIndex = 21;
-      // 
-      // uiName
-      // 
-      this.uiName.AutoSize = true;
-      this.uiName.Location = new System.Drawing.Point(284, 60);
-      this.uiName.Name = "uiName";
-      this.uiName.Size = new System.Drawing.Size(38, 13);
-      this.uiName.TabIndex = 20;
-      this.uiName.Text = "Name:";
-      // 
       // uiLength
       // 
-      this.uiLength.Location = new System.Drawing.Point(287, 124);
+      this.uiLength.Location = new System.Drawing.Point(287, 79);
       this.uiLength.Name = "uiLength";
       this.uiLength.Size = new System.Drawing.Size(67, 20);
-      this.uiLength.TabIndex = 23;
+      this.uiLength.TabIndex = 2;
       // 
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(284, 108);
+      this.label2.Location = new System.Drawing.Point(284, 63);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(82, 13);
       this.label2.TabIndex = 22;
@@ -98,7 +82,7 @@
       // 
       this.uiUnit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.uiUnit.AutoSize = true;
-      this.uiUnit.Location = new System.Drawing.Point(427, 108);
+      this.uiUnit.Location = new System.Drawing.Point(427, 63);
       this.uiUnit.Name = "uiUnit";
       this.uiUnit.Size = new System.Drawing.Size(21, 13);
       this.uiUnit.TabIndex = 24;
@@ -107,15 +91,15 @@
       // 
       // uiHeight
       // 
-      this.uiHeight.Location = new System.Drawing.Point(381, 124);
+      this.uiHeight.Location = new System.Drawing.Point(381, 79);
       this.uiHeight.Name = "uiHeight";
       this.uiHeight.Size = new System.Drawing.Size(67, 20);
-      this.uiHeight.TabIndex = 25;
+      this.uiHeight.TabIndex = 3;
       // 
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(360, 127);
+      this.label3.Location = new System.Drawing.Point(360, 82);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(12, 13);
       this.label3.TabIndex = 26;
@@ -126,7 +110,7 @@
       this.uiAdd.Location = new System.Drawing.Point(330, 181);
       this.uiAdd.Name = "uiAdd";
       this.uiAdd.Size = new System.Drawing.Size(75, 23);
-      this.uiAdd.TabIndex = 27;
+      this.uiAdd.TabIndex = 4;
       this.uiAdd.Text = "Add";
       this.uiAdd.UseVisualStyleBackColor = true;
       this.uiAdd.Click += new System.EventHandler(this.uiAdd_Click);
@@ -136,27 +120,30 @@
       this.uiRemove.Location = new System.Drawing.Point(330, 210);
       this.uiRemove.Name = "uiRemove";
       this.uiRemove.Size = new System.Drawing.Size(75, 23);
-      this.uiRemove.TabIndex = 28;
+      this.uiRemove.TabIndex = 5;
       this.uiRemove.Text = "Remove";
       this.uiRemove.UseVisualStyleBackColor = true;
+      this.uiRemove.Click += new System.EventHandler(this.uiRemove_Click);
       // 
       // uiPrioritise
       // 
       this.uiPrioritise.Location = new System.Drawing.Point(330, 239);
       this.uiPrioritise.Name = "uiPrioritise";
       this.uiPrioritise.Size = new System.Drawing.Size(75, 23);
-      this.uiPrioritise.TabIndex = 29;
+      this.uiPrioritise.TabIndex = 6;
       this.uiPrioritise.Text = "Prioritise";
       this.uiPrioritise.UseVisualStyleBackColor = true;
+      this.uiPrioritise.Click += new System.EventHandler(this.uiPrioritise_Click);
       // 
       // uiDeprioritise
       // 
       this.uiDeprioritise.Location = new System.Drawing.Point(330, 268);
       this.uiDeprioritise.Name = "uiDeprioritise";
       this.uiDeprioritise.Size = new System.Drawing.Size(75, 23);
-      this.uiDeprioritise.TabIndex = 30;
+      this.uiDeprioritise.TabIndex = 7;
       this.uiDeprioritise.Text = "Deprioritise";
       this.uiDeprioritise.UseVisualStyleBackColor = true;
+      this.uiDeprioritise.Click += new System.EventHandler(this.uiDeprioritise_Click);
       // 
       // uiClose
       // 
@@ -164,17 +151,19 @@
       this.uiClose.Location = new System.Drawing.Point(373, 440);
       this.uiClose.Name = "uiClose";
       this.uiClose.Size = new System.Drawing.Size(75, 23);
-      this.uiClose.TabIndex = 31;
+      this.uiClose.TabIndex = 8;
       this.uiClose.Text = "Close";
       this.uiClose.UseVisualStyleBackColor = true;
       // 
       // uiGroupName
       // 
+      this.uiGroupName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.uiGroupName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.uiGroupName.FormattingEnabled = true;
       this.uiGroupName.Location = new System.Drawing.Point(287, 29);
       this.uiGroupName.Name = "uiGroupName";
       this.uiGroupName.Size = new System.Drawing.Size(161, 21);
-      this.uiGroupName.TabIndex = 32;
+      this.uiGroupName.TabIndex = 1;
       // 
       // WallSectionGroupSetup
       // 
@@ -194,10 +183,8 @@
       this.Controls.Add(this.uiUnit);
       this.Controls.Add(this.uiLength);
       this.Controls.Add(this.label2);
-      this.Controls.Add(this.textBox1);
-      this.Controls.Add(this.uiName);
       this.Controls.Add(this.label1);
-      this.Controls.Add(this.uiPredefinedWallSections);
+      this.Controls.Add(this.uiGroupsAndSections);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.Name = "WallSectionGroupSetup";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -209,10 +196,8 @@
 
     #endregion
 
-    private System.Windows.Forms.TreeView uiPredefinedWallSections;
+    private System.Windows.Forms.TreeView uiGroupsAndSections;
     private System.Windows.Forms.Label label1;
-    private System.Windows.Forms.TextBox textBox1;
-    private System.Windows.Forms.Label uiName;
     private System.Windows.Forms.TextBox uiLength;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Label uiUnit;
