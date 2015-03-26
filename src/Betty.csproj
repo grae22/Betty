@@ -45,12 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Objects\FloorPlan.cs" />
-    <Compile Include="UI\EditShutterDlg.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\EditShutterDlg.Designer.cs">
-      <DependentUpon>EditShutterDlg.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,9 +61,6 @@
     <Compile Include="UI\WallSectionGroupSetup.Designer.cs">
       <DependentUpon>WallSectionGroupSetup.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UI\EditShutterDlg.resx">
-      <DependentUpon>EditShutterDlg.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
