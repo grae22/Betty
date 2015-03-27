@@ -34,6 +34,24 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
+    public List< WallFeature > WallFeatureTypes
+    {
+      get
+      {
+        List< WallFeature > list = new List< WallFeature >();
+        foreach( List< WallFeature > features in m_wallFeatureTypes.Values )
+        {
+          foreach( WallFeature f in features )
+          {
+            list.Add( f );
+          }
+        }
+        return list;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
     // Returns null if type not found.
 
     public List< WallFeature > GetFeaturesForType( string name )

@@ -11,8 +11,23 @@
       <Height>1000</Height>
     </WallFeature>
     <WallFeature>
+      <Type>Door</Type>
+      <Length>1500</Length>
+      <Height>1000</Height>
+    </WallFeature>
+    <WallFeature>
       <Type>Window</Type>
       <Length>2000</Length>
+      <Height>500</Height>
+    </WallFeature>
+    <WallFeature>
+      <Type>Window</Type>
+      <Length>1500</Length>
+      <Height>500</Height>
+    </WallFeature>
+    <WallFeature>
+      <Type>Window</Type>
+      <Length>500</Length>
       <Height>500</Height>
     </WallFeature>
   </WallFeatureTypeCollection>

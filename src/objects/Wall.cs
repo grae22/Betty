@@ -6,7 +6,8 @@ namespace Betty
   public class Wall
   {
     private string m_name = "Unknown";
-    private List< WallFeature > m_sections = new List< WallFeature >();
+    private ushort m_length;
+    private List< WallFeature > m_features = new List< WallFeature >();
 
     //-------------------------------------------------------------------------
 
@@ -32,16 +33,16 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    public List< WallFeature > Sections
+    public List< WallFeature > Features
     {
       get
       {
-        return m_sections;
+        return m_features;
       }
 
       set
       {
-        m_sections = value;
+        m_features = value;
       }
     }
 
@@ -51,14 +52,12 @@ namespace Betty
     {
       get
       {
-        ushort length = 0;
+        return m_length;
+      }
 
-        foreach( WallFeature section in m_sections )
-        {
-          length += section.Length;
-        }
-
-        return length;
+      set
+      {
+        m_length = value;
       }
     }
 

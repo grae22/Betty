@@ -11,7 +11,6 @@ namespace Betty
     private FloorPlan m_floorPlan = new FloorPlan();
     private ushort m_wallTotalLength;
     private Wall m_wall = null;
-    private WallFeature m_section = new WallFeature( "Unknown", 1000, 0 );
 
     //-------------------------------------------------------------------------
 
@@ -40,25 +39,18 @@ namespace Betty
       }
 
       //-- Init some UI components.
-      uiSectionType.Text = uiSectionType.Items[ 0 ] as string;
       uiAddWallSection.Enabled = false;
       
       PopulateWallList();
       RefreshWallInfoEnabledState();
+      PopulateFeatureTypesBox();
     }
 
     //-------------------------------------------------------------------------
 
     private void uiAddWallSection_Click( object sender, EventArgs e )
     {
-      m_wall.Sections.Add( m_section );
-      uiWallSections.Items.Add( m_section );
 
-      m_section = new WallFeature( "Unknown", 1000, 0 );
-
-      uiSectionDistanceFromOrigin.Text = "";
-      uiSectionDistanceFromOrigin.Focus();
-      uiAddWallSection.Enabled = false;
     }
 
     //-------------------------------------------------------------------------
@@ -95,85 +87,28 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    private void uiWallSectionLength_TextChanged( object sender, EventArgs e )
-    {
-      if( uiSectionDistanceFromOrigin.Text == "" )
-      {
-        uiSectionDistanceFromOrigin.BackColor = Color.White;
-        uiAddWallSection.Enabled = false;
-        return;
-      }
-
-      try
-      {
-        m_section.Length = Convert.ToUInt16( uiSectionDistanceFromOrigin.Text );
-
-        if( m_section.Length == 0 )
-        {
-          throw new Exception();
-        }
-
-        uiSectionDistanceFromOrigin.BackColor = Color.White;
-
-        uiAddWallSection.Enabled = true;
-      }
-      catch
-      {
-        uiSectionDistanceFromOrigin.BackColor = Color.Red;
-
-        uiAddWallSection.Enabled = false;
-      }
-    }
-
-    //-------------------------------------------------------------------------
-
-    private void uiWallSectionLength_KeyDown( object sender, KeyEventArgs e )
-    {
-      if( e.KeyCode == Keys.Enter )
-      {
-        uiAddWallSection_Click( null, null );
-      }
-      else if( e.KeyCode == Keys.Up )
-      {
-        if( uiSectionType.SelectedIndex > 0 )
-        {
-          uiSectionType.SelectedIndex--;
-        }
-      }
-      else if( e.KeyCode == Keys.Down )
-      {
-        if( uiSectionType.SelectedIndex < uiSectionType.Items.Count - 1 )
-        {
-          uiSectionType.SelectedIndex++;
-        }
-      }
-    }
-
-    //-------------------------------------------------------------------------
-
     private void uiRemoveWallSection_Click( object sender, EventArgs e )
     {
-      if( uiWallSections.SelectedItem == null )
+      if( uiWallFeatures.SelectedItem == null )
       {
         return;
       }
 
-      m_wall.Sections.Remove( uiWallSections.SelectedItem as WallFeature );
-      uiWallSections.Items.Remove( uiWallSections.SelectedItem );
+      // TODO
     }
 
     //-------------------------------------------------------------------------
 
     private void uiSectionMoveUp_Click( object sender, EventArgs e )
     {
-      if( uiWallSections.SelectedItem != null &&
-          uiWallSections.SelectedIndex > 0 )
+      if( uiWallFeatures.SelectedItem != null &&
+          uiWallFeatures.SelectedIndex > 0 )
       {
-        int index = uiWallSections.SelectedIndex;
-        WallFeature section = uiWallSections.SelectedItem as WallFeature;
-        uiWallSections.Items.RemoveAt( index );
-        uiWallSections.Items.Insert( index - 1, section );
-        uiWallSections.SelectedItem = section;
+        int index = uiWallFeatures.SelectedIndex;
+        WallFeature section = uiWallFeatures.SelectedItem as WallFeature;
+        uiWallFeatures.Items.RemoveAt( index );
+        uiWallFeatures.Items.Insert( index - 1, section );
+        uiWallFeatures.SelectedItem = section;
       }
     }
 
@@ -181,14 +116,14 @@ namespace Betty
 
     private void uiSectionMoveDown_Click( object sender, EventArgs e )
     {
-      if( uiWallSections.SelectedItem != null &&
-          uiWallSections.SelectedIndex < uiWallSections.Items.Count - 1 )
+      if( uiWallFeatures.SelectedItem != null &&
+          uiWallFeatures.SelectedIndex < uiWallFeatures.Items.Count - 1 )
       {
-        int index = uiWallSections.SelectedIndex;
-        WallFeature section = uiWallSections.SelectedItem as WallFeature;
-        uiWallSections.Items.RemoveAt( index );
-        uiWallSections.Items.Insert( index + 1, section );
-        uiWallSections.SelectedItem = section;
+        int index = uiWallFeatures.SelectedIndex;
+        WallFeature section = uiWallFeatures.SelectedItem as WallFeature;
+        uiWallFeatures.Items.RemoveAt( index );
+        uiWallFeatures.Items.Insert( index + 1, section );
+        uiWallFeatures.SelectedItem = section;
       }
     }
 
@@ -218,12 +153,16 @@ namespace Betty
 
     private void PopulateWallList()
     {
+      Wall selectedWall = uiWalls.SelectedItem as Wall;
+
       uiWalls.Items.Clear();
 
       foreach( Wall wall in m_floorPlan.Walls )
       {
         uiWalls.Items.Add( wall );
       }
+
+      uiWalls.SelectedItem = selectedWall;
     }
 
     //-------------------------------------------------------------------------
@@ -233,14 +172,15 @@ namespace Betty
       if( m_wall == null )
       {
         uiWallName.Text = "";
-        uiTotalWallLength.Text = "";
-        uiSectionDistanceFromOrigin.Text = "";
+        uiTotalWallLength.Text = "0";
+        uiSectionDistanceFromOrigin.Text = "0";
 
         return;
       }
 
       uiWallName.Text = m_wall.Name;
       uiTotalWallLength.Text = m_wall.Length.ToString();
+      uiSectionDistanceFromOrigin.Text = "0";
     }
 
     //-------------------------------------------------------------------------
@@ -289,6 +229,259 @@ namespace Betty
 
       uiWallName.Focus();
       uiWallName.SelectAll();
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiWallName_KeyDown( object sender, KeyEventArgs e )
+    {
+      if( e.KeyCode == Keys.Enter )
+      {
+        uiTotalWallLength.Focus();
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiWallName_Validating( object sender, System.ComponentModel.CancelEventArgs e )
+    {
+      try
+      {
+        // Has name?
+        uiWallName.Text = uiWallName.Text.Trim();
+
+        if( uiWallName.Text.Length == 0 )
+        {
+          MessageBox.Show( "You must enter a name.",
+                           "Invalid Input",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Error );
+          e.Cancel = true;
+          return;
+        }
+
+        // Name already exist?
+        Wall testWall = m_floorPlan.GetWall( uiWallName.Text );
+
+        if( testWall != m_wall &&
+            testWall != null )
+        {
+          MessageBox.Show( "A wall named '" + uiWallName.Text + "' already exists.",
+                           "Duplicate Name",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Error );
+          e.Cancel = true;
+          return;
+        }
+
+        // Update the wall's name.
+        m_wall.Name = uiWallName.Text;
+
+        // Update the item in the wall's list box.
+        PopulateWallList();
+
+        // Move on to next field.
+        uiTotalWallLength.Focus();
+      }
+      catch( Exception ex )
+      {
+        ShowErrorMessage( ex.Message, "Error" );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void ShowErrorMessage( string msg,
+                                   string title )
+    {
+      MessageBox.Show( msg,
+                       title,
+                       MessageBoxButtons.OK,
+                       MessageBoxIcon.Error );
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiWallName_Enter( object sender, EventArgs e )
+    {
+      uiWallName.SelectAll();
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiWallName_Click( object sender, EventArgs e )
+    {
+      uiWallName.SelectAll();
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiTotalWallLength_Enter( object sender, EventArgs e )
+    {
+      uiTotalWallLength.SelectAll();
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiTotalWallLength_Click( object sender, EventArgs e )
+    {
+      uiTotalWallLength.SelectAll();
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiTotalWallLength_Validating( object sender, System.ComponentModel.CancelEventArgs e )
+    {
+      try
+      {
+        m_wall.Length = Convert.ToUInt16( uiTotalWallLength.Text );
+      }
+      catch
+      {
+        ShowErrorMessage( "Please enter a valid length.",
+                          "Invalid Input" );
+        e.Cancel = true;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiSectionDistanceFromOrigin_Enter( object sender, EventArgs e )
+    {
+      uiSectionDistanceFromOrigin.SelectAll();
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiSectionDistanceFromOrigin_Click( object sender, EventArgs e )
+    {
+      uiSectionDistanceFromOrigin.SelectAll();
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiSectionDistanceFromOrigin_Validating( object sender, System.ComponentModel.CancelEventArgs e )
+    {
+      try
+      {
+        if( uiSectionDistanceFromOrigin.Text.Length == 0 )
+        {
+          uiSectionDistanceFromOrigin.Text = "0";
+        }
+
+        Convert.ToUInt16( uiSectionDistanceFromOrigin.Text );
+      }
+      catch
+      {
+        ShowErrorMessage( "Please enter a valid distance.",
+                          "Invalid Input" );
+        e.Cancel = true;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiSectionDistanceFromOrigin_KeyDown( object sender, KeyEventArgs e )
+    {
+      try
+      {
+        if( e.KeyCode == Keys.Enter )
+        {
+          uiAddWallSection_Click( null, null );
+        }
+        else if( e.KeyCode == Keys.Up )
+        {
+          if( uiFeatureType.SelectedIndex > 0 )
+          {
+            uiFeatureType.SelectedIndex--;
+          }
+        }
+        else if( e.KeyCode == Keys.Down )
+        {
+          if( uiFeatureType.SelectedIndex < uiFeatureType.Items.Count - 1 )
+          {
+            uiFeatureType.SelectedIndex++;
+          }
+        }
+        else if( e.KeyCode == Keys.PageUp )
+        {
+          // Find the next feature type up and select it's first feature.
+          if( uiFeatureType.SelectedItem == null )
+          {
+            return;
+          }
+
+          string currentFeatureTypeName =
+            ( uiFeatureType.SelectedItem as WallFeature ).Type;
+          string nextFeatureTypeName = null;
+
+          for( ; uiFeatureType.SelectedIndex > 0; uiFeatureType.SelectedIndex-- )
+          {
+            if( currentFeatureTypeName != ( uiFeatureType.SelectedItem as WallFeature ).Type )
+            {
+              nextFeatureTypeName = ( uiFeatureType.SelectedItem as WallFeature ).Type;
+              break;
+            }
+          }
+
+          for( ; uiFeatureType.SelectedIndex > 0; uiFeatureType.SelectedIndex-- )
+          {
+            if( ( uiFeatureType.SelectedItem as WallFeature ).Type != nextFeatureTypeName )
+            {
+              uiFeatureType.SelectedIndex++;
+              break;
+            }
+          }
+        }
+        else if( e.KeyCode == Keys.PageDown )
+        {
+          // Find the next feature type down and select it's first feature.
+          if( uiFeatureType.SelectedItem == null )
+          {
+            return;
+          }
+
+          string currentFeatureTypeName =
+            ( uiFeatureType.SelectedItem as WallFeature ).Type;
+
+          for( ; uiFeatureType.SelectedIndex < uiFeatureType.Items.Count - 1; uiFeatureType.SelectedIndex++ )
+          {
+            if( currentFeatureTypeName != ( uiFeatureType.SelectedItem as WallFeature ).Type )
+            {
+              break;
+            }
+          }
+        }
+      }
+      catch( Exception ex )
+      {
+        ShowErrorMessage( ex.Message, "Error" );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void PopulateFeatureTypesBox()
+    {
+      foreach( WallFeature f in m_floorPlan.WallFeatureTypes )
+      {
+        uiFeatureType.Items.Add( f );
+      }
+
+      if( uiFeatureType.Items.Count > 0 )
+      {
+        uiFeatureType.SelectedIndex = 0;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiTotalWallLength_KeyDown( object sender, KeyEventArgs e )
+    {
+      if( e.KeyCode == Keys.Enter )
+      {
+        uiSectionDistanceFromOrigin.Focus();
+      }
     }
 
     //-------------------------------------------------------------------------
