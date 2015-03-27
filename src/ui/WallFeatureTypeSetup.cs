@@ -5,66 +5,66 @@ using System.Diagnostics;
 
 namespace Betty
 {
-  public partial class WallSectionGroupSetup : Form
+  public partial class WallSectionTypeSetup : Form
   {
     FloorPlan m_floorPlan = null;
 
     //-------------------------------------------------------------------------
 
-    public WallSectionGroupSetup( FloorPlan floorPlan )
+    public WallSectionTypeSetup( FloorPlan floorPlan )
     {
       Debug.Assert( floorPlan != null );
       m_floorPlan = floorPlan;
 
       InitializeComponent();
-      PopulateGroupSectionsTree();
+      PopulateTypeSectionsTree();
 
       uiUnit.Text = Program.Unit;
     }
 
     //-------------------------------------------------------------------------
 
-    private void PopulateGroupSectionsTree()
+    private void PopulateTypeSectionsTree()
     {
       // Remember what was selected.
-      WallSection selectedItem = null;
+      WallFeature selectedItem = null;
       
-      if( uiGroupsAndSections.SelectedNode != null )
+      if( uiTypesAndFeatures.SelectedNode != null )
       {
-        selectedItem = uiGroupsAndSections.SelectedNode.Tag as WallSection;
+        selectedItem = uiTypesAndFeatures.SelectedNode.Tag as WallFeature;
       }
 
       // Clear the tree.
-      uiGroupsAndSections.Nodes.Clear();
+      uiTypesAndFeatures.Nodes.Clear();
       uiGroupName.Items.Clear();
 
-      // Iterate through the section groups and add each one.
-      foreach( string groupName in m_floorPlan.WallSectionGroupNames )
+      // Iterate through the section types and add each one.
+      foreach( string typeName in m_floorPlan.WallFeatureTypeNames )
       {
-        // Create a node for this group.
-        TreeNode groupNode = uiGroupsAndSections.Nodes.Add( groupName );
+        // Create a node for this type.
+        TreeNode typeNode = uiTypesAndFeatures.Nodes.Add( typeName );
 
-        // Add the name to the groups combobox.
-        uiGroupName.Items.Add( groupName );
+        // Add the name to the types combobox.
+        uiGroupName.Items.Add( typeName );
 
-        // Iterate through this group's sections and add as children to
-        // the group.
-        foreach( WallSection section in m_floorPlan.GetSectionsForGroup( groupName ) )
+        // Iterate through this type's sections and add as children to
+        // the type.
+        foreach( WallFeature section in m_floorPlan.GetFeaturesForType( typeName ) )
         {
           TreeNode node = new TreeNode( section.ToString() );
           node.Tag = section;
 
-          groupNode.Nodes.Add( node );
+          typeNode.Nodes.Add( node );
 
           // Was previously selected? Re-select.
           if( section == selectedItem )
           {
-            uiGroupsAndSections.SelectedNode = node;
+            uiTypesAndFeatures.SelectedNode = node;
           }
         }
       }
 
-      uiGroupsAndSections.ExpandAll();
+      uiTypesAndFeatures.ExpandAll();
     }
 
     //-------------------------------------------------------------------------
@@ -81,10 +81,10 @@ namespace Betty
 
     private void uiAdd_Click( object sender, EventArgs e )
     {
-      // Group name.
+      // Type name.
       if( uiGroupName.Text.Length == 0 )
       {
-        ShowMissingInfoMessage( "Group Name" );
+        ShowMissingInfoMessage( "Type Name" );
         uiGroupName.Focus();
         return;
       }
@@ -128,8 +128,8 @@ namespace Betty
       height = Program.UnitConvertToMm( height );
 
       // Create a new section and try add it to the floor plan.
-      WallSection section =
-        new WallSection( uiGroupName.Text,
+      WallFeature section =
+        new WallFeature( uiGroupName.Text,
                          length,
                          height );
 
@@ -144,7 +144,7 @@ namespace Betty
 
       if( m_floorPlan.AddWallSectionType( section ) )
       {
-        PopulateGroupSectionsTree();
+        PopulateTypeSectionsTree();
       }
     }
 
@@ -154,13 +154,13 @@ namespace Betty
     {
       // The nodes for sections have a 'tag' that is the section object,
       // if the selected node has this - remove the section.
-      if( uiGroupsAndSections.SelectedNode != null &&
-          uiGroupsAndSections.SelectedNode.Tag != null )
+      if( uiTypesAndFeatures.SelectedNode != null &&
+          uiTypesAndFeatures.SelectedNode.Tag != null )
       {
         m_floorPlan.RemoveWallSectionType(
-          uiGroupsAndSections.SelectedNode.Tag as WallSection );
+          uiTypesAndFeatures.SelectedNode.Tag as WallFeature );
 
-        PopulateGroupSectionsTree();
+        PopulateTypeSectionsTree();
       }
     }
 
@@ -169,13 +169,13 @@ namespace Betty
     private void uiPrioritise_Click( object sender, EventArgs e )
     {
       // The nodes for sections have a 'tag' that is the section object.
-      if( uiGroupsAndSections.SelectedNode != null &&
-          uiGroupsAndSections.SelectedNode.Tag != null )
+      if( uiTypesAndFeatures.SelectedNode != null &&
+          uiTypesAndFeatures.SelectedNode.Tag != null )
       {
-        m_floorPlan.PrioritiseWallSectionType(
-          uiGroupsAndSections.SelectedNode.Tag as WallSection );
+        //m_floorPlan.PrioritiseWallSectionType(
+        //  uiGroupsAndSections.SelectedNode.Tag as WallFeature );
 
-        PopulateGroupSectionsTree();
+        PopulateTypeSectionsTree();
       }
     }
 
@@ -184,13 +184,13 @@ namespace Betty
     private void uiDeprioritise_Click( object sender, EventArgs e )
     {
       // The nodes for sections have a 'tag' that is the section object.
-      if( uiGroupsAndSections.SelectedNode != null &&
-          uiGroupsAndSections.SelectedNode.Tag != null )
+      if( uiTypesAndFeatures.SelectedNode != null &&
+          uiTypesAndFeatures.SelectedNode.Tag != null )
       {
         m_floorPlan.DeprioritiseWallSectionType(
-          uiGroupsAndSections.SelectedNode.Tag as WallSection );
+          uiTypesAndFeatures.SelectedNode.Tag as WallFeature );
 
-        PopulateGroupSectionsTree();
+        PopulateTypeSectionsTree();
       }
     }
 

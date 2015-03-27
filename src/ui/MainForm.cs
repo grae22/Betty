@@ -11,7 +11,7 @@ namespace Betty
     private FloorPlan m_floorPlan = new FloorPlan();
     private ushort m_wallTotalLength;
     private Wall m_wall = new Wall();
-    private WallSection m_section = new WallSection( "Unknown", 1000, 0 );
+    private WallFeature m_section = new WallFeature( "Unknown", 1000, 0 );
 
     //-------------------------------------------------------------------------
 
@@ -50,13 +50,11 @@ namespace Betty
       m_wall.Sections.Add( m_section );
       uiWallSections.Items.Add( m_section );
 
-      m_section = new WallSection( "Unknown", 1000, 0 );
+      m_section = new WallFeature( "Unknown", 1000, 0 );
 
-      uiWallSectionLength.Text = "";
-      uiWallSectionLength.Focus();
+      uiSectionDistanceFromOrigin.Text = "";
+      uiSectionDistanceFromOrigin.Focus();
       uiAddWallSection.Enabled = false;
-
-      UpdateUsedRemainingStat();
     }
 
     //-------------------------------------------------------------------------
@@ -65,15 +63,15 @@ namespace Betty
     {
       try
       {
-        m_wallTotalLength = Convert.ToUInt16( uiWallTotalLength.Text );
+        m_wallTotalLength = Convert.ToUInt16( uiTotalWallLength.Text );
 
-        uiWallTotalLength.BackColor = Color.White;
+        uiTotalWallLength.BackColor = Color.White;
       }
       catch
       {
         m_wallTotalLength = 0;
 
-        uiWallTotalLength.BackColor = Color.Red;
+        uiTotalWallLength.BackColor = Color.Red;
       }
     }
 
@@ -88,36 +86,36 @@ namespace Betty
 
     private void uiWallSectionLength_Enter( object sender, EventArgs e )
     {
-      uiWallSectionLength.SelectAll();
+      uiSectionDistanceFromOrigin.SelectAll();
     }
 
     //-------------------------------------------------------------------------
 
     private void uiWallSectionLength_TextChanged( object sender, EventArgs e )
     {
-      if( uiWallSectionLength.Text == "" )
+      if( uiSectionDistanceFromOrigin.Text == "" )
       {
-        uiWallSectionLength.BackColor = Color.White;
+        uiSectionDistanceFromOrigin.BackColor = Color.White;
         uiAddWallSection.Enabled = false;
         return;
       }
 
       try
       {
-        m_section.Length = Convert.ToUInt16( uiWallSectionLength.Text );
+        m_section.Length = Convert.ToUInt16( uiSectionDistanceFromOrigin.Text );
 
         if( m_section.Length == 0 )
         {
           throw new Exception();
         }
 
-        uiWallSectionLength.BackColor = Color.White;
+        uiSectionDistanceFromOrigin.BackColor = Color.White;
 
         uiAddWallSection.Enabled = true;
       }
       catch
       {
-        uiWallSectionLength.BackColor = Color.Red;
+        uiSectionDistanceFromOrigin.BackColor = Color.Red;
 
         uiAddWallSection.Enabled = false;
       }
@@ -156,26 +154,8 @@ namespace Betty
         return;
       }
 
-      m_wall.Sections.Remove( uiWallSections.SelectedItem as WallSection );
+      m_wall.Sections.Remove( uiWallSections.SelectedItem as WallFeature );
       uiWallSections.Items.Remove( uiWallSections.SelectedItem );
-
-      UpdateUsedRemainingStat();
-    }
-
-    //-------------------------------------------------------------------------
-
-    private void UpdateUsedRemainingStat()
-    {
-      if( m_wallTotalLength > 0 )
-      {
-        int remainingLength = ( (int)m_wallTotalLength - (int)m_wall.Length );
-        uiWallRemainingLength.Text = m_wall.Length.ToString() + " / " + ( (int)m_wallTotalLength - (int)m_wall.Length ).ToString();
-        uiWallRemainingLength.BackColor = ( remainingLength < 0 ? Color.Red : Color.White );
-      }
-      else
-      {
-        uiWallRemainingLength.Text = "";
-      }
     }
 
     //-------------------------------------------------------------------------
@@ -186,7 +166,7 @@ namespace Betty
           uiWallSections.SelectedIndex > 0 )
       {
         int index = uiWallSections.SelectedIndex;
-        WallSection section = uiWallSections.SelectedItem as WallSection;
+        WallFeature section = uiWallSections.SelectedItem as WallFeature;
         uiWallSections.Items.RemoveAt( index );
         uiWallSections.Items.Insert( index - 1, section );
         uiWallSections.SelectedItem = section;
@@ -201,7 +181,7 @@ namespace Betty
           uiWallSections.SelectedIndex < uiWallSections.Items.Count - 1 )
       {
         int index = uiWallSections.SelectedIndex;
-        WallSection section = uiWallSections.SelectedItem as WallSection;
+        WallFeature section = uiWallSections.SelectedItem as WallFeature;
         uiWallSections.Items.RemoveAt( index );
         uiWallSections.Items.Insert( index + 1, section );
         uiWallSections.SelectedItem = section;
@@ -212,7 +192,7 @@ namespace Betty
 
     private void uiSetupWallSectionGroups_Click( object sender, EventArgs e )
     {
-      WallSectionGroupSetup dlg = new WallSectionGroupSetup( m_floorPlan );
+      WallSectionTypeSetup dlg = new WallSectionTypeSetup( m_floorPlan );
       dlg.ShowDialog( this );
     }
 

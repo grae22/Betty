@@ -4,35 +4,35 @@ using System.Xml;
 
 namespace Betty
 {
-  public class WallSection
+  public class WallFeature
   {
-    private string m_group = "Unknown";
+    private string m_type = "Unknown";
     private ushort m_length;        // mm
     private ushort m_height;        // mm
 
     //-------------------------------------------------------------------------
 
-    public WallSection( string group,
+    public WallFeature( string type,
                         ushort length,
                         ushort height )
     {
-      m_group = group;
+      m_type = type;
       m_length = length;
       m_height = height;
     }
 
     //-------------------------------------------------------------------------
 
-    public string Group
+    public string Type
     {
       get
       {
-        return m_group;
+        return m_type;
       }
 
       set
       {
-        m_group = value;
+        m_type = value;
       }
     }
 
@@ -97,7 +97,7 @@ namespace Betty
     public override string ToString()
     {
       // Length & height (if any).
-      string s = m_group + " [ " + LengthForDisplay;
+      string s = m_type + " [ " + LengthForDisplay;
 
       if( m_height > 0 )
       {
@@ -113,11 +113,11 @@ namespace Betty
 
     public XmlElement ToXml( XmlDocument doc )
     {
-      XmlElement wallSection = doc.CreateElement( "WallSection" );
+      XmlElement wallSection = doc.CreateElement( "WallFeature" );
       
-      XmlElement group = doc.CreateElement( "Group" );
-      wallSection.AppendChild( group );
-      group.InnerText = m_group;
+      XmlElement type = doc.CreateElement( "Type" );
+      wallSection.AppendChild( type );
+      type.InnerText = m_type;
       
       XmlElement length = doc.CreateElement( "Length" );
       wallSection.AppendChild( length );
@@ -132,15 +132,15 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    public static WallSection CreateFromXml( XmlElement wallSectionXml )
+    public static WallFeature CreateFromXml( XmlElement wallSectionXml )
     {
       try
       {
-        XmlElement groupXml = wallSectionXml.SelectSingleNode( "Group" ) as XmlElement;
+        XmlElement typeXml = wallSectionXml.SelectSingleNode( "Type" ) as XmlElement;
         XmlElement lengthXml = wallSectionXml.SelectSingleNode( "Length" ) as XmlElement;
         XmlElement heightXml = wallSectionXml.SelectSingleNode( "Height" ) as XmlElement;
 
-        return new WallSection( groupXml.InnerText,
+        return new WallFeature( typeXml.InnerText,
                                 Convert.ToUInt16( lengthXml.InnerText ),
                                 Convert.ToUInt16( heightXml.InnerText ) );
       }

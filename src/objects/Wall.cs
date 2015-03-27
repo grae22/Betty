@@ -5,11 +5,11 @@ namespace Betty
 {
   class Wall
   {
-    private List< WallSection > m_sections = new List< WallSection >();
+    private List< WallFeature > m_sections = new List< WallFeature >();
 
     //-------------------------------------------------------------------------
 
-    public List< WallSection > Sections
+    public List< WallFeature > Sections
     {
       get
       {
@@ -30,7 +30,7 @@ namespace Betty
       {
         ushort length = 0;
 
-        foreach( WallSection section in m_sections )
+        foreach( WallFeature section in m_sections )
         {
           length += section.Length;
         }

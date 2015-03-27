@@ -7,40 +7,23 @@ namespace Betty
   public class FloorPlan
   {
     private List< Wall > m_walls = new List< Wall >();
-    private Dictionary< string, List< WallSection > > m_wallSectionTypeGroups = new Dictionary< string, List<WallSection > >();
+    private Dictionary< string, List< WallFeature > > m_wallFeatureTypes = new Dictionary< string, List<WallFeature > >();
 
     //-------------------------------------------------------------------------
 
     public FloorPlan()
     {
-      //List< WallSection > list = new List< WallSection >();
-      //WallSection section = new WallSection( "Shutter", 1000, 1000 );
-      //list.Add( section );
-      //section = new WallSection( "Shutter", 2000, 1000 );
-      //list.Add( section );
-      //m_wallSectionTypeGroups.Add( "Shutter", list );
-
-      //list = new List<WallSection>();
-      //section = new WallSection( "Door", 800, 1000 );
-      //list.Add( section );
-      //section = new WallSection( "Door", 1200, 1000 );
-      //list.Add( section );
-      //m_wallSectionTypeGroups.Add( "Door", list );
-
-      //list = new List<WallSection>();
-      //section = new WallSection( "Window", 2000, 500 );
-      //list.Add( section );
-      //m_wallSectionTypeGroups.Add( "Window", list );
+      
     }
 
     //-------------------------------------------------------------------------
 
-    public List< string > WallSectionGroupNames
+    public List< string > WallFeatureTypeNames
     {
       get
       {
         List< string > names = new List< string >();
-        foreach( string s in m_wallSectionTypeGroups.Keys )
+        foreach( string s in m_wallFeatureTypes.Keys )
         {
           names.Add( s );
         }
@@ -50,13 +33,13 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    // Returns null if group not found.
+    // Returns null if type not found.
 
-    public List< WallSection > GetSectionsForGroup( string name )
+    public List< WallFeature > GetFeaturesForType( string name )
     {
-      if( m_wallSectionTypeGroups.ContainsKey( name ) )
+      if( m_wallFeatureTypes.ContainsKey( name ) )
       {
-        return m_wallSectionTypeGroups[ name ];
+        return m_wallFeatureTypes[ name ];
       }
 
       return null;
@@ -64,17 +47,17 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    public WallSection GetSectionFromDescription( string description )
+    public WallFeature GetFeatureFromDescription( string description )
     {
-      // Iterate through each group.
-      foreach( List< WallSection > groupSections in m_wallSectionTypeGroups.Values )
+      // Iterate through each type.
+      foreach( List< WallFeature > typeFeatures in m_wallFeatureTypes.Values )
       {
-        // Iterate throught the group's sections.
-        foreach( WallSection section in groupSections )
+        // Iterate throught the type's features.
+        foreach( WallFeature feature in typeFeatures )
         {
-          if( section.ToString() == description )
+          if( feature.ToString() == description )
           {
-            return section;
+            return feature;
           }
         }
       }
@@ -84,24 +67,24 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    public bool AddWallSectionType( WallSection sectionType )
+    public bool AddWallFeatureType( WallFeature featureType )
     {
       // Already exists?
-      if( GetSectionFromDescription( sectionType.ToString() ) != null )
+      if( GetFeatureFromDescription( featureType.ToString() ) != null )
       {
         return false;
       }
 
-      // Group exists already?
-      if( m_wallSectionTypeGroups.ContainsKey( sectionType.Group ) )
+      // Type exists already?
+      if( m_wallFeatureTypes.ContainsKey( featureType.Type ) )
       {
-        m_wallSectionTypeGroups[ sectionType.Group ].Add( sectionType );
+        m_wallFeatureTypes[ featureType.Type ].Add( featureType );
       }
-      else  // Group doesn't exist, add it.
+      else  // Type doesn't exist, add it.
       {
-        List< WallSection > list = new List< WallSection >();
-        list.Add( sectionType );
-        m_wallSectionTypeGroups.Add( sectionType.Group, list );
+        List< WallFeature > list = new List< WallFeature >();
+        list.Add( featureType );
+        m_wallFeatureTypes.Add( featureType.Type, list );
       }
 
       return true;
@@ -109,22 +92,22 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    public bool RemoveWallSectionType( WallSection sectionTypeToRemove )
+    public bool RemoveWallFeatureType( WallFeature featureTypeToRemove )
     {
-      // Iterate through each group.
-      foreach( List< WallSection > groupSections in m_wallSectionTypeGroups.Values )
+      // Iterate through each type.
+      foreach( List< WallFeature > typeFeatures in m_wallFeatureTypes.Values )
       {
-        // Iterate throught the group's sections.
-        foreach( WallSection section in groupSections )
+        // Iterate throught the type's features.
+        foreach( WallFeature feature in typeFeatures )
         {
-          if( section == sectionTypeToRemove )
+          if( feature == featureTypeToRemove )
           {
-            groupSections.Remove( sectionTypeToRemove );
+            typeFeatures.Remove( featureTypeToRemove );
 
-            // Group is now empty? Remove it from the map.
-            if( groupSections.Count == 0 )
+            // Type is now empty? Remove it from the map.
+            if( typeFeatures.Count == 0 )
             {
-              m_wallSectionTypeGroups.Remove( sectionTypeToRemove.Group );
+              m_wallFeatureTypes.Remove( featureTypeToRemove.Type );
             }
 
             return true;
@@ -136,11 +119,11 @@ namespace Betty
     }
 
     //-------------------------------------------------------------------------
-
-    public void PrioritiseWallSectionType( WallSection sectionToPrioritise )
+/*
+    public void PrioritiseWallSectionType( WallFeature sectionToPrioritise )
     {
       // Iterate through each group.
-      foreach( List< WallSection > groupSections in m_wallSectionTypeGroups.Values )
+      foreach( List< WallFeature > groupSections in m_wallSectionTypeGroups.Values )
       {
         // Iterate throught the group's sections.
         // Start at 2nd item since if the section is already the 1st then
@@ -149,20 +132,20 @@ namespace Betty
         {
           if( groupSections[ i ] == sectionToPrioritise )
           {
-            WallSection tmp = groupSections[ i - 1 ];
+            WallFeature tmp = groupSections[ i - 1 ];
             groupSections[ i - 1 ] = groupSections[ i ];
             groupSections[ i ] = tmp;
           }
         }
       }
     }
-
+*/
     //-------------------------------------------------------------------------
-
-    public void DeprioritiseWallSectionType( WallSection sectionToPrioritise )
+/*
+    public void DeprioritiseWallSectionType( WallFeature sectionToPrioritise )
     {
       // Iterate through each group.
-      foreach( List< WallSection > groupSections in m_wallSectionTypeGroups.Values )
+      foreach( List< WallFeature > groupSections in m_wallSectionTypeGroups.Values )
       {
         // Iterate throught the group's sections.
         // Stop at 1 before the end since if the section is already the last
@@ -171,14 +154,14 @@ namespace Betty
         {
           if( groupSections[ i ] == sectionToPrioritise )
           {
-            WallSection tmp = groupSections[ i + 1 ];
+            WallFeature tmp = groupSections[ i + 1 ];
             groupSections[ i + 1 ] = groupSections[ i ];
             groupSections[ i ] = tmp;
           }
         }
       }
     }
-
+*/
     //-------------------------------------------------------------------------
 
     public XmlElement ToXml( XmlDocument doc )
@@ -186,15 +169,15 @@ namespace Betty
       //-- Floor plan element.
       XmlElement floorPlan = doc.CreateElement( "FloorPlan" );
 
-      //-- Wall section types.
-      XmlElement wallSectionTypeCollection = doc.CreateElement( "WallSectionTypeCollection" );
-      floorPlan.AppendChild( wallSectionTypeCollection );
+      //-- Wall feature types.
+      XmlElement wallFeatureTypeCollection = doc.CreateElement( "WallFeatureTypeCollection" );
+      floorPlan.AppendChild( wallFeatureTypeCollection );
       
-      foreach( List< WallSection > groupSections in m_wallSectionTypeGroups.Values )
+      foreach( List< WallFeature > typeFeatures in m_wallFeatureTypes.Values )
       {
-        foreach( WallSection section in groupSections )
+        foreach( WallFeature feature in typeFeatures )
         {
-          wallSectionTypeCollection.AppendChild( section.ToXml( doc ) );
+          wallFeatureTypeCollection.AppendChild( feature.ToXml( doc ) );
         }
       }
 
@@ -207,19 +190,19 @@ namespace Betty
     {
       FloorPlan newFloorPlan = new FloorPlan();
 
-      //-- Wall section types.
-      XmlElement wallSectionTypeCollection =
-        floorPlanXml.SelectSingleNode( "./WallSectionTypeCollection" ) as XmlElement;
+      //-- Wall feature types.
+      XmlElement wallFeatureTypeCollection =
+        floorPlanXml.SelectSingleNode( "./WallFeatureTypeCollection" ) as XmlElement;
 
-      XmlNodeList wallSections = wallSectionTypeCollection.SelectNodes( "./WallSection" );
+      XmlNodeList wallFeatures = wallFeatureTypeCollection.SelectNodes( "./WallFeature" );
 
-      foreach( XmlElement sectionXml in wallSectionTypeCollection )
+      foreach( XmlElement featureXml in wallFeatureTypeCollection )
       {
-        WallSection newSection = WallSection.CreateFromXml( sectionXml );
+        WallFeature newFeature = WallFeature.CreateFromXml( featureXml );
 
-        if( newSection != null )
+        if( newFeature != null )
         {
-          newFloorPlan.AddWallSectionType( newSection );
+          newFloorPlan.AddWallFeatureType( newFeature );
         }
       }
 

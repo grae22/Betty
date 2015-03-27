@@ -1,6 +1,6 @@
 ﻿namespace Betty
 {
-  partial class WallSectionGroupSetup
+  partial class WallSectionTypeSetup
   {
     /// <summary>
     /// Required designer variable.
@@ -28,7 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.uiGroupsAndSections = new System.Windows.Forms.TreeView();
+      this.uiTypesAndFeatures = new System.Windows.Forms.TreeView();
       this.label1 = new System.Windows.Forms.Label();
       this.uiLength = new System.Windows.Forms.TextBox();
       this.label2 = new System.Windows.Forms.Label();
@@ -43,24 +43,24 @@
       this.uiGroupName = new System.Windows.Forms.ComboBox();
       this.SuspendLayout();
       // 
-      // uiGroupsAndSections
+      // uiTypesAndFeatures
       // 
-      this.uiGroupsAndSections.HideSelection = false;
-      this.uiGroupsAndSections.Location = new System.Drawing.Point(12, 12);
-      this.uiGroupsAndSections.Name = "uiGroupsAndSections";
-      this.uiGroupsAndSections.ShowPlusMinus = false;
-      this.uiGroupsAndSections.ShowRootLines = false;
-      this.uiGroupsAndSections.Size = new System.Drawing.Size(266, 452);
-      this.uiGroupsAndSections.TabIndex = 0;
+      this.uiTypesAndFeatures.HideSelection = false;
+      this.uiTypesAndFeatures.Location = new System.Drawing.Point(12, 12);
+      this.uiTypesAndFeatures.Name = "uiTypesAndFeatures";
+      this.uiTypesAndFeatures.ShowPlusMinus = false;
+      this.uiTypesAndFeatures.ShowRootLines = false;
+      this.uiTypesAndFeatures.Size = new System.Drawing.Size(266, 452);
+      this.uiTypesAndFeatures.TabIndex = 0;
       // 
       // label1
       // 
       this.label1.AutoSize = true;
       this.label1.Location = new System.Drawing.Point(284, 12);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(70, 13);
+      this.label1.Size = new System.Drawing.Size(65, 13);
       this.label1.TabIndex = 18;
-      this.label1.Text = "Group Name:";
+      this.label1.Text = "Type Name:";
       // 
       // uiLength
       // 
@@ -165,7 +165,7 @@
       this.uiGroupName.Size = new System.Drawing.Size(161, 21);
       this.uiGroupName.TabIndex = 1;
       // 
-      // WallSectionGroupSetup
+      // WallSectionTypeSetup
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -184,11 +184,11 @@
       this.Controls.Add(this.uiLength);
       this.Controls.Add(this.label2);
       this.Controls.Add(this.label1);
-      this.Controls.Add(this.uiGroupsAndSections);
+      this.Controls.Add(this.uiTypesAndFeatures);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-      this.Name = "WallSectionGroupSetup";
+      this.Name = "WallSectionTypeSetup";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-      this.Text = "Wall Section Groups Setup";
+      this.Text = "Wall Feature Types";
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -196,7 +196,7 @@
 
     #endregion
 
-    private System.Windows.Forms.TreeView uiGroupsAndSections;
+    private System.Windows.Forms.TreeView uiTypesAndFeatures;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.TextBox uiLength;
     private System.Windows.Forms.Label label2;
