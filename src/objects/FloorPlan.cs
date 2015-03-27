@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml;
+using System.Diagnostics;
 
 namespace Betty
 {
@@ -119,49 +120,59 @@ namespace Betty
     }
 
     //-------------------------------------------------------------------------
-/*
-    public void PrioritiseWallSectionType( WallFeature sectionToPrioritise )
+
+    public void AddWall( Wall wall )
     {
-      // Iterate through each group.
-      foreach( List< WallFeature > groupSections in m_wallSectionTypeGroups.Values )
+      // Null?
+      if( wall == null )
       {
-        // Iterate throught the group's sections.
-        // Start at 2nd item since if the section is already the 1st then
-        // we can't prioritise it further.
-        for( int i = 1; i < groupSections.Count; i++ )
-        {
-          if( groupSections[ i ] == sectionToPrioritise )
-          {
-            WallFeature tmp = groupSections[ i - 1 ];
-            groupSections[ i - 1 ] = groupSections[ i ];
-            groupSections[ i ] = tmp;
-          }
-        }
+        Debug.Assert( false );
+        return;
       }
+      
+      // No name?
+      wall.Name = wall.Name.Trim();
+
+      if( wall.Name.Length == 0 )
+      {
+        throw new Exception( "Wall must have a name." );
+      }
+
+      // Already have a wall with this wall's name?
+      if( GetWall( wall.Name ) != null )
+      {
+        throw new Exception( "Wall already exists with name '" + wall.Name + "'." );
+      }
+
+      // All is good, add it.
+      m_walls.Add( wall );
     }
-*/
+
     //-------------------------------------------------------------------------
-/*
-    public void DeprioritiseWallSectionType( WallFeature sectionToPrioritise )
+
+    public Wall GetWall( string name )
     {
-      // Iterate through each group.
-      foreach( List< WallFeature > groupSections in m_wallSectionTypeGroups.Values )
+      foreach( Wall wall in m_walls )
       {
-        // Iterate throught the group's sections.
-        // Stop at 1 before the end since if the section is already the last
-        // then we can't deprioritise it further.
-        for( int i = 0; i < groupSections.Count - 1; i++ )
+        if( wall.Name == name )
         {
-          if( groupSections[ i ] == sectionToPrioritise )
-          {
-            WallFeature tmp = groupSections[ i + 1 ];
-            groupSections[ i + 1 ] = groupSections[ i ];
-            groupSections[ i ] = tmp;
-          }
+          return wall;
         }
       }
+
+      return null;
     }
-*/
+
+    //-------------------------------------------------------------------------
+
+    public List< Wall > Walls
+    {
+      get
+      {
+        return m_walls;
+      }
+    }
+
     //-------------------------------------------------------------------------
 
     public XmlElement ToXml( XmlDocument doc )
