@@ -10,7 +10,7 @@ namespace Betty
   {
     private FloorPlan m_floorPlan = new FloorPlan();
     private ushort m_wallTotalLength;
-    private Wall m_wall = new Wall();
+    private Wall m_wall = null;
     private WallFeature m_section = new WallFeature( "Unknown", 1000, 0 );
 
     //-------------------------------------------------------------------------
@@ -18,9 +18,6 @@ namespace Betty
     public MainForm( string floorPlanFilename )
     {
       InitializeComponent();
-
-      uiSectionType.Text = uiSectionType.Items[ 0 ] as string;
-      uiAddWallSection.Enabled = false;
 
       //-- Load floor plan from xml doc.
       try
@@ -41,6 +38,13 @@ namespace Betty
                          MessageBoxButtons.OK,
                          MessageBoxIcon.Error );
       }
+
+      //-- Init some UI components.
+      uiSectionType.Text = uiSectionType.Items[ 0 ] as string;
+      uiAddWallSection.Enabled = false;
+      
+      PopulateWallList();
+      RefreshWallInfoEnabledState();
     }
 
     //-------------------------------------------------------------------------
@@ -192,7 +196,7 @@ namespace Betty
 
     private void uiSetupWallSectionGroups_Click( object sender, EventArgs e )
     {
-      WallSectionTypeSetup dlg = new WallSectionTypeSetup( m_floorPlan );
+      WallFeatureTypeSetup dlg = new WallFeatureTypeSetup( m_floorPlan );
       dlg.ShowDialog( this );
     }
 
@@ -201,6 +205,90 @@ namespace Betty
     private void uiSave_Click( object sender, EventArgs e )
     {
       m_floorPlan.WriteToFile();
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void RefreshWallInfoEnabledState()
+    {
+      uiWallInfo.Enabled = ( m_wall != null );
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void PopulateWallList()
+    {
+      uiWalls.Items.Clear();
+
+      foreach( Wall wall in m_floorPlan.Walls )
+      {
+        uiWalls.Items.Add( wall );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void PopulateWallInfo()
+    {
+      if( m_wall == null )
+      {
+        uiWallName.Text = "";
+        uiTotalWallLength.Text = "";
+        uiSectionDistanceFromOrigin.Text = "";
+
+        return;
+      }
+
+      uiWallName.Text = m_wall.Name;
+      uiTotalWallLength.Text = m_wall.Length.ToString();
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiAddWall_Click( object sender, EventArgs e )
+    {
+      try
+      {
+        // Find a unique name.
+        string name = "New wall";
+        ushort newWallNumber = 2;
+
+        while( m_floorPlan.GetWall( name ) != null )
+        {
+          name = "New wall " + newWallNumber.ToString();
+          newWallNumber++;
+        }
+
+        // Create a new wall object & add to the floorplan.
+        m_wall = new Wall( name );
+
+        m_floorPlan.AddWall( m_wall );
+
+        // Refresh UI.
+        PopulateWallList();
+
+        uiWalls.SelectedItem = m_wall;
+      }
+      catch( Exception ex )
+      {
+        MessageBox.Show( ex.Message,
+                         "Error",
+                         MessageBoxButtons.OK,
+                         MessageBoxIcon.Error );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiWalls_SelectedIndexChanged( object sender, EventArgs e )
+    {
+      m_wall = uiWalls.SelectedItem as Wall;
+
+      RefreshWallInfoEnabledState();
+      PopulateWallInfo();
+
+      uiWallName.Focus();
+      uiWallName.SelectAll();
     }
 
     //-------------------------------------------------------------------------

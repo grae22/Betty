@@ -3,9 +3,32 @@ using System.Collections.Generic;
 
 namespace Betty
 {
-  class Wall
+  public class Wall
   {
+    private string m_name = "Unknown";
     private List< WallFeature > m_sections = new List< WallFeature >();
+
+    //-------------------------------------------------------------------------
+
+    public Wall( string name )
+    {
+      m_name = name;
+    }
+
+    //-------------------------------------------------------------------------
+
+    public string Name
+    {
+      get
+      {
+        return m_name;
+      }
+
+      set
+      {
+        m_name = value;
+      }
+    }
 
     //-------------------------------------------------------------------------
 
@@ -37,6 +60,13 @@ namespace Betty
 
         return length;
       }
+    }
+
+    //-------------------------------------------------------------------------
+
+    public override string ToString()
+    {
+      return m_name;
     }
 
     //-------------------------------------------------------------------------

@@ -28,7 +28,9 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.groupBox2 = new System.Windows.Forms.GroupBox();
+      this.uiWallInfo = new System.Windows.Forms.GroupBox();
+      this.uiWallName = new System.Windows.Forms.TextBox();
+      this.label6 = new System.Windows.Forms.Label();
       this.uiSectionMoveDown = new System.Windows.Forms.Button();
       this.uiSectionMoveUp = new System.Windows.Forms.Button();
       this.uiRemoveWallSection = new System.Windows.Forms.Button();
@@ -46,39 +48,54 @@
       this.uiSave = new System.Windows.Forms.Button();
       this.uiSetupWallSectionGroups = new System.Windows.Forms.Button();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
-      this.uiWalls = new System.Windows.Forms.ListBox();
-      this.uiAddWall = new System.Windows.Forms.Button();
       this.uiRemoveWall = new System.Windows.Forms.Button();
-      this.uiWallName = new System.Windows.Forms.TextBox();
-      this.label6 = new System.Windows.Forms.Label();
-      this.groupBox2.SuspendLayout();
+      this.uiAddWall = new System.Windows.Forms.Button();
+      this.uiWalls = new System.Windows.Forms.ListBox();
+      this.uiWallInfo.SuspendLayout();
       this.groupBox1.SuspendLayout();
       this.groupBox3.SuspendLayout();
       this.SuspendLayout();
       // 
-      // groupBox2
+      // uiWallInfo
       // 
-      this.groupBox2.Controls.Add(this.uiWallName);
-      this.groupBox2.Controls.Add(this.label6);
-      this.groupBox2.Controls.Add(this.uiSectionMoveDown);
-      this.groupBox2.Controls.Add(this.uiSectionMoveUp);
-      this.groupBox2.Controls.Add(this.uiRemoveWallSection);
-      this.groupBox2.Controls.Add(this.uiWallSections);
-      this.groupBox2.Controls.Add(this.uiAddWallSection);
-      this.groupBox2.Controls.Add(this.label5);
-      this.groupBox2.Controls.Add(this.uiTotalWallLength);
-      this.groupBox2.Controls.Add(this.label4);
-      this.groupBox2.Controls.Add(this.label3);
-      this.groupBox2.Controls.Add(this.uiSectionDistanceFromOrigin);
-      this.groupBox2.Controls.Add(this.label2);
-      this.groupBox2.Controls.Add(this.uiSectionType);
-      this.groupBox2.Controls.Add(this.label1);
-      this.groupBox2.Location = new System.Drawing.Point(331, 115);
-      this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(384, 326);
-      this.groupBox2.TabIndex = 1;
-      this.groupBox2.TabStop = false;
-      this.groupBox2.Text = "Wall Info:";
+      this.uiWallInfo.Controls.Add(this.uiWallName);
+      this.uiWallInfo.Controls.Add(this.label6);
+      this.uiWallInfo.Controls.Add(this.uiSectionMoveDown);
+      this.uiWallInfo.Controls.Add(this.uiSectionMoveUp);
+      this.uiWallInfo.Controls.Add(this.uiRemoveWallSection);
+      this.uiWallInfo.Controls.Add(this.uiWallSections);
+      this.uiWallInfo.Controls.Add(this.uiAddWallSection);
+      this.uiWallInfo.Controls.Add(this.label5);
+      this.uiWallInfo.Controls.Add(this.uiTotalWallLength);
+      this.uiWallInfo.Controls.Add(this.label4);
+      this.uiWallInfo.Controls.Add(this.label3);
+      this.uiWallInfo.Controls.Add(this.uiSectionDistanceFromOrigin);
+      this.uiWallInfo.Controls.Add(this.label2);
+      this.uiWallInfo.Controls.Add(this.uiSectionType);
+      this.uiWallInfo.Controls.Add(this.label1);
+      this.uiWallInfo.Location = new System.Drawing.Point(331, 115);
+      this.uiWallInfo.Name = "uiWallInfo";
+      this.uiWallInfo.Size = new System.Drawing.Size(384, 326);
+      this.uiWallInfo.TabIndex = 1;
+      this.uiWallInfo.TabStop = false;
+      this.uiWallInfo.Text = "Wall Info:";
+      // 
+      // uiWallName
+      // 
+      this.uiWallName.Location = new System.Drawing.Point(59, 27);
+      this.uiWallName.Name = "uiWallName";
+      this.uiWallName.Size = new System.Drawing.Size(163, 20);
+      this.uiWallName.TabIndex = 16;
+      this.uiWallName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      // 
+      // label6
+      // 
+      this.label6.AutoSize = true;
+      this.label6.Location = new System.Drawing.Point(15, 30);
+      this.label6.Name = "label6";
+      this.label6.Size = new System.Drawing.Size(38, 13);
+      this.label6.TabIndex = 17;
+      this.label6.Text = "Name:";
       // 
       // uiSectionMoveDown
       // 
@@ -250,23 +267,6 @@
       this.groupBox3.TabStop = false;
       this.groupBox3.Text = "Walls:";
       // 
-      // uiWalls
-      // 
-      this.uiWalls.FormattingEnabled = true;
-      this.uiWalls.Location = new System.Drawing.Point(18, 27);
-      this.uiWalls.Name = "uiWalls";
-      this.uiWalls.Size = new System.Drawing.Size(273, 251);
-      this.uiWalls.TabIndex = 0;
-      // 
-      // uiAddWall
-      // 
-      this.uiAddWall.Location = new System.Drawing.Point(159, 284);
-      this.uiAddWall.Name = "uiAddWall";
-      this.uiAddWall.Size = new System.Drawing.Size(63, 24);
-      this.uiAddWall.TabIndex = 15;
-      this.uiAddWall.Text = "Add";
-      this.uiAddWall.UseVisualStyleBackColor = true;
-      // 
       // uiRemoveWall
       // 
       this.uiRemoveWall.Location = new System.Drawing.Point(228, 284);
@@ -276,22 +276,24 @@
       this.uiRemoveWall.Text = "Remove";
       this.uiRemoveWall.UseVisualStyleBackColor = true;
       // 
-      // uiWallName
+      // uiAddWall
       // 
-      this.uiWallName.Location = new System.Drawing.Point(59, 27);
-      this.uiWallName.Name = "uiWallName";
-      this.uiWallName.Size = new System.Drawing.Size(163, 20);
-      this.uiWallName.TabIndex = 16;
-      this.uiWallName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.uiAddWall.Location = new System.Drawing.Point(159, 284);
+      this.uiAddWall.Name = "uiAddWall";
+      this.uiAddWall.Size = new System.Drawing.Size(63, 24);
+      this.uiAddWall.TabIndex = 15;
+      this.uiAddWall.Text = "Add";
+      this.uiAddWall.UseVisualStyleBackColor = true;
+      this.uiAddWall.Click += new System.EventHandler(this.uiAddWall_Click);
       // 
-      // label6
+      // uiWalls
       // 
-      this.label6.AutoSize = true;
-      this.label6.Location = new System.Drawing.Point(15, 30);
-      this.label6.Name = "label6";
-      this.label6.Size = new System.Drawing.Size(38, 13);
-      this.label6.TabIndex = 17;
-      this.label6.Text = "Name:";
+      this.uiWalls.FormattingEnabled = true;
+      this.uiWalls.Location = new System.Drawing.Point(18, 27);
+      this.uiWalls.Name = "uiWalls";
+      this.uiWalls.Size = new System.Drawing.Size(273, 251);
+      this.uiWalls.TabIndex = 0;
+      this.uiWalls.SelectedIndexChanged += new System.EventHandler(this.uiWalls_SelectedIndexChanged);
       // 
       // MainForm
       // 
@@ -300,14 +302,14 @@
       this.ClientSize = new System.Drawing.Size(734, 453);
       this.Controls.Add(this.groupBox3);
       this.Controls.Add(this.groupBox1);
-      this.Controls.Add(this.groupBox2);
+      this.Controls.Add(this.uiWallInfo);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.MaximizeBox = false;
       this.Name = "MainForm";
       this.Padding = new System.Windows.Forms.Padding(5);
       this.Text = "Betty";
-      this.groupBox2.ResumeLayout(false);
-      this.groupBox2.PerformLayout();
+      this.uiWallInfo.ResumeLayout(false);
+      this.uiWallInfo.PerformLayout();
       this.groupBox1.ResumeLayout(false);
       this.groupBox3.ResumeLayout(false);
       this.ResumeLayout(false);
@@ -316,7 +318,7 @@
 
     #endregion
 
-    private System.Windows.Forms.GroupBox groupBox2;
+    private System.Windows.Forms.GroupBox uiWallInfo;
     private System.Windows.Forms.ComboBox uiSectionType;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Label label2;

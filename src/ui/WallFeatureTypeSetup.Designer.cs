@@ -1,6 +1,6 @@
 ﻿namespace Betty
 {
-  partial class WallSectionTypeSetup
+  partial class WallFeatureTypeSetup
   {
     /// <summary>
     /// Required designer variable.
@@ -37,8 +37,6 @@
       this.label3 = new System.Windows.Forms.Label();
       this.uiAdd = new System.Windows.Forms.Button();
       this.uiRemove = new System.Windows.Forms.Button();
-      this.uiPrioritise = new System.Windows.Forms.Button();
-      this.uiDeprioritise = new System.Windows.Forms.Button();
       this.uiClose = new System.Windows.Forms.Button();
       this.uiGroupName = new System.Windows.Forms.ComboBox();
       this.SuspendLayout();
@@ -107,9 +105,9 @@
       // 
       // uiAdd
       // 
-      this.uiAdd.Location = new System.Drawing.Point(330, 181);
+      this.uiAdd.Location = new System.Drawing.Point(287, 117);
       this.uiAdd.Name = "uiAdd";
-      this.uiAdd.Size = new System.Drawing.Size(75, 23);
+      this.uiAdd.Size = new System.Drawing.Size(161, 23);
       this.uiAdd.TabIndex = 4;
       this.uiAdd.Text = "Add";
       this.uiAdd.UseVisualStyleBackColor = true;
@@ -117,33 +115,13 @@
       // 
       // uiRemove
       // 
-      this.uiRemove.Location = new System.Drawing.Point(330, 210);
+      this.uiRemove.Location = new System.Drawing.Point(287, 146);
       this.uiRemove.Name = "uiRemove";
-      this.uiRemove.Size = new System.Drawing.Size(75, 23);
+      this.uiRemove.Size = new System.Drawing.Size(161, 23);
       this.uiRemove.TabIndex = 5;
       this.uiRemove.Text = "Remove";
       this.uiRemove.UseVisualStyleBackColor = true;
       this.uiRemove.Click += new System.EventHandler(this.uiRemove_Click);
-      // 
-      // uiPrioritise
-      // 
-      this.uiPrioritise.Location = new System.Drawing.Point(330, 239);
-      this.uiPrioritise.Name = "uiPrioritise";
-      this.uiPrioritise.Size = new System.Drawing.Size(75, 23);
-      this.uiPrioritise.TabIndex = 6;
-      this.uiPrioritise.Text = "Prioritise";
-      this.uiPrioritise.UseVisualStyleBackColor = true;
-      this.uiPrioritise.Click += new System.EventHandler(this.uiPrioritise_Click);
-      // 
-      // uiDeprioritise
-      // 
-      this.uiDeprioritise.Location = new System.Drawing.Point(330, 268);
-      this.uiDeprioritise.Name = "uiDeprioritise";
-      this.uiDeprioritise.Size = new System.Drawing.Size(75, 23);
-      this.uiDeprioritise.TabIndex = 7;
-      this.uiDeprioritise.Text = "Deprioritise";
-      this.uiDeprioritise.UseVisualStyleBackColor = true;
-      this.uiDeprioritise.Click += new System.EventHandler(this.uiDeprioritise_Click);
       // 
       // uiClose
       // 
@@ -174,8 +152,6 @@
       this.ControlBox = false;
       this.Controls.Add(this.uiGroupName);
       this.Controls.Add(this.uiClose);
-      this.Controls.Add(this.uiDeprioritise);
-      this.Controls.Add(this.uiPrioritise);
       this.Controls.Add(this.uiRemove);
       this.Controls.Add(this.uiAdd);
       this.Controls.Add(this.label3);
@@ -205,8 +181,6 @@
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.Button uiAdd;
     private System.Windows.Forms.Button uiRemove;
-    private System.Windows.Forms.Button uiPrioritise;
-    private System.Windows.Forms.Button uiDeprioritise;
     private System.Windows.Forms.Button uiClose;
     private System.Windows.Forms.ComboBox uiGroupName;
   }

@@ -5,13 +5,13 @@ using System.Diagnostics;
 
 namespace Betty
 {
-  public partial class WallSectionTypeSetup : Form
+  public partial class WallFeatureTypeSetup : Form
   {
     FloorPlan m_floorPlan = null;
 
     //-------------------------------------------------------------------------
 
-    public WallSectionTypeSetup( FloorPlan floorPlan )
+    public WallFeatureTypeSetup( FloorPlan floorPlan )
     {
       Debug.Assert( floorPlan != null );
       m_floorPlan = floorPlan;
@@ -133,16 +133,16 @@ namespace Betty
                          length,
                          height );
 
-      if( m_floorPlan.GetSectionFromDescription( section.ToString() ) != null )
+      if( m_floorPlan.GetFeatureFromDescription( section.ToString() ) != null )
       {
-        MessageBox.Show( "A section already exists with these settings.",
+        MessageBox.Show( "A feature already exists with these settings.",
                          "Already exists",
                          MessageBoxButtons.OK,
                          MessageBoxIcon.Information );
         return;
       }
 
-      if( m_floorPlan.AddWallSectionType( section ) )
+      if( m_floorPlan.AddWallFeatureType( section ) )
       {
         PopulateTypeSectionsTree();
       }
@@ -157,37 +157,7 @@ namespace Betty
       if( uiTypesAndFeatures.SelectedNode != null &&
           uiTypesAndFeatures.SelectedNode.Tag != null )
       {
-        m_floorPlan.RemoveWallSectionType(
-          uiTypesAndFeatures.SelectedNode.Tag as WallFeature );
-
-        PopulateTypeSectionsTree();
-      }
-    }
-
-    //-------------------------------------------------------------------------
-
-    private void uiPrioritise_Click( object sender, EventArgs e )
-    {
-      // The nodes for sections have a 'tag' that is the section object.
-      if( uiTypesAndFeatures.SelectedNode != null &&
-          uiTypesAndFeatures.SelectedNode.Tag != null )
-      {
-        //m_floorPlan.PrioritiseWallSectionType(
-        //  uiGroupsAndSections.SelectedNode.Tag as WallFeature );
-
-        PopulateTypeSectionsTree();
-      }
-    }
-
-    //-------------------------------------------------------------------------
-
-    private void uiDeprioritise_Click( object sender, EventArgs e )
-    {
-      // The nodes for sections have a 'tag' that is the section object.
-      if( uiTypesAndFeatures.SelectedNode != null &&
-          uiTypesAndFeatures.SelectedNode.Tag != null )
-      {
-        m_floorPlan.DeprioritiseWallSectionType(
+        m_floorPlan.RemoveWallFeatureType(
           uiTypesAndFeatures.SelectedNode.Tag as WallFeature );
 
         PopulateTypeSectionsTree();
