@@ -9,6 +9,17 @@ namespace Betty
     private string m_type = "Unknown";
     private ushort m_length;        // mm
     private ushort m_height;        // mm
+    private ushort m_distanceFromOrigin;    // DFO (mm)
+
+    //-------------------------------------------------------------------------
+
+    public WallFeature( WallFeature copyFrom )
+    {
+      m_type = copyFrom.Type;
+      m_length = copyFrom.Length;
+      m_height = copyFrom.Height;
+      m_distanceFromOrigin = copyFrom.DistanceFromOrigin;
+    }
 
     //-------------------------------------------------------------------------
 
@@ -89,6 +100,21 @@ namespace Betty
       get
       {
         return Program.UnitConvertForDisplay( m_height ).ToString();
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    public ushort DistanceFromOrigin
+    {
+      get
+      {
+        return m_distanceFromOrigin;
+      }
+
+      set
+      {
+        m_distanceFromOrigin = value;
       }
     }
 

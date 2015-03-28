@@ -39,18 +39,9 @@ namespace Betty
       }
 
       //-- Init some UI components.
-      uiAddWallSection.Enabled = false;
-      
       PopulateWallList();
       RefreshWallInfoEnabledState();
       PopulateFeatureTypesBox();
-    }
-
-    //-------------------------------------------------------------------------
-
-    private void uiAddWallSection_Click( object sender, EventArgs e )
-    {
-
     }
 
     //-------------------------------------------------------------------------
@@ -69,13 +60,6 @@ namespace Betty
 
         uiTotalWallLength.BackColor = Color.Red;
       }
-    }
-
-    //-------------------------------------------------------------------------
-
-    private void uiSectionType_TextChanged( object sender, EventArgs e )
-    {
-
     }
 
     //-------------------------------------------------------------------------
@@ -99,36 +83,6 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    private void uiSectionMoveUp_Click( object sender, EventArgs e )
-    {
-      if( uiWallFeatures.SelectedItem != null &&
-          uiWallFeatures.SelectedIndex > 0 )
-      {
-        int index = uiWallFeatures.SelectedIndex;
-        WallFeature section = uiWallFeatures.SelectedItem as WallFeature;
-        uiWallFeatures.Items.RemoveAt( index );
-        uiWallFeatures.Items.Insert( index - 1, section );
-        uiWallFeatures.SelectedItem = section;
-      }
-    }
-
-    //-------------------------------------------------------------------------
-
-    private void uiSectionMoveDown_Click( object sender, EventArgs e )
-    {
-      if( uiWallFeatures.SelectedItem != null &&
-          uiWallFeatures.SelectedIndex < uiWallFeatures.Items.Count - 1 )
-      {
-        int index = uiWallFeatures.SelectedIndex;
-        WallFeature section = uiWallFeatures.SelectedItem as WallFeature;
-        uiWallFeatures.Items.RemoveAt( index );
-        uiWallFeatures.Items.Insert( index + 1, section );
-        uiWallFeatures.SelectedItem = section;
-      }
-    }
-
-    //-------------------------------------------------------------------------
-
     private void uiSetupWallSectionGroups_Click( object sender, EventArgs e )
     {
       WallFeatureTypeSetup dlg = new WallFeatureTypeSetup( m_floorPlan );
@@ -147,6 +101,7 @@ namespace Betty
     private void RefreshWallInfoEnabledState()
     {
       uiWallInfo.Enabled = ( m_wall != null );
+      uiGrpWallFeatures.Enabled = ( m_wall != null );
     }
 
     //-------------------------------------------------------------------------
@@ -391,65 +346,30 @@ namespace Betty
         }
         else if( e.KeyCode == Keys.Up )
         {
+          if( uiFeatures.SelectedIndex > 0 )
+          {
+            uiFeatures.SelectedIndex--;
+          }
+        }
+        else if( e.KeyCode == Keys.Down )
+        {
+          if( uiFeatures.SelectedIndex < uiFeatures.Items.Count - 1 )
+          {
+            uiFeatures.SelectedIndex++;
+          }
+        }
+        else if( e.KeyCode == Keys.PageUp )
+        {
           if( uiFeatureType.SelectedIndex > 0 )
           {
             uiFeatureType.SelectedIndex--;
           }
         }
-        else if( e.KeyCode == Keys.Down )
+        else if( e.KeyCode == Keys.PageDown )
         {
           if( uiFeatureType.SelectedIndex < uiFeatureType.Items.Count - 1 )
           {
             uiFeatureType.SelectedIndex++;
-          }
-        }
-        else if( e.KeyCode == Keys.PageUp )
-        {
-          // Find the next feature type up and select it's first feature.
-          if( uiFeatureType.SelectedItem == null )
-          {
-            return;
-          }
-
-          string currentFeatureTypeName =
-            ( uiFeatureType.SelectedItem as WallFeature ).Type;
-          string nextFeatureTypeName = null;
-
-          for( ; uiFeatureType.SelectedIndex > 0; uiFeatureType.SelectedIndex-- )
-          {
-            if( currentFeatureTypeName != ( uiFeatureType.SelectedItem as WallFeature ).Type )
-            {
-              nextFeatureTypeName = ( uiFeatureType.SelectedItem as WallFeature ).Type;
-              break;
-            }
-          }
-
-          for( ; uiFeatureType.SelectedIndex > 0; uiFeatureType.SelectedIndex-- )
-          {
-            if( ( uiFeatureType.SelectedItem as WallFeature ).Type != nextFeatureTypeName )
-            {
-              uiFeatureType.SelectedIndex++;
-              break;
-            }
-          }
-        }
-        else if( e.KeyCode == Keys.PageDown )
-        {
-          // Find the next feature type down and select it's first feature.
-          if( uiFeatureType.SelectedItem == null )
-          {
-            return;
-          }
-
-          string currentFeatureTypeName =
-            ( uiFeatureType.SelectedItem as WallFeature ).Type;
-
-          for( ; uiFeatureType.SelectedIndex < uiFeatureType.Items.Count - 1; uiFeatureType.SelectedIndex++ )
-          {
-            if( currentFeatureTypeName != ( uiFeatureType.SelectedItem as WallFeature ).Type )
-            {
-              break;
-            }
           }
         }
       }
@@ -463,9 +383,11 @@ namespace Betty
 
     private void PopulateFeatureTypesBox()
     {
-      foreach( WallFeature f in m_floorPlan.WallFeatureTypes )
+      uiFeatureType.Items.Clear();
+
+      foreach( string s in m_floorPlan.WallFeatureTypeNames )
       {
-        uiFeatureType.Items.Add( f );
+        uiFeatureType.Items.Add( s );
       }
 
       if( uiFeatureType.Items.Count > 0 )
@@ -481,6 +403,91 @@ namespace Betty
       if( e.KeyCode == Keys.Enter )
       {
         uiSectionDistanceFromOrigin.Focus();
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiFeatureType_SelectedIndexChanged( object sender, EventArgs e )
+    {
+      PopulateFeaturesBox();
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void PopulateFeaturesBox()
+    {
+      uiFeatures.Items.Clear();
+
+      foreach( WallFeature f in m_floorPlan.GetFeaturesForType( uiFeatureType.Text ) )
+      {
+        uiFeatures.Items.Add( f );
+      }
+
+      if( uiFeatures.Items.Count > 0 )
+      {
+        uiFeatures.SelectedIndex = 0;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiAddWallSection_Click( object sender, EventArgs e )
+    {
+      // Feature.
+      if( uiFeatures.SelectedItem == null )
+      {
+        MessageBox.Show( "Please select a 'Feature'.",
+                         "Missing Information",
+                         MessageBoxButtons.OK,
+                         MessageBoxIcon.Information );
+        uiSectionDistanceFromOrigin.Focus();
+        return;
+      }
+
+      // DFO.
+      ushort dfo;
+
+      try
+      {
+        dfo = Convert.ToUInt16( uiSectionDistanceFromOrigin.Text );
+
+        if( dfo == 0 )
+        {
+          throw new Exception();
+        }
+      }
+      catch
+      {
+        MessageBox.Show( "Please enter a valid DFO.",
+                         "Invalid Input",
+                         MessageBoxButtons.OK,
+                         MessageBoxIcon.Information );
+        uiSectionDistanceFromOrigin.Focus();
+        return;
+      }
+
+      // Add the feature to the wall.
+      m_wall.Features.Add(
+        new WallFeature( uiFeatures.SelectedItem as WallFeature ) );
+
+      PopulateWallFeatures();
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void PopulateWallFeatures()
+    {
+      uiWallFeatures.Items.Clear();
+
+      if( m_wall == null )
+      {
+        return;
+      }
+
+      foreach( WallFeature f in m_wall.Features )
+      {
+        uiWallFeatures.Items.Add( f );
       }
     }
 
