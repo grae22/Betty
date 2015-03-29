@@ -31,4 +31,17 @@
       <Height>500</Height>
     </WallFeature>
   </WallFeatureTypeCollection>
+  <ShutterTypeCollection />
+  <WallCollection>
+    <Wall>
+      <Name>New wall</Name>
+      <FeatureCollection>
+        <WallFeature>
+          <Type>Door</Type>
+          <Length>1200</Length>
+          <Height>1000</Height>
+        </WallFeature>
+      </FeatureCollection>
+    </Wall>
+  </WallCollection>
 </FloorPlan>

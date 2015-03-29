@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace Betty
 {
@@ -8,6 +9,13 @@ namespace Betty
     private string m_name = "Unknown";
     private ushort m_length;
     private List< WallFeature > m_features = new List< WallFeature >();
+
+    //-------------------------------------------------------------------------
+
+    public static Wall CreateFromXml( XmlElement xml )
+    {
+      return null;    // TODO
+    }
 
     //-------------------------------------------------------------------------
 
@@ -66,6 +74,28 @@ namespace Betty
     public override string ToString()
     {
       return m_name;
+    }
+
+    //-------------------------------------------------------------------------
+
+    public XmlElement ToXml( XmlDocument doc )
+    {
+      XmlElement wallXml = doc.CreateElement( "Wall" );
+
+      XmlElement nameXml = doc.CreateElement( "Name" );
+      wallXml.AppendChild( nameXml );
+      nameXml.InnerText = m_name;
+
+      XmlElement featureCollectionXml = doc.CreateElement( "FeatureCollection" );
+      wallXml.AppendChild( featureCollectionXml );
+
+      foreach( WallFeature feature in m_features )
+      {
+        featureCollectionXml.AppendChild(
+          feature.ToXml( doc ) );
+      }
+
+      return wallXml;
     }
 
     //-------------------------------------------------------------------------

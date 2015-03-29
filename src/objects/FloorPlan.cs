@@ -235,6 +235,15 @@ namespace Betty
         shutterTypeCollection.AppendChild( shutter.ToXml( doc ) );
       }
 
+      //-- Walls.
+      XmlElement wallCollection = doc.CreateElement( "WallCollection" );
+      floorPlan.AppendChild( wallCollection );
+
+      foreach( Wall wall in m_walls )
+      {
+        wallCollection.AppendChild( wall.ToXml( doc ) );
+      }
+
       return floorPlan;
     }
 
@@ -257,6 +266,22 @@ namespace Betty
         if( newFeature != null )
         {
           newFloorPlan.AddWallFeatureType( newFeature );
+        }
+      }
+
+      //-- Walls.
+      XmlElement wallCollectionXml =
+        floorPlanXml.SelectSingleNode( "./WallCollection" ) as XmlElement;
+
+      XmlNodeList walls = wallCollectionXml.SelectNodes( "./Wall" );
+
+      foreach( XmlElement wallXml in walls )
+      {
+        Wall newWall = Wall.CreateFromXml( wallXml );
+
+        if( newWall != null )
+        {
+          newFloorPlan.AddWall( newWall );
         }
       }
 
