@@ -4,7 +4,7 @@ using System.Xml;
 
 namespace Betty
 {
-  public class WallFeature
+  public class WallFeature : IComparable< WallFeature >
   {
     private string m_type = "Unknown";
     private ushort m_length;        // mm
@@ -132,6 +132,12 @@ namespace Betty
 
       s += " ]";
 
+      // DFO.
+      if( m_distanceFromOrigin > 0 )
+      {
+        s += " ( DFO = " + m_distanceFromOrigin.ToString() + " )";
+      }
+
       return s;
     }
 
@@ -176,6 +182,22 @@ namespace Betty
       }
     }
 
+    //-------------------------------------------------------------------------
+
+    public int CompareTo( WallFeature ob )
+    {
+      if( ob.DistanceFromOrigin > m_distanceFromOrigin )
+      {
+        return -1;
+      }
+      else if( ob.DistanceFromOrigin < m_distanceFromOrigin )
+      {
+        return 1;
+      }
+
+      return 0;
+    }
+ 
     //-------------------------------------------------------------------------
   }
 }

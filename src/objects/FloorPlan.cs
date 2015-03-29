@@ -9,6 +9,7 @@ namespace Betty
   {
     private List< Wall > m_walls = new List< Wall >();
     private Dictionary< string, List< WallFeature > > m_wallFeatureTypes = new Dictionary< string, List<WallFeature > >();
+    private List< Shutter > m_shutterTypes = new List< Shutter >();
 
     //-------------------------------------------------------------------------
 
@@ -193,6 +194,21 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
+    public List< Shutter > ShutterTypes
+    {
+      get
+      {
+        return m_shutterTypes;
+      }
+
+      set
+      {
+        m_shutterTypes = value;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
     public XmlElement ToXml( XmlDocument doc )
     {
       //-- Floor plan element.
@@ -208,6 +224,15 @@ namespace Betty
         {
           wallFeatureTypeCollection.AppendChild( feature.ToXml( doc ) );
         }
+      }
+
+      //-- Shutter types.
+      XmlElement shutterTypeCollection = doc.CreateElement( "ShutterTypeCollection" );
+      floorPlan.AppendChild( shutterTypeCollection );
+
+      foreach( Shutter shutter in m_shutterTypes )
+      {
+        shutterTypeCollection.AppendChild( shutter.ToXml( doc ) );
       }
 
       return floorPlan;

@@ -64,14 +64,14 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    private void uiWallSectionLength_Enter( object sender, EventArgs e )
+    private void uiWallFeatureLength_Enter( object sender, EventArgs e )
     {
-      uiSectionDistanceFromOrigin.SelectAll();
+      uiFeatureDistanceFromOrigin.SelectAll();
     }
 
     //-------------------------------------------------------------------------
 
-    private void uiRemoveWallSection_Click( object sender, EventArgs e )
+    private void uiRemoveWallFeaure_Click( object sender, EventArgs e )
     {
       if( uiWallFeatures.SelectedItem == null )
       {
@@ -83,7 +83,7 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    private void uiSetupWallSectionGroups_Click( object sender, EventArgs e )
+    private void uiSetupWallFeatureTypes_Click( object sender, EventArgs e )
     {
       WallFeatureTypeSetup dlg = new WallFeatureTypeSetup( m_floorPlan );
       dlg.ShowDialog( this );
@@ -128,14 +128,14 @@ namespace Betty
       {
         uiWallName.Text = "";
         uiTotalWallLength.Text = "0";
-        uiSectionDistanceFromOrigin.Text = "0";
+        uiFeatureDistanceFromOrigin.Text = "0";
 
         return;
       }
 
       uiWallName.Text = m_wall.Name;
       uiTotalWallLength.Text = m_wall.Length.ToString();
-      uiSectionDistanceFromOrigin.Text = "0";
+      uiFeatureDistanceFromOrigin.Text = "0";
     }
 
     //-------------------------------------------------------------------------
@@ -301,30 +301,30 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    private void uiSectionDistanceFromOrigin_Enter( object sender, EventArgs e )
+    private void uiFeatureDistanceFromOrigin_Enter( object sender, EventArgs e )
     {
-      uiSectionDistanceFromOrigin.SelectAll();
+      uiFeatureDistanceFromOrigin.SelectAll();
     }
 
     //-------------------------------------------------------------------------
 
-    private void uiSectionDistanceFromOrigin_Click( object sender, EventArgs e )
+    private void uiFeatureDistanceFromOrigin_Click( object sender, EventArgs e )
     {
-      uiSectionDistanceFromOrigin.SelectAll();
+      uiFeatureDistanceFromOrigin.SelectAll();
     }
 
     //-------------------------------------------------------------------------
 
-    private void uiSectionDistanceFromOrigin_Validating( object sender, System.ComponentModel.CancelEventArgs e )
+    private void uiFeatureDistanceFromOrigin_Validating( object sender, System.ComponentModel.CancelEventArgs e )
     {
       try
       {
-        if( uiSectionDistanceFromOrigin.Text.Length == 0 )
+        if( uiFeatureDistanceFromOrigin.Text.Length == 0 )
         {
-          uiSectionDistanceFromOrigin.Text = "0";
+          uiFeatureDistanceFromOrigin.Text = "0";
         }
 
-        Convert.ToUInt16( uiSectionDistanceFromOrigin.Text );
+        Convert.ToUInt16( uiFeatureDistanceFromOrigin.Text );
       }
       catch
       {
@@ -336,13 +336,13 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    private void uiSectionDistanceFromOrigin_KeyDown( object sender, KeyEventArgs e )
+    private void uiFeatureDistanceFromOrigin_KeyDown( object sender, KeyEventArgs e )
     {
       try
       {
         if( e.KeyCode == Keys.Enter )
         {
-          uiAddWallSection_Click( null, null );
+          uiAddWallFeature_Click( null, null );
         }
         else if( e.KeyCode == Keys.Up )
         {
@@ -402,7 +402,7 @@ namespace Betty
     {
       if( e.KeyCode == Keys.Enter )
       {
-        uiSectionDistanceFromOrigin.Focus();
+        uiFeatureDistanceFromOrigin.Focus();
       }
     }
 
@@ -432,7 +432,7 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    private void uiAddWallSection_Click( object sender, EventArgs e )
+    private void uiAddWallFeature_Click( object sender, EventArgs e )
     {
       // Feature.
       if( uiFeatures.SelectedItem == null )
@@ -441,7 +441,7 @@ namespace Betty
                          "Missing Information",
                          MessageBoxButtons.OK,
                          MessageBoxIcon.Information );
-        uiSectionDistanceFromOrigin.Focus();
+        uiFeatureDistanceFromOrigin.Focus();
         return;
       }
 
@@ -450,12 +450,7 @@ namespace Betty
 
       try
       {
-        dfo = Convert.ToUInt16( uiSectionDistanceFromOrigin.Text );
-
-        if( dfo == 0 )
-        {
-          throw new Exception();
-        }
+        dfo = Convert.ToUInt16( uiFeatureDistanceFromOrigin.Text );
       }
       catch
       {
@@ -463,15 +458,23 @@ namespace Betty
                          "Invalid Input",
                          MessageBoxButtons.OK,
                          MessageBoxIcon.Information );
-        uiSectionDistanceFromOrigin.Focus();
+        uiFeatureDistanceFromOrigin.Focus();
         return;
       }
 
       // Add the feature to the wall.
-      m_wall.Features.Add(
-        new WallFeature( uiFeatures.SelectedItem as WallFeature ) );
+      WallFeature newFeature =
+        new WallFeature( uiFeatures.SelectedItem as WallFeature );
+
+      newFeature.DistanceFromOrigin = dfo;
+
+      m_wall.Features.Add( newFeature );
 
       PopulateWallFeatures();
+
+      // Reset the DFO box.
+      uiFeatureDistanceFromOrigin.Focus();
+      uiFeatureDistanceFromOrigin.Text = "";
     }
 
     //-------------------------------------------------------------------------
@@ -485,7 +488,18 @@ namespace Betty
         return;
       }
 
+      // Add to a list first so we can sort it.
+      List< WallFeature > items = new List< WallFeature >();
+
       foreach( WallFeature f in m_wall.Features )
+      {
+        items.Add( f );
+      }
+
+      items.Sort();
+      
+      // Add to ui list.
+      foreach( WallFeature f in items )
       {
         uiWallFeatures.Items.Add( f );
       }
