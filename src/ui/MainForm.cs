@@ -106,6 +106,8 @@ namespace Betty
       {
         WallFeatureTypeSetup dlg = new WallFeatureTypeSetup( m_floorPlan );
         dlg.ShowDialog( this );
+
+        PopulateFeatureTypesBox();
       }
       catch( Exception ex )
       {

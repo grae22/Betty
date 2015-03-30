@@ -39,6 +39,7 @@
       this.uiRemove = new System.Windows.Forms.Button();
       this.uiClose = new System.Windows.Forms.Button();
       this.uiGroupName = new System.Windows.Forms.ComboBox();
+      this.uiChkUseShutter = new System.Windows.Forms.CheckBox();
       this.SuspendLayout();
       // 
       // uiTypesAndFeatures
@@ -105,7 +106,7 @@
       // 
       // uiAdd
       // 
-      this.uiAdd.Location = new System.Drawing.Point(287, 117);
+      this.uiAdd.Location = new System.Drawing.Point(287, 149);
       this.uiAdd.Name = "uiAdd";
       this.uiAdd.Size = new System.Drawing.Size(161, 23);
       this.uiAdd.TabIndex = 4;
@@ -115,7 +116,7 @@
       // 
       // uiRemove
       // 
-      this.uiRemove.Location = new System.Drawing.Point(287, 146);
+      this.uiRemove.Location = new System.Drawing.Point(287, 178);
       this.uiRemove.Name = "uiRemove";
       this.uiRemove.Size = new System.Drawing.Size(161, 23);
       this.uiRemove.TabIndex = 5;
@@ -143,13 +144,24 @@
       this.uiGroupName.Size = new System.Drawing.Size(161, 21);
       this.uiGroupName.TabIndex = 1;
       // 
-      // WallSectionTypeSetup
+      // uiChkUseShutter
+      // 
+      this.uiChkUseShutter.AutoSize = true;
+      this.uiChkUseShutter.Location = new System.Drawing.Point(287, 116);
+      this.uiChkUseShutter.Name = "uiChkUseShutter";
+      this.uiChkUseShutter.Size = new System.Drawing.Size(101, 17);
+      this.uiChkUseShutter.TabIndex = 27;
+      this.uiChkUseShutter.Text = "Use Shutter (S).";
+      this.uiChkUseShutter.UseVisualStyleBackColor = true;
+      // 
+      // WallFeatureTypeSetup
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.uiClose;
       this.ClientSize = new System.Drawing.Size(460, 475);
       this.ControlBox = false;
+      this.Controls.Add(this.uiChkUseShutter);
       this.Controls.Add(this.uiGroupName);
       this.Controls.Add(this.uiClose);
       this.Controls.Add(this.uiRemove);
@@ -162,7 +174,7 @@
       this.Controls.Add(this.label1);
       this.Controls.Add(this.uiTypesAndFeatures);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-      this.Name = "WallSectionTypeSetup";
+      this.Name = "WallFeatureTypeSetup";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Wall Feature Types";
       this.ResumeLayout(false);
@@ -183,5 +195,6 @@
     private System.Windows.Forms.Button uiRemove;
     private System.Windows.Forms.Button uiClose;
     private System.Windows.Forms.ComboBox uiGroupName;
+    private System.Windows.Forms.CheckBox uiChkUseShutter;
   }
 }

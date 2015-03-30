@@ -10,6 +10,7 @@ namespace Betty
     private ushort m_length;        // mm
     private ushort m_height;        // mm
     private ushort m_distanceFromOrigin;    // DFO (mm)
+    private bool m_useShutter;
 
     //-------------------------------------------------------------------------
 
@@ -19,6 +20,7 @@ namespace Betty
       m_length = copyFrom.Length;
       m_height = copyFrom.Height;
       m_distanceFromOrigin = copyFrom.DistanceFromOrigin;
+      m_useShutter = copyFrom.UseShutter;
     }
 
     //-------------------------------------------------------------------------
@@ -26,12 +28,14 @@ namespace Betty
     public WallFeature( string type,
                         ushort length,
                         ushort height,
-                        ushort distanceFromOrigin )
+                        ushort distanceFromOrigin,
+                        bool useShutter )
     {
       m_type = type;
       m_length = length;
       m_height = height;
       m_distanceFromOrigin = distanceFromOrigin;
+      m_useShutter = useShutter;
     }
 
     //-------------------------------------------------------------------------
@@ -122,6 +126,21 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
+    public bool UseShutter
+    {
+      get
+      {
+        return m_useShutter;
+      }
+
+      set
+      {
+        m_useShutter = value;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
     public override string ToString()
     {
       // Length & height (if any).
@@ -133,6 +152,12 @@ namespace Betty
       }
 
       s += " ]";
+
+      // Use shutter.
+      if( m_useShutter )
+      {
+        s += " (S)";
+      }
 
       // DFO.
       if( m_distanceFromOrigin > 0 )
@@ -165,6 +190,10 @@ namespace Betty
       wallSection.AppendChild( dfo );
       dfo.InnerText = m_distanceFromOrigin.ToString();
 
+      XmlElement useShutter = doc.CreateElement( "UseShutter" );
+      wallSection.AppendChild( useShutter );
+      useShutter.InnerText = m_useShutter.ToString();
+
       return wallSection;
     }
 
@@ -178,11 +207,13 @@ namespace Betty
         XmlElement lengthXml = wallSectionXml.SelectSingleNode( "Length" ) as XmlElement;
         XmlElement heightXml = wallSectionXml.SelectSingleNode( "Height" ) as XmlElement;
         XmlElement dfoXml = wallSectionXml.SelectSingleNode( "DistanceFromOrigin" ) as XmlElement;
+        XmlElement useShutterXml = wallSectionXml.SelectSingleNode( "UseShutter" ) as XmlElement;
 
         return new WallFeature( typeXml.InnerText,
                                 Convert.ToUInt16( lengthXml.InnerText ),
                                 Convert.ToUInt16( heightXml.InnerText ),
-                                Convert.ToUInt16( dfoXml.InnerText ) );
+                                Convert.ToUInt16( dfoXml.InnerText ),
+                                bool.Parse( useShutterXml.InnerText ) );
       }
       catch
       {

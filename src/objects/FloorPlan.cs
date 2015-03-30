@@ -247,7 +247,6 @@ namespace Betty
         return;
       }
 
-      // TODO : fix this...
       List<Shutter> newList = new List<Shutter>();
 
       for( int i = m_shutterTypes.Count - 1; i >= 0; i-- )
@@ -264,6 +263,7 @@ namespace Betty
         }
       }
 
+      newList.Reverse();
       m_shutterTypes = newList;
     }
 

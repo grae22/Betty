@@ -5,36 +5,49 @@
       <Length>1200</Length>
       <Height>1000</Height>
       <DistanceFromOrigin>0</DistanceFromOrigin>
+      <UseShutter>False</UseShutter>
     </WallFeature>
     <WallFeature>
       <Type>Door</Type>
       <Length>800</Length>
       <Height>1000</Height>
       <DistanceFromOrigin>0</DistanceFromOrigin>
+      <UseShutter>False</UseShutter>
     </WallFeature>
     <WallFeature>
       <Type>Door</Type>
       <Length>1500</Length>
       <Height>1000</Height>
       <DistanceFromOrigin>0</DistanceFromOrigin>
+      <UseShutter>False</UseShutter>
     </WallFeature>
     <WallFeature>
       <Type>Window</Type>
       <Length>2000</Length>
       <Height>500</Height>
       <DistanceFromOrigin>0</DistanceFromOrigin>
+      <UseShutter>False</UseShutter>
     </WallFeature>
     <WallFeature>
       <Type>Window</Type>
       <Length>1500</Length>
       <Height>500</Height>
       <DistanceFromOrigin>0</DistanceFromOrigin>
+      <UseShutter>False</UseShutter>
     </WallFeature>
     <WallFeature>
       <Type>Window</Type>
       <Length>500</Length>
       <Height>500</Height>
       <DistanceFromOrigin>0</DistanceFromOrigin>
+      <UseShutter>False</UseShutter>
+    </WallFeature>
+    <WallFeature>
+      <Type>Detail</Type>
+      <Length>5000</Length>
+      <Height>5000</Height>
+      <DistanceFromOrigin>0</DistanceFromOrigin>
+      <UseShutter>True</UseShutter>
     </WallFeature>
   </WallFeatureTypeCollection>
   <ShutterTypeCollection>
@@ -43,6 +56,9 @@
     </Shutter>
     <Shutter>
       <Length>1000</Length>
+    </Shutter>
+    <Shutter>
+      <Length>500</Length>
     </Shutter>
   </ShutterTypeCollection>
   <WallCollection>
@@ -56,12 +72,14 @@
           <Length>1200</Length>
           <Height>1000</Height>
           <DistanceFromOrigin>0</DistanceFromOrigin>
+          <UseShutter>False</UseShutter>
         </WallFeature>
         <WallFeature>
           <Type>Window</Type>
           <Length>500</Length>
           <Height>500</Height>
           <DistanceFromOrigin>300</DistanceFromOrigin>
+          <UseShutter>False</UseShutter>
         </WallFeature>
       </FeatureCollection>
     </Wall>
@@ -75,6 +93,7 @@
           <Length>1500</Length>
           <Height>1000</Height>
           <DistanceFromOrigin>250</DistanceFromOrigin>
+          <UseShutter>False</UseShutter>
         </WallFeature>
       </FeatureCollection>
     </Wall>

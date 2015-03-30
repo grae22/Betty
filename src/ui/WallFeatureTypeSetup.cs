@@ -132,7 +132,8 @@ namespace Betty
         new WallFeature( uiGroupName.Text,
                          length,
                          height,
-                         0 );
+                         0,
+                         uiChkUseShutter.Checked );
 
       if( m_floorPlan.GetFeatureFromDescription( feature.ToString() ) != null )
       {
