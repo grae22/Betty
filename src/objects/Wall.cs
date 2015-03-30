@@ -8,13 +8,43 @@ namespace Betty
   {
     private string m_name = "Unknown";
     private ushort m_length;
+    private bool m_isExternalWall;
     private List< WallFeature > m_features = new List< WallFeature >();
 
     //-------------------------------------------------------------------------
 
     public static Wall CreateFromXml( XmlElement xml )
     {
-      return null;    // TODO
+      try
+      {
+        // Wall properties.
+        XmlElement nameXml = xml.SelectSingleNode( "Name" ) as XmlElement;
+        XmlElement lengthXml = xml.SelectSingleNode( "Length" ) as XmlElement;
+        XmlElement externalWallXml = xml.SelectSingleNode( "ExternalWall" ) as XmlElement;
+
+        // Features.
+        XmlElement featureCollectionXml = xml.SelectSingleNode( "FeatureCollection" ) as XmlElement;
+        XmlNodeList featuresXml = featureCollectionXml.SelectNodes( "WallFeature" );
+
+        List<WallFeature> features = new List<WallFeature>();
+
+        foreach( XmlElement featureXml in featuresXml )
+        {
+          features.Add( WallFeature.CreateFromXml( featureXml ) );
+        }
+
+        // Create the wall.
+        Wall wall = new Wall( nameXml.InnerText );
+        wall.Length = Convert.ToUInt16( lengthXml.InnerText );
+        wall.IsExternalWall = bool.Parse( externalWallXml.InnerText );
+        wall.Features = features;
+
+        return wall;
+      }
+      catch
+      {
+        return null;
+      }
     }
 
     //-------------------------------------------------------------------------
@@ -71,6 +101,21 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
+    public bool IsExternalWall
+    {
+      get
+      {
+        return m_isExternalWall;
+      }
+
+      set
+      {
+        m_isExternalWall = value;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
     public override string ToString()
     {
       return m_name;
@@ -85,6 +130,14 @@ namespace Betty
       XmlElement nameXml = doc.CreateElement( "Name" );
       wallXml.AppendChild( nameXml );
       nameXml.InnerText = m_name;
+
+      XmlElement lengthXml = doc.CreateElement( "Length" );
+      wallXml.AppendChild( lengthXml );
+      lengthXml.InnerText = m_length.ToString();
+
+      XmlElement externalWallXml = doc.CreateElement( "ExternalWall" );
+      wallXml.AppendChild( externalWallXml );
+      externalWallXml.InnerText = m_isExternalWall.ToString();
 
       XmlElement featureCollectionXml = doc.CreateElement( "FeatureCollection" );
       wallXml.AppendChild( featureCollectionXml );

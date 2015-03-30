@@ -16,32 +16,39 @@ namespace Betty
 
     public MainForm( string floorPlanFilename )
     {
-      InitializeComponent();
-
-      //-- Load floor plan from xml doc.
       try
       {
-        if( floorPlanFilename.Length > 0 )
+        InitializeComponent();
+
+        //-- Load floor plan from xml doc.
+        try
         {
-          XmlDocument doc = new XmlDocument();
-          doc.Load( floorPlanFilename );
-          XmlElement floorPlanXml = doc.FirstChild as XmlElement;
-          m_floorPlan = FloorPlan.CreateFromXml( floorPlanXml );
+          if( floorPlanFilename.Length > 0 )
+          {
+            XmlDocument doc = new XmlDocument();
+            doc.Load( floorPlanFilename );
+            XmlElement floorPlanXml = doc.FirstChild as XmlElement;
+            m_floorPlan = FloorPlan.CreateFromXml( floorPlanXml );
+          }
         }
+        catch( Exception ex )
+        {
+          MessageBox.Show( "Error loading FloorPlan from file '" + floorPlanFilename + "'." +
+                            Environment.NewLine + Environment.NewLine + ex.Message,
+                           "Error",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Error );
+        }
+
+        //-- Init some UI components.
+        PopulateWallList();
+        RefreshWallInfoEnabledState();
+        PopulateFeatureTypesBox();
       }
       catch( Exception ex )
       {
-        MessageBox.Show( "Error loading FloorPlan from file '" + floorPlanFilename + "'." +
-                          Environment.NewLine + Environment.NewLine + ex.Message,
-                         "Error",
-                         MessageBoxButtons.OK,
-                         MessageBoxIcon.Error );
+        ShowErrorMessage( ex.Message, "Error" );
       }
-
-      //-- Init some UI components.
-      PopulateWallList();
-      RefreshWallInfoEnabledState();
-      PopulateFeatureTypesBox();
     }
 
     //-------------------------------------------------------------------------
@@ -73,27 +80,51 @@ namespace Betty
 
     private void uiRemoveWallFeaure_Click( object sender, EventArgs e )
     {
-      if( uiWallFeatures.SelectedItem == null )
+      try
       {
-        return;
-      }
+        if( uiWallFeatures.SelectedItem == null ||
+            m_wall == null )
+        {
+          return;
+        }
 
-      // TODO
+        m_wall.Features.Remove( uiWallFeatures.SelectedItem as WallFeature );
+
+        PopulateWallFeatures();
+      }
+      catch( Exception ex )
+      {
+        ShowErrorMessage( ex.Message, "Error" );
+      }
     }
 
     //-------------------------------------------------------------------------
 
     private void uiSetupWallFeatureTypes_Click( object sender, EventArgs e )
     {
-      WallFeatureTypeSetup dlg = new WallFeatureTypeSetup( m_floorPlan );
-      dlg.ShowDialog( this );
+      try
+      {
+        WallFeatureTypeSetup dlg = new WallFeatureTypeSetup( m_floorPlan );
+        dlg.ShowDialog( this );
+      }
+      catch( Exception ex )
+      {
+        ShowErrorMessage( ex.Message, "Error" );
+      }
     }
 
     //-------------------------------------------------------------------------
 
     private void uiSave_Click( object sender, EventArgs e )
     {
-      m_floorPlan.WriteToFile();
+      try
+      {
+        m_floorPlan.WriteToFile();
+      }
+      catch( Exception ex )
+      {
+        ShowErrorMessage( ex.Message, "Error" );
+      }
     }
 
     //-------------------------------------------------------------------------
@@ -108,34 +139,51 @@ namespace Betty
 
     private void PopulateWallList()
     {
-      Wall selectedWall = uiWalls.SelectedItem as Wall;
-
-      uiWalls.Items.Clear();
-
-      foreach( Wall wall in m_floorPlan.Walls )
+      try
       {
-        uiWalls.Items.Add( wall );
-      }
+        Wall selectedWall = uiWalls.SelectedItem as Wall;
 
-      uiWalls.SelectedItem = selectedWall;
+        uiWalls.Items.Clear();
+
+        foreach( Wall wall in m_floorPlan.Walls )
+        {
+          uiWalls.Items.Add( wall );
+        }
+
+        uiWalls.SelectedItem = selectedWall;
+      }
+      catch( Exception ex )
+      {
+        ShowErrorMessage( ex.Message, "Error" );
+      }
     }
 
     //-------------------------------------------------------------------------
 
     private void PopulateWallInfo()
     {
-      if( m_wall == null )
+      try
       {
-        uiWallName.Text = "";
-        uiTotalWallLength.Text = "0";
+        if( m_wall == null )
+        {
+          uiWallName.Text = "";
+          uiTotalWallLength.Text = "0";
+          uiFeatureDistanceFromOrigin.Text = "0";
+
+          return;
+        }
+
+        uiWallName.Text = m_wall.Name;
+        uiTotalWallLength.Text = m_wall.Length.ToString();
+        uiChkExternalWall.Checked = m_wall.IsExternalWall;
         uiFeatureDistanceFromOrigin.Text = "0";
 
-        return;
+        PopulateWallFeatures();
       }
-
-      uiWallName.Text = m_wall.Name;
-      uiTotalWallLength.Text = m_wall.Length.ToString();
-      uiFeatureDistanceFromOrigin.Text = "0";
+      catch( Exception ex )
+      {
+        ShowErrorMessage( ex.Message, "Error" );
+      }
     }
 
     //-------------------------------------------------------------------------
@@ -177,13 +225,20 @@ namespace Betty
 
     private void uiWalls_SelectedIndexChanged( object sender, EventArgs e )
     {
-      m_wall = uiWalls.SelectedItem as Wall;
+      try
+      {
+        m_wall = uiWalls.SelectedItem as Wall;
 
-      RefreshWallInfoEnabledState();
-      PopulateWallInfo();
+        RefreshWallInfoEnabledState();
+        PopulateWallInfo();
 
-      uiWallName.Focus();
-      uiWallName.SelectAll();
+        //uiWallName.Focus();
+        //uiWallName.SelectAll();
+      }
+      catch( Exception ex )
+      {
+        ShowErrorMessage( ex.Message, "Error" );
+      }
     }
 
     //-------------------------------------------------------------------------
@@ -192,13 +247,23 @@ namespace Betty
     {
       if( e.KeyCode == Keys.Enter )
       {
-        uiTotalWallLength.Focus();
+        ValidateUiWallName( true );
       }
     }
 
     //-------------------------------------------------------------------------
 
     private void uiWallName_Validating( object sender, System.ComponentModel.CancelEventArgs e )
+    {
+      if( ValidateUiWallName( false ) == false )
+      {
+        e.Cancel = true;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private bool ValidateUiWallName( bool moveToNextIfOk )
     {
       try
       {
@@ -211,8 +276,7 @@ namespace Betty
                            "Invalid Input",
                            MessageBoxButtons.OK,
                            MessageBoxIcon.Error );
-          e.Cancel = true;
-          return;
+          return false;
         }
 
         // Name already exist?
@@ -225,8 +289,7 @@ namespace Betty
                            "Duplicate Name",
                            MessageBoxButtons.OK,
                            MessageBoxIcon.Error );
-          e.Cancel = true;
-          return;
+          return false;
         }
 
         // Update the wall's name.
@@ -236,11 +299,17 @@ namespace Betty
         PopulateWallList();
 
         // Move on to next field.
-        uiTotalWallLength.Focus();
+        if( moveToNextIfOk )
+        {
+          uiTotalWallLength.Focus();
+        }
+
+        return true;
       }
       catch( Exception ex )
       {
         ShowErrorMessage( ex.Message, "Error" );
+        return false;
       }
     }
 
@@ -383,16 +452,23 @@ namespace Betty
 
     private void PopulateFeatureTypesBox()
     {
-      uiFeatureType.Items.Clear();
-
-      foreach( string s in m_floorPlan.WallFeatureTypeNames )
+      try
       {
-        uiFeatureType.Items.Add( s );
+        uiFeatureType.Items.Clear();
+
+        foreach( string s in m_floorPlan.WallFeatureTypeNames )
+        {
+          uiFeatureType.Items.Add( s );
+        }
+
+        if( uiFeatureType.Items.Count > 0 )
+        {
+          uiFeatureType.SelectedIndex = 0;
+        }
       }
-
-      if( uiFeatureType.Items.Count > 0 )
+      catch( Exception ex )
       {
-        uiFeatureType.SelectedIndex = 0;
+        ShowErrorMessage( ex.Message, "Error" );
       }
     }
 
@@ -417,16 +493,23 @@ namespace Betty
 
     private void PopulateFeaturesBox()
     {
-      uiFeatures.Items.Clear();
-
-      foreach( WallFeature f in m_floorPlan.GetFeaturesForType( uiFeatureType.Text ) )
+      try
       {
-        uiFeatures.Items.Add( f );
+        uiFeatures.Items.Clear();
+
+        foreach( WallFeature f in m_floorPlan.GetFeaturesForType( uiFeatureType.Text ) )
+        {
+          uiFeatures.Items.Add( f );
+        }
+
+        if( uiFeatures.Items.Count > 0 )
+        {
+          uiFeatures.SelectedIndex = 0;
+        }
       }
-
-      if( uiFeatures.Items.Count > 0 )
+      catch( Exception ex )
       {
-        uiFeatures.SelectedIndex = 0;
+        ShowErrorMessage( ex.Message, "Error" );
       }
     }
 
@@ -434,74 +517,103 @@ namespace Betty
 
     private void uiAddWallFeature_Click( object sender, EventArgs e )
     {
-      // Feature.
-      if( uiFeatures.SelectedItem == null )
-      {
-        MessageBox.Show( "Please select a 'Feature'.",
-                         "Missing Information",
-                         MessageBoxButtons.OK,
-                         MessageBoxIcon.Information );
-        uiFeatureDistanceFromOrigin.Focus();
-        return;
-      }
-
-      // DFO.
-      ushort dfo;
-
       try
       {
-        dfo = Convert.ToUInt16( uiFeatureDistanceFromOrigin.Text );
-      }
-      catch
-      {
-        MessageBox.Show( "Please enter a valid DFO.",
-                         "Invalid Input",
-                         MessageBoxButtons.OK,
-                         MessageBoxIcon.Information );
+        // Feature.
+        if( uiFeatures.SelectedItem == null )
+        {
+          MessageBox.Show( "Please select a 'Feature'.",
+                           "Missing Information",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Information );
+          uiFeatureDistanceFromOrigin.Focus();
+          return;
+        }
+
+        // DFO.
+        ushort dfo;
+
+        try
+        {
+          dfo = Convert.ToUInt16( uiFeatureDistanceFromOrigin.Text );
+        }
+        catch
+        {
+          MessageBox.Show( "Please enter a valid DFO.",
+                           "Invalid Input",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Information );
+          uiFeatureDistanceFromOrigin.Focus();
+          return;
+        }
+
+        // Add the feature to the wall.
+        WallFeature newFeature =
+          new WallFeature( uiFeatures.SelectedItem as WallFeature );
+
+        newFeature.DistanceFromOrigin = dfo;
+
+        m_wall.Features.Add( newFeature );
+
+        PopulateWallFeatures();
+
+        // Reset the DFO box.
         uiFeatureDistanceFromOrigin.Focus();
-        return;
+        uiFeatureDistanceFromOrigin.Text = "";
       }
-
-      // Add the feature to the wall.
-      WallFeature newFeature =
-        new WallFeature( uiFeatures.SelectedItem as WallFeature );
-
-      newFeature.DistanceFromOrigin = dfo;
-
-      m_wall.Features.Add( newFeature );
-
-      PopulateWallFeatures();
-
-      // Reset the DFO box.
-      uiFeatureDistanceFromOrigin.Focus();
-      uiFeatureDistanceFromOrigin.Text = "";
+      catch( Exception ex )
+      {
+        ShowErrorMessage( ex.Message, "Error" );
+      }
     }
 
     //-------------------------------------------------------------------------
 
     private void PopulateWallFeatures()
     {
-      uiWallFeatures.Items.Clear();
-
-      if( m_wall == null )
+      try
       {
-        return;
-      }
+        uiWallFeatures.Items.Clear();
 
-      // Add to a list first so we can sort it.
-      List< WallFeature > items = new List< WallFeature >();
+        if( m_wall == null )
+        {
+          return;
+        }
 
-      foreach( WallFeature f in m_wall.Features )
-      {
-        items.Add( f );
-      }
+        // Add to a list first so we can sort it.
+        List< WallFeature > items = new List< WallFeature >();
 
-      items.Sort();
+        foreach( WallFeature f in m_wall.Features )
+        {
+          items.Add( f );
+        }
+
+        items.Sort();
       
-      // Add to ui list.
-      foreach( WallFeature f in items )
+        // Add to ui list.
+        foreach( WallFeature f in items )
+        {
+          uiWallFeatures.Items.Add( f );
+        }
+      }
+      catch( Exception ex )
       {
-        uiWallFeatures.Items.Add( f );
+        ShowErrorMessage( ex.Message, "Error" );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiBtnShutters_Click( object sender, EventArgs e )
+    {
+      try
+      {
+        ShutterSetup dlg = new ShutterSetup( m_floorPlan );
+        dlg.ShowDialog( this );
+      }
+      catch( Exception ex )
+      {
+        ShowErrorMessage( ex.Message, "Error" );
       }
     }
 

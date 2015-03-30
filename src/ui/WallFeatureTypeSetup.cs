@@ -17,14 +17,14 @@ namespace Betty
       m_floorPlan = floorPlan;
 
       InitializeComponent();
-      PopulateTypeSectionsTree();
+      PopulateFeatureTypesTree();
 
       uiUnit.Text = Program.Unit;
     }
 
     //-------------------------------------------------------------------------
 
-    private void PopulateTypeSectionsTree()
+    private void PopulateFeatureTypesTree()
     {
       // Remember what was selected.
       WallFeature selectedItem = null;
@@ -38,7 +38,7 @@ namespace Betty
       uiTypesAndFeatures.Nodes.Clear();
       uiGroupName.Items.Clear();
 
-      // Iterate through the section types and add each one.
+      // Iterate through the feture types and add each one.
       foreach( string typeName in m_floorPlan.WallFeatureTypeNames )
       {
         // Create a node for this type.
@@ -47,17 +47,17 @@ namespace Betty
         // Add the name to the types combobox.
         uiGroupName.Items.Add( typeName );
 
-        // Iterate through this type's sections and add as children to
+        // Iterate through this type's features and add as children to
         // the type.
-        foreach( WallFeature section in m_floorPlan.GetFeaturesForType( typeName ) )
+        foreach( WallFeature feature in m_floorPlan.GetFeaturesForType( typeName ) )
         {
-          TreeNode node = new TreeNode( section.ToString() );
-          node.Tag = section;
+          TreeNode node = new TreeNode( feature.ToString() );
+          node.Tag = feature;
 
           typeNode.Nodes.Add( node );
 
           // Was previously selected? Re-select.
-          if( section == selectedItem )
+          if( feature == selectedItem )
           {
             uiTypesAndFeatures.SelectedNode = node;
           }
@@ -127,13 +127,14 @@ namespace Betty
 
       height = Program.UnitConvertToMm( height );
 
-      // Create a new section and try add it to the floor plan.
-      WallFeature section =
+      // Create a new feature and try add it to the floor plan.
+      WallFeature feature =
         new WallFeature( uiGroupName.Text,
                          length,
-                         height );
+                         height,
+                         0 );
 
-      if( m_floorPlan.GetFeatureFromDescription( section.ToString() ) != null )
+      if( m_floorPlan.GetFeatureFromDescription( feature.ToString() ) != null )
       {
         MessageBox.Show( "A feature already exists with these settings.",
                          "Already exists",
@@ -142,9 +143,9 @@ namespace Betty
         return;
       }
 
-      if( m_floorPlan.AddWallFeatureType( section ) )
+      if( m_floorPlan.AddWallFeatureType( feature ) )
       {
-        PopulateTypeSectionsTree();
+        PopulateFeatureTypesTree();
       }
     }
 
@@ -152,7 +153,7 @@ namespace Betty
 
     private void uiRemove_Click( object sender, EventArgs e )
     {
-      // The nodes for sections have a 'tag' that is the section object,
+      // The nodes for features have a 'tag' that is the section object,
       // if the selected node has this - remove the section.
       if( uiTypesAndFeatures.SelectedNode != null &&
           uiTypesAndFeatures.SelectedNode.Tag != null )
@@ -160,7 +161,7 @@ namespace Betty
         m_floorPlan.RemoveWallFeatureType(
           uiTypesAndFeatures.SelectedNode.Tag as WallFeature );
 
-        PopulateTypeSectionsTree();
+        PopulateFeatureTypesTree();
       }
     }
 

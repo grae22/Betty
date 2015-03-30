@@ -209,6 +209,66 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
+    public void PrioritiseShutterType( Shutter shutter )
+    {
+      // Not in list or already the head?
+      if( m_shutterTypes.IndexOf( shutter ) < 1 )
+      {
+        return;
+      }
+
+      List<Shutter> newList = new List<Shutter>();
+
+      for( int i = 0; i < m_shutterTypes.Count; i++ )
+      {
+        if( i + 1 < m_shutterTypes.Count &&
+            m_shutterTypes[ i + 1 ] == shutter )
+        {
+          newList.Add( shutter );
+        }
+
+        if( m_shutterTypes[ i ] != shutter )
+        {
+          newList.Add( m_shutterTypes[ i ] );
+        }
+      }
+
+      m_shutterTypes = newList;
+    }
+
+    //-------------------------------------------------------------------------
+
+    public void DeprioritiseShutterType( Shutter shutter )
+    {
+      // Not in list or already the tail?
+      if( m_shutterTypes.Contains( shutter ) == false ||
+          m_shutterTypes.IndexOf( shutter ) == m_shutterTypes.Count - 1 )
+      {
+        return;
+      }
+
+      // TODO : fix this...
+      List<Shutter> newList = new List<Shutter>();
+
+      for( int i = m_shutterTypes.Count - 1; i >= 0; i-- )
+      {
+        if( i - 1 >= 0 &&
+            m_shutterTypes[ i - 1 ] == shutter )
+        {
+          newList.Add( shutter );
+        }
+
+        if( m_shutterTypes[ i ] != shutter )
+        {
+          newList.Add( m_shutterTypes[ i ] );
+        }
+      }
+
+      m_shutterTypes = newList;
+    }
+
+    //-------------------------------------------------------------------------
+
     public XmlElement ToXml( XmlDocument doc )
     {
       //-- Floor plan element.
@@ -267,6 +327,18 @@ namespace Betty
         {
           newFloorPlan.AddWallFeatureType( newFeature );
         }
+      }
+
+      //-- Shutters.
+      XmlElement shutterTypeCollection =
+        floorPlanXml.SelectSingleNode( "./ShutterTypeCollection" ) as XmlElement;
+
+      XmlNodeList shuttersXml = shutterTypeCollection.SelectNodes( "Shutter" );
+
+      foreach( XmlElement shutterXml in shuttersXml)
+      {
+        newFloorPlan.ShutterTypes.Add(
+          Shutter.CreateFromXml( shutterXml ) );
       }
 
       //-- Walls.

@@ -4,42 +4,77 @@
       <Type>Door</Type>
       <Length>1200</Length>
       <Height>1000</Height>
+      <DistanceFromOrigin>0</DistanceFromOrigin>
     </WallFeature>
     <WallFeature>
       <Type>Door</Type>
       <Length>800</Length>
       <Height>1000</Height>
+      <DistanceFromOrigin>0</DistanceFromOrigin>
     </WallFeature>
     <WallFeature>
       <Type>Door</Type>
       <Length>1500</Length>
       <Height>1000</Height>
+      <DistanceFromOrigin>0</DistanceFromOrigin>
     </WallFeature>
     <WallFeature>
       <Type>Window</Type>
       <Length>2000</Length>
       <Height>500</Height>
+      <DistanceFromOrigin>0</DistanceFromOrigin>
     </WallFeature>
     <WallFeature>
       <Type>Window</Type>
       <Length>1500</Length>
       <Height>500</Height>
+      <DistanceFromOrigin>0</DistanceFromOrigin>
     </WallFeature>
     <WallFeature>
       <Type>Window</Type>
       <Length>500</Length>
       <Height>500</Height>
+      <DistanceFromOrigin>0</DistanceFromOrigin>
     </WallFeature>
   </WallFeatureTypeCollection>
-  <ShutterTypeCollection />
+  <ShutterTypeCollection>
+    <Shutter>
+      <Length>2000</Length>
+    </Shutter>
+    <Shutter>
+      <Length>1000</Length>
+    </Shutter>
+  </ShutterTypeCollection>
   <WallCollection>
     <Wall>
-      <Name>New wall</Name>
+      <Name>Outter</Name>
+      <Length>10000</Length>
+      <ExternalWall>True</ExternalWall>
       <FeatureCollection>
         <WallFeature>
           <Type>Door</Type>
           <Length>1200</Length>
           <Height>1000</Height>
+          <DistanceFromOrigin>0</DistanceFromOrigin>
+        </WallFeature>
+        <WallFeature>
+          <Type>Window</Type>
+          <Length>500</Length>
+          <Height>500</Height>
+          <DistanceFromOrigin>300</DistanceFromOrigin>
+        </WallFeature>
+      </FeatureCollection>
+    </Wall>
+    <Wall>
+      <Name>Inner</Name>
+      <Length>5000</Length>
+      <ExternalWall>False</ExternalWall>
+      <FeatureCollection>
+        <WallFeature>
+          <Type>Door</Type>
+          <Length>1500</Length>
+          <Height>1000</Height>
+          <DistanceFromOrigin>250</DistanceFromOrigin>
         </WallFeature>
       </FeatureCollection>
     </Wall>

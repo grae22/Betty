@@ -25,11 +25,13 @@ namespace Betty
 
     public WallFeature( string type,
                         ushort length,
-                        ushort height )
+                        ushort height,
+                        ushort distanceFromOrigin )
     {
       m_type = type;
       m_length = length;
       m_height = height;
+      m_distanceFromOrigin = distanceFromOrigin;
     }
 
     //-------------------------------------------------------------------------
@@ -159,6 +161,10 @@ namespace Betty
       wallSection.AppendChild( height );
       height.InnerText = m_height.ToString();
 
+      XmlElement dfo = doc.CreateElement( "DistanceFromOrigin" );
+      wallSection.AppendChild( dfo );
+      dfo.InnerText = m_distanceFromOrigin.ToString();
+
       return wallSection;
     }
 
@@ -171,10 +177,12 @@ namespace Betty
         XmlElement typeXml = wallSectionXml.SelectSingleNode( "Type" ) as XmlElement;
         XmlElement lengthXml = wallSectionXml.SelectSingleNode( "Length" ) as XmlElement;
         XmlElement heightXml = wallSectionXml.SelectSingleNode( "Height" ) as XmlElement;
+        XmlElement dfoXml = wallSectionXml.SelectSingleNode( "DistanceFromOrigin" ) as XmlElement;
 
         return new WallFeature( typeXml.InnerText,
                                 Convert.ToUInt16( lengthXml.InnerText ),
-                                Convert.ToUInt16( heightXml.InnerText ) );
+                                Convert.ToUInt16( heightXml.InnerText ),
+                                Convert.ToUInt16( dfoXml.InnerText ) );
       }
       catch
       {
