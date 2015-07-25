@@ -1,94 +1,12 @@
 <FloorPlan>
-  <WallFeatureTypeCollection>
-    <WallFeature>
-      <Type>Door</Type>
-      <Length>1200</Length>
-      <Height>1000</Height>
-      <DistanceFromOrigin>0</DistanceFromOrigin>
-      <UseShutter>False</UseShutter>
-    </WallFeature>
-    <WallFeature>
-      <Type>Door</Type>
-      <Length>800</Length>
-      <Height>1000</Height>
-      <DistanceFromOrigin>0</DistanceFromOrigin>
-      <UseShutter>False</UseShutter>
-    </WallFeature>
-    <WallFeature>
-      <Type>Door</Type>
-      <Length>1500</Length>
-      <Height>1000</Height>
-      <DistanceFromOrigin>0</DistanceFromOrigin>
-      <UseShutter>False</UseShutter>
-    </WallFeature>
-    <WallFeature>
-      <Type>Window</Type>
-      <Length>2000</Length>
-      <Height>500</Height>
-      <DistanceFromOrigin>0</DistanceFromOrigin>
-      <UseShutter>False</UseShutter>
-    </WallFeature>
-    <WallFeature>
-      <Type>Window</Type>
-      <Length>1500</Length>
-      <Height>500</Height>
-      <DistanceFromOrigin>0</DistanceFromOrigin>
-      <UseShutter>False</UseShutter>
-    </WallFeature>
-    <WallFeature>
-      <Type>Window</Type>
-      <Length>500</Length>
-      <Height>500</Height>
-      <DistanceFromOrigin>0</DistanceFromOrigin>
-      <UseShutter>False</UseShutter>
-    </WallFeature>
-    <WallFeature>
-      <Type>Detail</Type>
-      <Length>5000</Length>
-      <Height>5000</Height>
-      <DistanceFromOrigin>0</DistanceFromOrigin>
-      <UseShutter>True</UseShutter>
-    </WallFeature>
-  </WallFeatureTypeCollection>
-  <ShutterTypeCollection>
-    <Shutter>
-      <Length>2000</Length>
-    </Shutter>
-    <Shutter>
-      <Length>1000</Length>
-    </Shutter>
-    <Shutter>
-      <Length>500</Length>
-    </Shutter>
-  </ShutterTypeCollection>
+  <WallFeatureTypeCollection />
+  <ShutterTypeCollection />
   <WallCollection>
     <Wall>
-      <Name>Inner</Name>
-      <Length>10200</Length>
+      <Name>New wall</Name>
+      <Length>0</Length>
       <ExternalWall>False</ExternalWall>
-      <FeatureCollection>
-        <WallFeature>
-          <Type>Door</Type>
-          <Length>1200</Length>
-          <Height>1000</Height>
-          <DistanceFromOrigin>500</DistanceFromOrigin>
-          <UseShutter>False</UseShutter>
-        </WallFeature>
-        <WallFeature>
-          <Type>Window</Type>
-          <Length>2000</Length>
-          <Height>500</Height>
-          <DistanceFromOrigin>2700</DistanceFromOrigin>
-          <UseShutter>False</UseShutter>
-        </WallFeature>
-        <WallFeature>
-          <Type>Door</Type>
-          <Length>1500</Length>
-          <Height>1000</Height>
-          <DistanceFromOrigin>6700</DistanceFromOrigin>
-          <UseShutter>False</UseShutter>
-        </WallFeature>
-      </FeatureCollection>
+      <FeatureCollection />
     </Wall>
   </WallCollection>
 </FloorPlan>

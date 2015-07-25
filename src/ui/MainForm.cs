@@ -8,6 +8,7 @@ namespace Betty
 {
   public partial class MainForm : Form
   {
+    private string m_floorPlanFilename;
     private FloorPlan m_floorPlan = new FloorPlan();
     private ushort m_wallTotalLength;
     private Wall m_wall = null;
@@ -20,15 +21,28 @@ namespace Betty
       {
         InitializeComponent();
 
+        m_floorPlanFilename = floorPlanFilename;
+
         //-- Load floor plan from xml doc.
         try
         {
           if( floorPlanFilename.Length > 0 )
           {
-            XmlDocument doc = new XmlDocument();
-            doc.Load( floorPlanFilename );
-            XmlElement floorPlanXml = doc.FirstChild as XmlElement;
-            m_floorPlan = FloorPlan.CreateFromXml( floorPlanXml );
+            try
+            {
+              XmlDocument doc = new XmlDocument();
+              doc.Load( floorPlanFilename );
+              XmlElement floorPlanXml = doc.FirstChild as XmlElement;
+              m_floorPlan = FloorPlan.CreateFromXml( floorPlanXml );
+            }
+            catch( Exception )
+            {
+              MessageBox.Show(
+                "The file '" + floorPlanFilename + "' does not appear to be a valid FloorPlan file - a new FloorPlan will be started.",
+                "Floor Plan",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information );             
+            }
           }
         }
         catch( Exception ex )
@@ -121,7 +135,30 @@ namespace Betty
     {
       try
       {
-        m_floorPlan.WriteToFile();
+        if( m_floorPlanFilename == null )
+        {
+          SaveFileDialog dlg = new SaveFileDialog();
+          dlg.AddExtension = true;
+          dlg.CheckPathExists = true;
+          dlg.DefaultExt = "floorplan";
+          dlg.OverwritePrompt = true;
+          dlg.Title = "Save as...";
+          
+          if( dlg.ShowDialog( this ) == System.Windows.Forms.DialogResult.Cancel )
+          {
+            return;
+          }
+
+          m_floorPlanFilename = dlg.FileName;
+        }
+
+        m_floorPlan.WriteToFile( m_floorPlanFilename );
+
+        MessageBox.Show(
+          "FloorPlan saved.",
+          "Saved",
+          MessageBoxButtons.OK,
+          MessageBoxIcon.Information );
       }
       catch( Exception ex )
       {
@@ -653,6 +690,27 @@ namespace Betty
           "Error",
           MessageBoxButtons.OK,
           MessageBoxIcon.Error );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void MainForm_FormClosing( object sender, FormClosingEventArgs e )
+    {
+      DialogResult result =
+        MessageBox.Show(
+          "Save before closing?",
+          "Save?",
+          MessageBoxButtons.YesNoCancel,
+          MessageBoxIcon.Question );
+
+      if( result == System.Windows.Forms.DialogResult.Yes )
+      {
+        uiSave_Click( null, null );
+      }
+      else if( result == System.Windows.Forms.DialogResult.Cancel )
+      {
+        e.Cancel = true;
       }
     }
 

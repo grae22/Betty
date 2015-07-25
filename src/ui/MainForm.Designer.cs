@@ -33,10 +33,8 @@
       this.uiSave = new System.Windows.Forms.Button();
       this.uiSetupWallSectionGroups = new System.Windows.Forms.Button();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
-      this.uiRemoveWall = new System.Windows.Forms.Button();
-      this.uiAddWall = new System.Windows.Forms.Button();
-      this.uiWalls = new System.Windows.Forms.ListBox();
       this.uiGrpWallFeatures = new System.Windows.Forms.GroupBox();
+      this.uiBtnShutterCombination = new System.Windows.Forms.Button();
       this.uiFeatures = new System.Windows.Forms.ComboBox();
       this.label7 = new System.Windows.Forms.Label();
       this.uiRemoveWallFeature = new System.Windows.Forms.Button();
@@ -54,7 +52,9 @@
       this.label5 = new System.Windows.Forms.Label();
       this.uiTotalWallLength = new System.Windows.Forms.TextBox();
       this.label4 = new System.Windows.Forms.Label();
-      this.uiBtnShutterCombination = new System.Windows.Forms.Button();
+      this.uiRemoveWall = new System.Windows.Forms.Button();
+      this.uiAddWall = new System.Windows.Forms.Button();
+      this.uiWalls = new System.Windows.Forms.ListBox();
       this.groupBox1.SuspendLayout();
       this.groupBox3.SuspendLayout();
       this.uiGrpWallFeatures.SuspendLayout();
@@ -117,34 +117,6 @@
       this.groupBox3.TabStop = false;
       this.groupBox3.Text = "Walls:";
       // 
-      // uiRemoveWall
-      // 
-      this.uiRemoveWall.Location = new System.Drawing.Point(228, 421);
-      this.uiRemoveWall.Name = "uiRemoveWall";
-      this.uiRemoveWall.Size = new System.Drawing.Size(63, 24);
-      this.uiRemoveWall.TabIndex = 16;
-      this.uiRemoveWall.Text = "Remove";
-      this.uiRemoveWall.UseVisualStyleBackColor = true;
-      // 
-      // uiAddWall
-      // 
-      this.uiAddWall.Location = new System.Drawing.Point(159, 421);
-      this.uiAddWall.Name = "uiAddWall";
-      this.uiAddWall.Size = new System.Drawing.Size(63, 24);
-      this.uiAddWall.TabIndex = 15;
-      this.uiAddWall.Text = "Add";
-      this.uiAddWall.UseVisualStyleBackColor = true;
-      this.uiAddWall.Click += new System.EventHandler(this.uiAddWall_Click);
-      // 
-      // uiWalls
-      // 
-      this.uiWalls.FormattingEnabled = true;
-      this.uiWalls.Location = new System.Drawing.Point(18, 27);
-      this.uiWalls.Name = "uiWalls";
-      this.uiWalls.Size = new System.Drawing.Size(273, 381);
-      this.uiWalls.TabIndex = 0;
-      this.uiWalls.SelectedIndexChanged += new System.EventHandler(this.uiWalls_SelectedIndexChanged);
-      // 
       // uiGrpWallFeatures
       // 
       this.uiGrpWallFeatures.Controls.Add(this.uiBtnShutterCombination);
@@ -164,6 +136,16 @@
       this.uiGrpWallFeatures.TabIndex = 18;
       this.uiGrpWallFeatures.TabStop = false;
       this.uiGrpWallFeatures.Text = "Features:";
+      // 
+      // uiBtnShutterCombination
+      // 
+      this.uiBtnShutterCombination.Location = new System.Drawing.Point(178, 302);
+      this.uiBtnShutterCombination.Name = "uiBtnShutterCombination";
+      this.uiBtnShutterCombination.Size = new System.Drawing.Size(129, 24);
+      this.uiBtnShutterCombination.TabIndex = 37;
+      this.uiBtnShutterCombination.Text = "Shutter Combination";
+      this.uiBtnShutterCombination.UseVisualStyleBackColor = true;
+      this.uiBtnShutterCombination.Click += new System.EventHandler(this.uiBtnShutterCombination_Click);
       // 
       // uiFeatures
       // 
@@ -324,15 +306,33 @@
       this.label4.TabIndex = 5;
       this.label4.Text = "TWL:";
       // 
-      // uiBtnShutterCombination
+      // uiRemoveWall
       // 
-      this.uiBtnShutterCombination.Location = new System.Drawing.Point(178, 302);
-      this.uiBtnShutterCombination.Name = "uiBtnShutterCombination";
-      this.uiBtnShutterCombination.Size = new System.Drawing.Size(129, 24);
-      this.uiBtnShutterCombination.TabIndex = 37;
-      this.uiBtnShutterCombination.Text = "Shutter Combination";
-      this.uiBtnShutterCombination.UseVisualStyleBackColor = true;
-      this.uiBtnShutterCombination.Click += new System.EventHandler(this.uiBtnShutterCombination_Click);
+      this.uiRemoveWall.Location = new System.Drawing.Point(228, 421);
+      this.uiRemoveWall.Name = "uiRemoveWall";
+      this.uiRemoveWall.Size = new System.Drawing.Size(63, 24);
+      this.uiRemoveWall.TabIndex = 16;
+      this.uiRemoveWall.Text = "Remove";
+      this.uiRemoveWall.UseVisualStyleBackColor = true;
+      // 
+      // uiAddWall
+      // 
+      this.uiAddWall.Location = new System.Drawing.Point(159, 421);
+      this.uiAddWall.Name = "uiAddWall";
+      this.uiAddWall.Size = new System.Drawing.Size(63, 24);
+      this.uiAddWall.TabIndex = 15;
+      this.uiAddWall.Text = "Add";
+      this.uiAddWall.UseVisualStyleBackColor = true;
+      this.uiAddWall.Click += new System.EventHandler(this.uiAddWall_Click);
+      // 
+      // uiWalls
+      // 
+      this.uiWalls.FormattingEnabled = true;
+      this.uiWalls.Location = new System.Drawing.Point(18, 27);
+      this.uiWalls.Name = "uiWalls";
+      this.uiWalls.Size = new System.Drawing.Size(273, 381);
+      this.uiWalls.TabIndex = 0;
+      this.uiWalls.SelectedIndexChanged += new System.EventHandler(this.uiWalls_SelectedIndexChanged);
       // 
       // MainForm
       // 
@@ -346,6 +346,7 @@
       this.Name = "MainForm";
       this.Padding = new System.Windows.Forms.Padding(5);
       this.Text = "Betty";
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
       this.groupBox1.ResumeLayout(false);
       this.groupBox3.ResumeLayout(false);
       this.uiGrpWallFeatures.ResumeLayout(false);

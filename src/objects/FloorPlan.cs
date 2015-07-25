@@ -362,11 +362,11 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    public void WriteToFile()
+    public void WriteToFile( string filename )
     {
       XmlDocument doc = new XmlDocument();
       doc.AppendChild( ToXml( doc ) );
-      doc.Save( "Test.floorplan" );
+      doc.Save( filename );
     }
 
     //-------------------------------------------------------------------------
