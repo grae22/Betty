@@ -4,7 +4,7 @@ using System.Xml;
 
 namespace Betty
 {
-  public class Shutter
+  public class Shutter : WallObject
   {
     private ushort m_length;        // mm
 
@@ -77,6 +77,33 @@ namespace Betty
       {
         return null;
       }
+    }
+
+    //-------------------------------------------------------------------------
+
+    public override string Description
+    {
+      get
+      {
+        return ToString();
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    public override string ShortDescription
+    {
+      get
+      {
+        return "S[" + LengthForDisplay + "]";
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    public override int CompareTo( WallFeature ob )
+    {
+      throw new NotImplementedException();
     }
 
     //-------------------------------------------------------------------------

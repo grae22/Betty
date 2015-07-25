@@ -78,7 +78,7 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    private void uiRemoveWallFeaure_Click( object sender, EventArgs e )
+    private void uiRemoveWallFeature_Click( object sender, EventArgs e )
     {
       try
       {
@@ -88,7 +88,7 @@ namespace Betty
           return;
         }
 
-        m_wall.Features.Remove( uiWallFeatures.SelectedItem as WallFeature );
+        m_wall.RemoveFeature( uiWallFeatures.SelectedItem as WallFeature );
 
         PopulateWallFeatures();
       }
@@ -176,7 +176,7 @@ namespace Betty
         }
 
         uiWallName.Text = m_wall.Name;
-        uiTotalWallLength.Text = m_wall.Length.ToString();
+        uiTotalWallLength.Text = m_wall.LengthForDisplay;
         uiChkExternalWall.Checked = m_wall.IsExternalWall;
         uiFeatureDistanceFromOrigin.Text = "0";
 
@@ -360,7 +360,9 @@ namespace Betty
     {
       try
       {
-        m_wall.Length = Convert.ToUInt16( uiTotalWallLength.Text );
+        m_wall.Length =
+          Program.UnitConvertToMm(
+            Convert.ToUInt16( uiTotalWallLength.Text ) );
       }
       catch
       {
@@ -553,9 +555,9 @@ namespace Betty
         WallFeature newFeature =
           new WallFeature( uiFeatures.SelectedItem as WallFeature );
 
-        newFeature.DistanceFromOrigin = dfo;
+        newFeature.DistanceFromOrigin = Program.UnitConvertToMm( dfo );
 
-        m_wall.Features.Add( newFeature );
+        m_wall.AddFeature( newFeature );
 
         PopulateWallFeatures();
 
@@ -616,6 +618,41 @@ namespace Betty
       catch( Exception ex )
       {
         ShowErrorMessage( ex.Message, "Error" );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiBtnShutterCombination_Click( object sender, EventArgs e )
+    {
+      List< WallObject > wallObject;
+
+      try
+      {
+        Program.DetermineShutterCombinationForWall(
+          m_wall,
+          m_floorPlan.ShutterTypes,
+          out wallObject );
+
+        string combo = "";
+        foreach( WallObject s in wallObject )
+        {
+          combo += s.ShortDescription + Environment.NewLine;
+        }
+
+        MessageBox.Show(
+          combo,
+          "Shutter Combination",
+          MessageBoxButtons.OK,
+          MessageBoxIcon.Information );
+      }
+      catch( Exception ex )
+      {
+        MessageBox.Show(
+          ex.Message,
+          "Error",
+          MessageBoxButtons.OK,
+          MessageBoxIcon.Error );
       }
     }
 

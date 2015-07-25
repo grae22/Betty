@@ -28,13 +28,8 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.uiWallInfo = new System.Windows.Forms.GroupBox();
-      this.uiWallName = new System.Windows.Forms.TextBox();
-      this.label6 = new System.Windows.Forms.Label();
-      this.label5 = new System.Windows.Forms.Label();
-      this.uiTotalWallLength = new System.Windows.Forms.TextBox();
-      this.label4 = new System.Windows.Forms.Label();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this.uiBtnShutters = new System.Windows.Forms.Button();
       this.uiSave = new System.Windows.Forms.Button();
       this.uiSetupWallSectionGroups = new System.Windows.Forms.Button();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -52,79 +47,19 @@
       this.label2 = new System.Windows.Forms.Label();
       this.uiFeatureType = new System.Windows.Forms.ComboBox();
       this.label1 = new System.Windows.Forms.Label();
+      this.uiWallInfo = new System.Windows.Forms.GroupBox();
       this.uiChkExternalWall = new System.Windows.Forms.CheckBox();
-      this.uiBtnShutters = new System.Windows.Forms.Button();
-      this.uiWallInfo.SuspendLayout();
+      this.uiWallName = new System.Windows.Forms.TextBox();
+      this.label6 = new System.Windows.Forms.Label();
+      this.label5 = new System.Windows.Forms.Label();
+      this.uiTotalWallLength = new System.Windows.Forms.TextBox();
+      this.label4 = new System.Windows.Forms.Label();
+      this.uiBtnShutterCombination = new System.Windows.Forms.Button();
       this.groupBox1.SuspendLayout();
       this.groupBox3.SuspendLayout();
       this.uiGrpWallFeatures.SuspendLayout();
+      this.uiWallInfo.SuspendLayout();
       this.SuspendLayout();
-      // 
-      // uiWallInfo
-      // 
-      this.uiWallInfo.Controls.Add(this.uiChkExternalWall);
-      this.uiWallInfo.Controls.Add(this.uiWallName);
-      this.uiWallInfo.Controls.Add(this.label6);
-      this.uiWallInfo.Controls.Add(this.label5);
-      this.uiWallInfo.Controls.Add(this.uiTotalWallLength);
-      this.uiWallInfo.Controls.Add(this.label4);
-      this.uiWallInfo.Location = new System.Drawing.Point(331, 86);
-      this.uiWallInfo.Name = "uiWallInfo";
-      this.uiWallInfo.Size = new System.Drawing.Size(331, 79);
-      this.uiWallInfo.TabIndex = 1;
-      this.uiWallInfo.TabStop = false;
-      this.uiWallInfo.Text = "Wall Info:";
-      // 
-      // uiWallName
-      // 
-      this.uiWallName.Location = new System.Drawing.Point(59, 27);
-      this.uiWallName.Name = "uiWallName";
-      this.uiWallName.Size = new System.Drawing.Size(119, 20);
-      this.uiWallName.TabIndex = 16;
-      this.uiWallName.Click += new System.EventHandler(this.uiWallName_Click);
-      this.uiWallName.Enter += new System.EventHandler(this.uiWallName_Enter);
-      this.uiWallName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.uiWallName_KeyDown);
-      this.uiWallName.Validating += new System.ComponentModel.CancelEventHandler(this.uiWallName_Validating);
-      // 
-      // label6
-      // 
-      this.label6.AutoSize = true;
-      this.label6.Location = new System.Drawing.Point(15, 30);
-      this.label6.Name = "label6";
-      this.label6.Size = new System.Drawing.Size(38, 13);
-      this.label6.TabIndex = 17;
-      this.label6.Text = "Name:";
-      // 
-      // label5
-      // 
-      this.label5.AutoSize = true;
-      this.label5.Location = new System.Drawing.Point(295, 30);
-      this.label5.Name = "label5";
-      this.label5.Size = new System.Drawing.Size(21, 13);
-      this.label5.TabIndex = 7;
-      this.label5.Text = "cm";
-      // 
-      // uiTotalWallLength
-      // 
-      this.uiTotalWallLength.Location = new System.Drawing.Point(233, 27);
-      this.uiTotalWallLength.Name = "uiTotalWallLength";
-      this.uiTotalWallLength.Size = new System.Drawing.Size(60, 20);
-      this.uiTotalWallLength.TabIndex = 1;
-      this.uiTotalWallLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-      this.uiTotalWallLength.Click += new System.EventHandler(this.uiTotalWallLength_Click);
-      this.uiTotalWallLength.TextChanged += new System.EventHandler(this.uiWallTotalLength_TextChanged);
-      this.uiTotalWallLength.Enter += new System.EventHandler(this.uiTotalWallLength_Enter);
-      this.uiTotalWallLength.KeyDown += new System.Windows.Forms.KeyEventHandler(this.uiTotalWallLength_KeyDown);
-      this.uiTotalWallLength.Validating += new System.ComponentModel.CancelEventHandler(this.uiTotalWallLength_Validating);
-      // 
-      // label4
-      // 
-      this.label4.AutoSize = true;
-      this.label4.Location = new System.Drawing.Point(193, 30);
-      this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(34, 13);
-      this.label4.TabIndex = 5;
-      this.label4.Text = "TWL:";
       // 
       // groupBox1
       // 
@@ -137,6 +72,16 @@
       this.groupBox1.TabIndex = 2;
       this.groupBox1.TabStop = false;
       this.groupBox1.Text = "Floor Plan:";
+      // 
+      // uiBtnShutters
+      // 
+      this.uiBtnShutters.Location = new System.Drawing.Point(203, 31);
+      this.uiBtnShutters.Name = "uiBtnShutters";
+      this.uiBtnShutters.Size = new System.Drawing.Size(88, 23);
+      this.uiBtnShutters.TabIndex = 27;
+      this.uiBtnShutters.Text = "Shutters";
+      this.uiBtnShutters.UseVisualStyleBackColor = true;
+      this.uiBtnShutters.Click += new System.EventHandler(this.uiBtnShutters_Click);
       // 
       // uiSave
       // 
@@ -160,19 +105,21 @@
       // 
       // groupBox3
       // 
+      this.groupBox3.Controls.Add(this.uiGrpWallFeatures);
+      this.groupBox3.Controls.Add(this.uiWallInfo);
       this.groupBox3.Controls.Add(this.uiRemoveWall);
       this.groupBox3.Controls.Add(this.uiAddWall);
       this.groupBox3.Controls.Add(this.uiWalls);
       this.groupBox3.Location = new System.Drawing.Point(14, 86);
       this.groupBox3.Name = "groupBox3";
-      this.groupBox3.Size = new System.Drawing.Size(311, 355);
+      this.groupBox3.Size = new System.Drawing.Size(658, 460);
       this.groupBox3.TabIndex = 3;
       this.groupBox3.TabStop = false;
       this.groupBox3.Text = "Walls:";
       // 
       // uiRemoveWall
       // 
-      this.uiRemoveWall.Location = new System.Drawing.Point(228, 318);
+      this.uiRemoveWall.Location = new System.Drawing.Point(228, 421);
       this.uiRemoveWall.Name = "uiRemoveWall";
       this.uiRemoveWall.Size = new System.Drawing.Size(63, 24);
       this.uiRemoveWall.TabIndex = 16;
@@ -181,7 +128,7 @@
       // 
       // uiAddWall
       // 
-      this.uiAddWall.Location = new System.Drawing.Point(159, 318);
+      this.uiAddWall.Location = new System.Drawing.Point(159, 421);
       this.uiAddWall.Name = "uiAddWall";
       this.uiAddWall.Size = new System.Drawing.Size(63, 24);
       this.uiAddWall.TabIndex = 15;
@@ -194,12 +141,13 @@
       this.uiWalls.FormattingEnabled = true;
       this.uiWalls.Location = new System.Drawing.Point(18, 27);
       this.uiWalls.Name = "uiWalls";
-      this.uiWalls.Size = new System.Drawing.Size(273, 277);
+      this.uiWalls.Size = new System.Drawing.Size(273, 381);
       this.uiWalls.TabIndex = 0;
       this.uiWalls.SelectedIndexChanged += new System.EventHandler(this.uiWalls_SelectedIndexChanged);
       // 
       // uiGrpWallFeatures
       // 
+      this.uiGrpWallFeatures.Controls.Add(this.uiBtnShutterCombination);
       this.uiGrpWallFeatures.Controls.Add(this.uiFeatures);
       this.uiGrpWallFeatures.Controls.Add(this.label7);
       this.uiGrpWallFeatures.Controls.Add(this.uiRemoveWallFeature);
@@ -210,12 +158,12 @@
       this.uiGrpWallFeatures.Controls.Add(this.label2);
       this.uiGrpWallFeatures.Controls.Add(this.uiFeatureType);
       this.uiGrpWallFeatures.Controls.Add(this.label1);
-      this.uiGrpWallFeatures.Location = new System.Drawing.Point(331, 171);
+      this.uiGrpWallFeatures.Location = new System.Drawing.Point(309, 106);
       this.uiGrpWallFeatures.Name = "uiGrpWallFeatures";
-      this.uiGrpWallFeatures.Size = new System.Drawing.Size(331, 270);
-      this.uiGrpWallFeatures.TabIndex = 4;
+      this.uiGrpWallFeatures.Size = new System.Drawing.Size(331, 339);
+      this.uiGrpWallFeatures.TabIndex = 18;
       this.uiGrpWallFeatures.TabStop = false;
-      this.uiGrpWallFeatures.Text = "Wall Features:";
+      this.uiGrpWallFeatures.Text = "Features:";
       // 
       // uiFeatures
       // 
@@ -243,14 +191,14 @@
       this.uiRemoveWallFeature.TabIndex = 34;
       this.uiRemoveWallFeature.Text = "Remove";
       this.uiRemoveWallFeature.UseVisualStyleBackColor = true;
-      this.uiRemoveWallFeature.Click += new System.EventHandler(this.uiRemoveWallFeaure_Click);
+      this.uiRemoveWallFeature.Click += new System.EventHandler(this.uiRemoveWallFeature_Click);
       // 
       // uiWallFeatures
       // 
       this.uiWallFeatures.FormattingEnabled = true;
       this.uiWallFeatures.Location = new System.Drawing.Point(18, 123);
       this.uiWallFeatures.Name = "uiWallFeatures";
-      this.uiWallFeatures.Size = new System.Drawing.Size(289, 134);
+      this.uiWallFeatures.Size = new System.Drawing.Size(289, 173);
       this.uiWallFeatures.TabIndex = 33;
       // 
       // uiAddWallFeature
@@ -279,7 +227,6 @@
       this.uiFeatureDistanceFromOrigin.Size = new System.Drawing.Size(49, 20);
       this.uiFeatureDistanceFromOrigin.TabIndex = 30;
       this.uiFeatureDistanceFromOrigin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-      this.uiFeatureDistanceFromOrigin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.uiFeatureDistanceFromOrigin_KeyDown);
       // 
       // label2
       // 
@@ -309,6 +256,21 @@
       this.label1.TabIndex = 27;
       this.label1.Text = "Type:";
       // 
+      // uiWallInfo
+      // 
+      this.uiWallInfo.Controls.Add(this.uiChkExternalWall);
+      this.uiWallInfo.Controls.Add(this.uiWallName);
+      this.uiWallInfo.Controls.Add(this.label6);
+      this.uiWallInfo.Controls.Add(this.label5);
+      this.uiWallInfo.Controls.Add(this.uiTotalWallLength);
+      this.uiWallInfo.Controls.Add(this.label4);
+      this.uiWallInfo.Location = new System.Drawing.Point(309, 21);
+      this.uiWallInfo.Name = "uiWallInfo";
+      this.uiWallInfo.Size = new System.Drawing.Size(331, 79);
+      this.uiWallInfo.TabIndex = 17;
+      this.uiWallInfo.TabStop = false;
+      this.uiWallInfo.Text = "Info:";
+      // 
       // uiChkExternalWall
       // 
       this.uiChkExternalWall.AutoSize = true;
@@ -319,58 +281,94 @@
       this.uiChkExternalWall.Text = "External Wall";
       this.uiChkExternalWall.UseVisualStyleBackColor = true;
       // 
-      // uiBtnShutters
+      // uiWallName
       // 
-      this.uiBtnShutters.Location = new System.Drawing.Point(203, 31);
-      this.uiBtnShutters.Name = "uiBtnShutters";
-      this.uiBtnShutters.Size = new System.Drawing.Size(88, 23);
-      this.uiBtnShutters.TabIndex = 27;
-      this.uiBtnShutters.Text = "Shutters";
-      this.uiBtnShutters.UseVisualStyleBackColor = true;
-      this.uiBtnShutters.Click += new System.EventHandler(this.uiBtnShutters_Click);
+      this.uiWallName.Location = new System.Drawing.Point(59, 27);
+      this.uiWallName.Name = "uiWallName";
+      this.uiWallName.Size = new System.Drawing.Size(119, 20);
+      this.uiWallName.TabIndex = 16;
+      // 
+      // label6
+      // 
+      this.label6.AutoSize = true;
+      this.label6.Location = new System.Drawing.Point(15, 30);
+      this.label6.Name = "label6";
+      this.label6.Size = new System.Drawing.Size(38, 13);
+      this.label6.TabIndex = 17;
+      this.label6.Text = "Name:";
+      // 
+      // label5
+      // 
+      this.label5.AutoSize = true;
+      this.label5.Location = new System.Drawing.Point(295, 30);
+      this.label5.Name = "label5";
+      this.label5.Size = new System.Drawing.Size(21, 13);
+      this.label5.TabIndex = 7;
+      this.label5.Text = "cm";
+      // 
+      // uiTotalWallLength
+      // 
+      this.uiTotalWallLength.Location = new System.Drawing.Point(233, 27);
+      this.uiTotalWallLength.Name = "uiTotalWallLength";
+      this.uiTotalWallLength.Size = new System.Drawing.Size(60, 20);
+      this.uiTotalWallLength.TabIndex = 1;
+      this.uiTotalWallLength.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+      this.uiTotalWallLength.Validating += new System.ComponentModel.CancelEventHandler(this.uiTotalWallLength_Validating);
+      // 
+      // label4
+      // 
+      this.label4.AutoSize = true;
+      this.label4.Location = new System.Drawing.Point(193, 30);
+      this.label4.Name = "label4";
+      this.label4.Size = new System.Drawing.Size(34, 13);
+      this.label4.TabIndex = 5;
+      this.label4.Text = "TWL:";
+      // 
+      // uiBtnShutterCombination
+      // 
+      this.uiBtnShutterCombination.Location = new System.Drawing.Point(178, 302);
+      this.uiBtnShutterCombination.Name = "uiBtnShutterCombination";
+      this.uiBtnShutterCombination.Size = new System.Drawing.Size(129, 24);
+      this.uiBtnShutterCombination.TabIndex = 37;
+      this.uiBtnShutterCombination.Text = "Shutter Combination";
+      this.uiBtnShutterCombination.UseVisualStyleBackColor = true;
+      this.uiBtnShutterCombination.Click += new System.EventHandler(this.uiBtnShutterCombination_Click);
       // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(680, 453);
-      this.Controls.Add(this.uiGrpWallFeatures);
+      this.ClientSize = new System.Drawing.Size(680, 554);
       this.Controls.Add(this.groupBox3);
       this.Controls.Add(this.groupBox1);
-      this.Controls.Add(this.uiWallInfo);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.MaximizeBox = false;
       this.Name = "MainForm";
       this.Padding = new System.Windows.Forms.Padding(5);
       this.Text = "Betty";
-      this.uiWallInfo.ResumeLayout(false);
-      this.uiWallInfo.PerformLayout();
       this.groupBox1.ResumeLayout(false);
       this.groupBox3.ResumeLayout(false);
       this.uiGrpWallFeatures.ResumeLayout(false);
       this.uiGrpWallFeatures.PerformLayout();
+      this.uiWallInfo.ResumeLayout(false);
+      this.uiWallInfo.PerformLayout();
       this.ResumeLayout(false);
 
     }
 
     #endregion
 
-    private System.Windows.Forms.GroupBox uiWallInfo;
-    private System.Windows.Forms.Label label5;
-    private System.Windows.Forms.TextBox uiTotalWallLength;
-    private System.Windows.Forms.Label label4;
     private System.Windows.Forms.GroupBox groupBox1;
     private System.Windows.Forms.Button uiSave;
     private System.Windows.Forms.GroupBox groupBox3;
     private System.Windows.Forms.Button uiRemoveWall;
     private System.Windows.Forms.Button uiAddWall;
     private System.Windows.Forms.ListBox uiWalls;
-    private System.Windows.Forms.TextBox uiWallName;
-    private System.Windows.Forms.Label label6;
+    private System.Windows.Forms.Button uiSetupWallSectionGroups;
+    private System.Windows.Forms.Button uiBtnShutters;
     private System.Windows.Forms.GroupBox uiGrpWallFeatures;
     private System.Windows.Forms.ComboBox uiFeatures;
     private System.Windows.Forms.Label label7;
-    private System.Windows.Forms.Button uiSetupWallSectionGroups;
     private System.Windows.Forms.Button uiRemoveWallFeature;
     private System.Windows.Forms.ListBox uiWallFeatures;
     private System.Windows.Forms.Button uiAddWallFeature;
@@ -379,8 +377,14 @@
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.ComboBox uiFeatureType;
     private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.GroupBox uiWallInfo;
     private System.Windows.Forms.CheckBox uiChkExternalWall;
-    private System.Windows.Forms.Button uiBtnShutters;
+    private System.Windows.Forms.TextBox uiWallName;
+    private System.Windows.Forms.Label label6;
+    private System.Windows.Forms.Label label5;
+    private System.Windows.Forms.TextBox uiTotalWallLength;
+    private System.Windows.Forms.Label label4;
+    private System.Windows.Forms.Button uiBtnShutterCombination;
   }
 }
 

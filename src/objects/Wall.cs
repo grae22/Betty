@@ -37,7 +37,11 @@ namespace Betty
         Wall wall = new Wall( nameXml.InnerText );
         wall.Length = Convert.ToUInt16( lengthXml.InnerText );
         wall.IsExternalWall = bool.Parse( externalWallXml.InnerText );
-        wall.Features = features;
+
+        foreach( WallFeature f in features )
+        {
+          wall.AddFeature( f );
+        }
 
         return wall;
       }
@@ -77,10 +81,48 @@ namespace Betty
       {
         return m_features;
       }
+    }
 
-      set
+    //-------------------------------------------------------------------------
+
+    public void AddFeature( WallFeature newFeature )
+    {
+      // Check new feature doesn't overlap with existing features.
+      foreach( WallFeature feature in m_features )
       {
-        m_features = value;
+        ushort fStart = feature.DistanceFromOrigin;
+        ushort fEnd = (ushort)( feature.DistanceFromOrigin + feature.Length );
+        ushort nfStart = newFeature.DistanceFromOrigin;
+        ushort nfEnd = (ushort)( newFeature.DistanceFromOrigin + newFeature.Length );
+
+        // New feature starts inside current feature?
+        if( nfStart >= fStart && nfStart <= fEnd )
+        {
+          throw new Exception( "'" + newFeature.ToString() + "' DOF is inside '" + feature.ToString() + "'." );
+        }
+        // New feature ends inside current feature?
+        else if( nfEnd >= fStart && nfEnd <= fEnd )
+        {
+          throw new Exception( "'" + newFeature.ToString() + "' ends inside '" + feature.ToString() + "'." );
+        }
+        // New feature surrounds current feature?
+        else if( nfStart <= fStart && nfEnd >= fEnd )
+        {
+          throw new Exception( "'" + newFeature.ToString() + "' overlaps with '" + feature.ToString() + "'." );
+        }
+      }
+
+      // Add it.
+      m_features.Add( newFeature );
+    }
+
+    //-------------------------------------------------------------------------
+
+    public void RemoveFeature( WallFeature feature )
+    {
+      if( m_features.Contains( feature ) )
+      {
+        m_features.Remove( feature );
       }
     }
 
@@ -96,6 +138,19 @@ namespace Betty
       set
       {
         m_length = value;
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    // Returns a string of the value in the units we are using for displayed
+    // values.
+
+    public string LengthForDisplay
+    {
+      get
+      {
+        return Program.UnitConvertForDisplay( m_length ).ToString();
       }
     }
 

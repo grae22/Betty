@@ -4,7 +4,7 @@ using System.Xml;
 
 namespace Betty
 {
-  public class WallFeature : IComparable< WallFeature >
+  public class WallFeature : WallObject
   {
     private string m_type = "Unknown";
     private ushort m_length;        // mm
@@ -126,6 +126,16 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
+    public string DistanceFromOriginForDisplay
+    {
+      get
+      {
+        return Program.UnitConvertForDisplay( m_distanceFromOrigin ).ToString();
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
     public bool UseShutter
     {
       get
@@ -162,7 +172,7 @@ namespace Betty
       // DFO.
       if( m_distanceFromOrigin > 0 )
       {
-        s += " ( DFO = " + m_distanceFromOrigin.ToString() + " )";
+        s += " ( DFO = " + DistanceFromOriginForDisplay + " )";
       }
 
       return s;
@@ -223,7 +233,7 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    public int CompareTo( WallFeature ob )
+    public override int CompareTo( WallFeature ob )
     {
       if( ob.DistanceFromOrigin > m_distanceFromOrigin )
       {
@@ -237,6 +247,26 @@ namespace Betty
       return 0;
     }
  
+    //-------------------------------------------------------------------------
+
+    public override string Description
+    {
+      get
+      {
+        return ToString();
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    public override string ShortDescription
+    {
+      get
+      {
+        return ToString();
+      }
+    }
+
     //-------------------------------------------------------------------------
   }
 }

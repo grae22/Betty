@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Objects\FloorPlan.cs" />
     <Compile Include="Objects\Shutter.cs" />
+    <Compile Include="Objects\WallObject.cs" />
     <Compile Include="UI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
