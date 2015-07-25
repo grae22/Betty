@@ -141,8 +141,9 @@ namespace Betty
           dlg.AddExtension = true;
           dlg.CheckPathExists = true;
           dlg.DefaultExt = "floorplan";
+          dlg.Filter = "FloorPlan (*.floorplan)|*.floorplan";
           dlg.OverwritePrompt = true;
-          dlg.Title = "Save as...";
+          dlg.Title = "Save As...";
           
           if( dlg.ShowDialog( this ) == System.Windows.Forms.DialogResult.Cancel )
           {
@@ -151,6 +152,45 @@ namespace Betty
 
           m_floorPlanFilename = dlg.FileName;
         }
+
+        m_floorPlan.WriteToFile( m_floorPlanFilename );
+        
+        // Don't show if form is closing.
+        if( !( sender == null && e == null ) )
+        {
+          MessageBox.Show(
+            "FloorPlan saved.",
+            "Saved",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Information );
+        }
+      }
+      catch( Exception ex )
+      {
+        ShowErrorMessage( ex.Message, "Error" );
+      }
+    }
+
+    //-------------------------------------------------------------------------
+
+    private void uiSaveAs_Click( object sender, EventArgs e )
+    {
+      try
+      {
+        SaveFileDialog dlg = new SaveFileDialog();
+        dlg.AddExtension = true;
+        dlg.CheckPathExists = true;
+        dlg.DefaultExt = "floorplan";
+        dlg.Filter = "FloorPlan (*.floorplan)|*.floorplan";
+        dlg.OverwritePrompt = true;
+        dlg.Title = "Save As...";
+
+        if( dlg.ShowDialog( this ) == System.Windows.Forms.DialogResult.Cancel )
+        {
+          return;
+        }
+
+        m_floorPlanFilename = dlg.FileName;
 
         m_floorPlan.WriteToFile( m_floorPlanFilename );
 

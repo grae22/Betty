@@ -101,9 +101,20 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    public override int CompareTo( WallFeature ob )
+    public override int CompareTo( WallObject ob )
     {
-      throw new NotImplementedException();
+      Shutter compareToOb = ob as Shutter;
+
+      if( Length < compareToOb.Length )
+      {
+        return -1;
+      }
+      else if( Length > compareToOb.Length )
+      {
+        return 1;
+      }
+
+      return 0;
     }
 
     //-------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 
 namespace Betty
 {
-  public abstract class  WallObject : IComparable< WallFeature >
+  public abstract class WallObject : IComparable< WallObject >
   {
     //-------------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    public abstract int CompareTo( WallFeature ob );
+    public abstract int CompareTo( WallObject ob );
 
     //-------------------------------------------------------------------------
   }

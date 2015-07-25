@@ -68,7 +68,7 @@
       this.uiBtnMoveUp.Name = "uiBtnMoveUp";
       this.uiBtnMoveUp.Size = new System.Drawing.Size(83, 23);
       this.uiBtnMoveUp.TabIndex = 3;
-      this.uiBtnMoveUp.Text = "Move Up";
+      this.uiBtnMoveUp.Text = "Prioritise";
       this.uiBtnMoveUp.UseVisualStyleBackColor = true;
       this.uiBtnMoveUp.Click += new System.EventHandler(this.uiBtnMoveUp_Click);
       // 
@@ -78,7 +78,7 @@
       this.uiBtnMoveDown.Name = "uiBtnMoveDown";
       this.uiBtnMoveDown.Size = new System.Drawing.Size(83, 23);
       this.uiBtnMoveDown.TabIndex = 4;
-      this.uiBtnMoveDown.Text = "Move Down";
+      this.uiBtnMoveDown.Text = "De-prioritise";
       this.uiBtnMoveDown.UseVisualStyleBackColor = true;
       this.uiBtnMoveDown.Click += new System.EventHandler(this.uiBtnMoveDown_Click);
       // 

@@ -161,6 +161,8 @@ namespace Betty
         }
       }
 
+      SortWallObjects( finalWallObjectCombination );
+
       return true;
     }
 
@@ -198,6 +200,49 @@ namespace Betty
       }
 
       return foundShutter;
+    }
+
+    //-------------------------------------------------------------------------
+
+    private static void SortWallObjects( List< WallObject > list )
+    {
+      SortFirstShutters( list );
+    }
+
+    //-------------------------------------------------------------------------
+
+    private static void SortFirstShutters( List< WallObject > list )
+    {
+      List< Shutter > tmpList = new List< Shutter >();
+
+      // Get the shutters from the front of the list.
+      foreach( WallObject ob in list )
+      {
+        if( ob is Shutter )
+        {
+          tmpList.Add( ob as Shutter );
+        }
+        else
+        {
+          break;
+        }
+      }
+
+      if( tmpList.Count == 0 )
+      {
+        return;
+      }
+
+      // Remove shutters from front of the list.
+      while( list.Count > 0 &&
+             list[ 0 ] is Shutter )
+      {
+        list.RemoveAt( 0 );
+      }
+
+      // Sort the tmp list and add it back onto main list.
+      tmpList.Sort();
+      list.InsertRange( 0, tmpList );
     }
 
     //-------------------------------------------------------------------------

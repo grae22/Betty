@@ -28,10 +28,6 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.groupBox1 = new System.Windows.Forms.GroupBox();
-      this.uiBtnShutters = new System.Windows.Forms.Button();
-      this.uiSave = new System.Windows.Forms.Button();
-      this.uiSetupWallSectionGroups = new System.Windows.Forms.Button();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
       this.uiGrpWallFeatures = new System.Windows.Forms.GroupBox();
       this.uiBtnShutterCombination = new System.Windows.Forms.Button();
@@ -55,53 +51,18 @@
       this.uiRemoveWall = new System.Windows.Forms.Button();
       this.uiAddWall = new System.Windows.Forms.Button();
       this.uiWalls = new System.Windows.Forms.ListBox();
-      this.groupBox1.SuspendLayout();
+      this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+      this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.setupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.wallFeaturesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.shuttersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.groupBox3.SuspendLayout();
       this.uiGrpWallFeatures.SuspendLayout();
       this.uiWallInfo.SuspendLayout();
+      this.menuStrip1.SuspendLayout();
       this.SuspendLayout();
-      // 
-      // groupBox1
-      // 
-      this.groupBox1.Controls.Add(this.uiBtnShutters);
-      this.groupBox1.Controls.Add(this.uiSave);
-      this.groupBox1.Controls.Add(this.uiSetupWallSectionGroups);
-      this.groupBox1.Location = new System.Drawing.Point(14, 9);
-      this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(311, 71);
-      this.groupBox1.TabIndex = 2;
-      this.groupBox1.TabStop = false;
-      this.groupBox1.Text = "Floor Plan:";
-      // 
-      // uiBtnShutters
-      // 
-      this.uiBtnShutters.Location = new System.Drawing.Point(203, 31);
-      this.uiBtnShutters.Name = "uiBtnShutters";
-      this.uiBtnShutters.Size = new System.Drawing.Size(88, 23);
-      this.uiBtnShutters.TabIndex = 27;
-      this.uiBtnShutters.Text = "Shutters";
-      this.uiBtnShutters.UseVisualStyleBackColor = true;
-      this.uiBtnShutters.Click += new System.EventHandler(this.uiBtnShutters_Click);
-      // 
-      // uiSave
-      // 
-      this.uiSave.Location = new System.Drawing.Point(18, 31);
-      this.uiSave.Name = "uiSave";
-      this.uiSave.Size = new System.Drawing.Size(68, 23);
-      this.uiSave.TabIndex = 1;
-      this.uiSave.Text = "Save";
-      this.uiSave.UseVisualStyleBackColor = true;
-      this.uiSave.Click += new System.EventHandler(this.uiSave_Click);
-      // 
-      // uiSetupWallSectionGroups
-      // 
-      this.uiSetupWallSectionGroups.Location = new System.Drawing.Point(92, 31);
-      this.uiSetupWallSectionGroups.Name = "uiSetupWallSectionGroups";
-      this.uiSetupWallSectionGroups.Size = new System.Drawing.Size(105, 23);
-      this.uiSetupWallSectionGroups.TabIndex = 26;
-      this.uiSetupWallSectionGroups.Text = "Wall Features";
-      this.uiSetupWallSectionGroups.UseVisualStyleBackColor = true;
-      this.uiSetupWallSectionGroups.Click += new System.EventHandler(this.uiSetupWallFeatureTypes_Click);
       // 
       // groupBox3
       // 
@@ -110,7 +71,7 @@
       this.groupBox3.Controls.Add(this.uiRemoveWall);
       this.groupBox3.Controls.Add(this.uiAddWall);
       this.groupBox3.Controls.Add(this.uiWalls);
-      this.groupBox3.Location = new System.Drawing.Point(14, 86);
+      this.groupBox3.Location = new System.Drawing.Point(8, 32);
       this.groupBox3.Name = "groupBox3";
       this.groupBox3.Size = new System.Drawing.Size(658, 460);
       this.groupBox3.TabIndex = 3;
@@ -334,39 +295,95 @@
       this.uiWalls.TabIndex = 0;
       this.uiWalls.SelectedIndexChanged += new System.EventHandler(this.uiWalls_SelectedIndexChanged);
       // 
+      // menuStrip1
+      // 
+      this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.setupToolStripMenuItem});
+      this.menuStrip1.Location = new System.Drawing.Point(5, 5);
+      this.menuStrip1.Name = "menuStrip1";
+      this.menuStrip1.Size = new System.Drawing.Size(665, 24);
+      this.menuStrip1.TabIndex = 4;
+      this.menuStrip1.Text = "menuStrip1";
+      // 
+      // fileToolStripMenuItem
+      // 
+      this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem,
+            this.saveAsToolStripMenuItem});
+      this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+      this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+      this.fileToolStripMenuItem.Text = "&File";
+      // 
+      // saveToolStripMenuItem
+      // 
+      this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+      this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+      this.saveToolStripMenuItem.Text = "&Save";
+      this.saveToolStripMenuItem.Click += new System.EventHandler(this.uiSave_Click);
+      // 
+      // saveAsToolStripMenuItem
+      // 
+      this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+      this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+      this.saveAsToolStripMenuItem.Text = "Save &As...";
+      this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.uiSaveAs_Click);
+      // 
+      // setupToolStripMenuItem
+      // 
+      this.setupToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.wallFeaturesToolStripMenuItem,
+            this.shuttersToolStripMenuItem});
+      this.setupToolStripMenuItem.Name = "setupToolStripMenuItem";
+      this.setupToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+      this.setupToolStripMenuItem.Text = "&Setup";
+      // 
+      // wallFeaturesToolStripMenuItem
+      // 
+      this.wallFeaturesToolStripMenuItem.Name = "wallFeaturesToolStripMenuItem";
+      this.wallFeaturesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+      this.wallFeaturesToolStripMenuItem.Text = "&Wall Features";
+      this.wallFeaturesToolStripMenuItem.Click += new System.EventHandler(this.uiSetupWallFeatureTypes_Click);
+      // 
+      // shuttersToolStripMenuItem
+      // 
+      this.shuttersToolStripMenuItem.Name = "shuttersToolStripMenuItem";
+      this.shuttersToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+      this.shuttersToolStripMenuItem.Text = "&Shutters";
+      this.shuttersToolStripMenuItem.Click += new System.EventHandler(this.uiBtnShutters_Click);
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(680, 554);
+      this.ClientSize = new System.Drawing.Size(675, 500);
       this.Controls.Add(this.groupBox3);
-      this.Controls.Add(this.groupBox1);
+      this.Controls.Add(this.menuStrip1);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+      this.MainMenuStrip = this.menuStrip1;
       this.MaximizeBox = false;
       this.Name = "MainForm";
       this.Padding = new System.Windows.Forms.Padding(5);
       this.Text = "Betty";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-      this.groupBox1.ResumeLayout(false);
       this.groupBox3.ResumeLayout(false);
       this.uiGrpWallFeatures.ResumeLayout(false);
       this.uiGrpWallFeatures.PerformLayout();
       this.uiWallInfo.ResumeLayout(false);
       this.uiWallInfo.PerformLayout();
+      this.menuStrip1.ResumeLayout(false);
+      this.menuStrip1.PerformLayout();
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
     #endregion
 
-    private System.Windows.Forms.GroupBox groupBox1;
-    private System.Windows.Forms.Button uiSave;
     private System.Windows.Forms.GroupBox groupBox3;
     private System.Windows.Forms.Button uiRemoveWall;
     private System.Windows.Forms.Button uiAddWall;
     private System.Windows.Forms.ListBox uiWalls;
-    private System.Windows.Forms.Button uiSetupWallSectionGroups;
-    private System.Windows.Forms.Button uiBtnShutters;
     private System.Windows.Forms.GroupBox uiGrpWallFeatures;
     private System.Windows.Forms.ComboBox uiFeatures;
     private System.Windows.Forms.Label label7;
@@ -386,6 +403,13 @@
     private System.Windows.Forms.TextBox uiTotalWallLength;
     private System.Windows.Forms.Label label4;
     private System.Windows.Forms.Button uiBtnShutterCombination;
+    private System.Windows.Forms.MenuStrip menuStrip1;
+    private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem setupToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem wallFeaturesToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem shuttersToolStripMenuItem;
   }
 }
 

@@ -233,13 +233,15 @@ namespace Betty
 
     //-------------------------------------------------------------------------
 
-    public override int CompareTo( WallFeature ob )
+    public override int CompareTo( WallObject ob )
     {
-      if( ob.DistanceFromOrigin > m_distanceFromOrigin )
+      WallFeature compareToOb = ob as WallFeature;
+
+      if( compareToOb.DistanceFromOrigin > m_distanceFromOrigin )
       {
         return -1;
       }
-      else if( ob.DistanceFromOrigin < m_distanceFromOrigin )
+      else if( compareToOb.DistanceFromOrigin < m_distanceFromOrigin )
       {
         return 1;
       }
